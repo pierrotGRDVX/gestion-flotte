@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <script src="Nvle_intervention.js"></script>
+        <!barre lateral>
+            <div class="sidebar">
+                <aside class="menu">
+                    <div class="field">
+                    </div>
+                </aside>
+            </div>
+
+        <!Contenue central>
+        <div class="contenue-central"> 
+            <!box de selection des depenses> 
+            <div class="box">
+                
+            </div>
+            <!box de selection du vehicule>
+            <div class="box">
+                <h1 id="titreCategorie">Séléction du véhicule</h1>
+                <div class="select">
+                    <select id="slt_immatriculation">
+                        <option>--Sélectionner--</option>
+                    </select>
+                </div>
+                <div class="fixed-grid has-3-cols">
+                    <div class="grid">
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Marque:</div>
+                                <div class="control">
+                                    <input class="textarea has-fixed-size" readonly id="txa_marque" rows="1" placeholder="Marque"/>    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Modèle:</div>
+                                <div class="control">
+                                    <input class="textarea has-fixed-size" readonly id="txa_model" rows="1" placeholder="Modèle"/>    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Précédent Kilomètrage:</div>
+                                <div class="control">
+                                    <input class="textarea has-fixed-size" readonly id="txa_kilometrage" rows="1" placeholder="km"/>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!box details des dépense>
+            <div class="box" id="box_depense">
+                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <div class="fixed-grid has-5-cols">
+                        <div class="grid">
+
+                            <div class="cell">
+                                <div class="field">
+                                    <div class="label">Date:</div>
+                                    <div class="control">
+                                        <input class="input" id="ipt_date" rows="1" placeholder="00/00/0000"/>  
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cell">
+                                <div class="field">
+                                    <div class="label">Kilomètrage:</div>
+                                    <div class="control">
+                                        <input class="input has-fixed-size" id="txa_kilometrage" rows="1" placeholder="Kilometrage"/> 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cell">
+                                <div class="field">
+                                    <div class="label">Prix/L:</div>
+                                    <div class="control">
+                                        <input class="input has-fixed-size" id="txa_cout" rows="1" placeholder="€/L"/>    
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cell">
+                                <div class="field">
+                                    <div class="label">Prix:</div>
+                                    <div class="control">
+                                        <input class="input has-fixed-size" id="txa_prix" rows="1" placeholder="€"/>    
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cell">
+                                <div class="field">
+                                    <div class="label">Volume:</div>
+                                    <div class="control">
+                                        <input class="input has-fixed-size" id="txa_volume" rows="1" placeholder="L"/>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
+
+
+            <!box bouton enregistrer>
+            <div>
+                <div class="box">
+                    <div class="button is-success" id="btn_enregistrer">Enregistrer</div>
+                </div>
+            </div>
+        
+        </div>
+    
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <!barre lateral>
+            <div class="sidebar">
+                <aside class="menu">
+                    <div class="field">
+                        <div class="label">Ajouter Ville</div>
+                        <button class="button is-success" id="btn_ville">Ajouter</button>    
+                        <div class="label">Ajouter Adresse</div>
+                        <button class="button is-success" id="btn_adresse">Ajouter</button>
+                        <div class="label">Ajouter Catégorie</div>
+                        <button class="button is-success" id="btn_categorie">Ajouter</button>    
+                        <div class="label">Ajouter Energie</div>
+                        <button class="button is-success" id="btn_energie">Ajouter</button>
+                    </div>
+                </aside>
+            </div>
+
+<!contenu Principale>    
+<div class="contenue-central">
+    <! box contenant les donnnées de la personne>
+    <div class="box">
+        <h1 id="titreCategorie">Données personnelles:</h1>
+        <div class="fixed-grid has-2-cols">
+            <div class="grid">
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">Nom:</div>
+                        <div class="control">
+                            <input class="input" id="ipt_nom" type="text" placeholder="Nom">
+                        </div>    
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">Prénom:</div>
+                        <div class="control">
+                            <input class="input" id="ipt_prenom" type="text" placeholder="Prénom">
+                        </div>    
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">Date de naissance</div>
+                        <div class="control">
+                            <input class="input" id="ipt_naissance" type="text" placeholder="00/00/0000"/>
+                        </div>    
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">Genre</div>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="answer" value="Homme" /> Homme
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="answer" value="Femme" /> Femme
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">Adresse E-mail</div>
+                        <div class="control">
+                            <input class="input" id="ipt_email" type="text" placeholder="xxx@mail.com">
+                        </div>    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!box contenant l'adresse de la personne>
+    <div class="box">
+        <h1 id="titreCategorie">Adresse</h1>        
+        <div class="field">
+            <div class="select">
+                <select id="slt_adresse">
+                    <option>--Selectionner--</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <! box contenant les permis détenue>
+    <div class="box">
+        <h1 id="titreCategorie">Permis détenue:</h1>
+        <div class="fixed-grid has-2-cols">
+            <div class="grid">
+                <div class="cell">
+                    <div class="label">Numéro de Permis</div>
+                    <input class="input" id="ipt_num_permis" placeholder="XXX">
+                </div> 
+                <div class="cell is-col-span-2">
+                    <div class="field">
+                        <div class="label">Catégorie:</div>
+                        <div class="checkboxes" id="ckb_categorie">
+                            
+                        </div>    
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+
+
+    <! --box enregistrer -->
+            <div class="box">
+                <h1 id="titreCategorie">Enregistrer</h1>
+                <button id="btn_enregistrer" class="button is-primary">Envoyer</button>
+            </div>
+
+    <script src="Ajouter_Pax.js"></script>
+
+</div>
+
+
+
+    <!popUp Ajouter une Ville>
+    <div class="modal" id="pup_ville">
+        <div class="modal-background"></div>
+        <div class="modal-content" id="contenu_popup">
+            <div class="box">
+                <h2 class="title is-4">Ajouter une ville</h2>
+                <div class="field">
+                    <div class="label">ville</div>
+                        <div class="control">
+                            <input class="input" id="ipt_pup_ville" type="text" placeholder="Ville">
+                        </div>
+                    </div>
+                    <div class="label">Code postal</div>
+                        <div class="control">
+                            <input class="input" id="ipt_pup_code_postal" type="number" placeholder="Code postal">
+                        </div>
+                    </div>
+                <button class="button is-primary" id="btn_save_pup_ville">Enregistrer</button>
+                <button class="modal-close is-large" aria-label="close" id="btn_pup_ville_close"></button>
+                </div>
+            </div>
+        </div>
+
+    <!popUp Ajouter une Adresse>
+    <div class="modal" id="pup_adresse">
+        <div class="modal-background"></div>
+        <div class="modal-content" id="contenu_popup">
+            <div class="box">
+                <h2 class="title is-4">Ajouter une adresse</h2>
+                <div class="fixed-grid has-4-cols">
+                    <div class="grid">
+
+                        <div class="cell is-col-span-4">  
+                            <div class="field">
+                                <div class="label">Ville</div>
+                                <div class="select">
+                                    <select id="slt_pup_ville">
+                                        <option >--Selectionner--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cell is-row-start-2" style="width: 100px;">
+                            <div class="field">
+                                <div class="label">Numéro</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_pup_numero" type="number" placeholder="XX" >
+                                </div>
+                            </div>    
+                        </div> 
+
+                        <div class="cell is-col-span-3">
+                            <div class="field">   
+                                <div class="label">Rue</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_pup_rue" type="text" placeholder="Rue">
+                                </div>
+                            </div>
+                        </div>  
+                        
+                        <div class="cell is-col-span-4">
+                            <div class="field">
+                                <div class="label">Complément d'adresse</div>
+                                <input class="input" id="ipt_pup_complement" type="text" placeholder="xxx">
+                            </div>
+                        </div>
+                            
+                    </div>     
+                </div>
+                <button class="button is-primary" id="btn_save_pup_adresse">Enregistrer</button>
+                <button class="modal-close is-large" aria-label="close" id="btn_pup_adresse_close"></button>
+            </div>
+        </div>
+
+        <!popUp Ajouter une Catégorie>
+        <div class="modal" id="pup_categorie">
+            <div class="modal-background"></div>
+            <div class="modal-content" id="contenu_popup">
+                <div class="box">
+                    <h2 class="title is-4">Ajouter une Catégorie</h2>
+                    <div class="field">
+                        <div class="label">Catégorie</div>
+                        <div class="control">
+                            <input class="input" id="ipt_pup_categorie" type="text" placeholder="Catégorie">
+                        </div>
+                    </div>
+                    <button class="button is-primary" id="btn_pup_save_categorie">Enregistrer</button>
+                    <button class="modal-close is-large" aria-label="close" id="btn_pup_categorie_close"></button>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

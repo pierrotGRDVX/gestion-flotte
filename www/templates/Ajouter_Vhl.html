@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <!barre lateral>
+        <div class="sidebar">
+            <aside class="menu">
+                <div class="field">
+                    <div class="label">Ajouter Marque</div>
+                    <button class="button is-success" id="btn_marque">Ajouter</button>    
+                    <div class="label">Ajouter Model</div>
+                    <button class="button is-success" id="btn_model">Ajouter</button>
+                    <div class="label">Ajouter Catégorie</div>
+                    <button class="button is-success" id="btn_categorie">Ajouter</button>    
+                    <div class="label">Ajouter Energie</div>
+                    <button class="button is-success" id="btn_energie">Ajouter</button>
+                </div>
+            </aside>
+        </div>
+
+        <!contenu Principale>    
+        <div class="contenue-central">
+            <!box contenant les informations presentes sur le certificat d'Immatriculation>
+            <div class="box">
+                <h1 id="titreCategorie">Caractérsitiques techniques:</h1>
+                <div class="fixed-grid has-2-cols">
+                    <div class="grid">     
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Immatriculation:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_immatriculation" type="text" placeholder="XX-000-XX">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell"></div>
+                        <div class="cell is-row-start-2">
+                            
+                            <div class="field">
+                                <div class="label">Marque:</div>
+                                <div class="select">
+                                <select id="slt_marque">
+                                    <option>--Sélectionner--</option>
+                                </select>
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Modèle:</div>
+                                <div class="select" disabled>
+                                <select id="slt_model">
+                                    <option>--Sélectionner--</option>
+                                </select>
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Date de mise en circulation:</div>
+                                <div class="control">
+                                     <input class="input" id="ipt_mise_en_circulation" type="text" placeholder="00-00-0000">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Type de carburant:</div>
+                                <div class="select">
+                                <select id="slt_energie">
+                                    <option>--Sélectionner--</option>
+                                </select>
+                                </div>   
+                            </div>
+                        </div>
+                        <div class="cell is-col-span-2">
+                            <div class="field">
+                                <div class="label">Catégorie:</div>
+                                <div class="control" id ="rdo_categorie">
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <! box contenant les informations sur l'état du véhicule à l'acquisition>
+            <div class="box">
+                <h1 id="titreCategorie">Etat à l'acquisition:</h1>
+                <div class="fixed-grid has-2-cols">
+                    <div class="grid">
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Couleur:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_couleur" type="text" placeholder="Couleur">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Kilomètrage:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_kilometrage" type="text" placeholder="Kilometrage">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Prix d'achat:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_prix" type="text" placeholder="€">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">date du contrôle technique:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_date_ct" type="text" placeholder="00-00-0000">
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <! box enregistrer>
+            <div class="box">
+                <h1 id="titreCategorie">Enregistrer</h1>
+                <button id="btn_enregistrer" class="button is-primary">Envoyer</button>
+            </div>
+            
+
+            </div>
+            <!popUp>
+                <!popUp Ajouter une marque>
+                <div class="modal" id="pup_marque">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" id="contenu_popup">
+                        <div class="box">
+                            <h2 class="title is-4">Ajouter une marque</h2>
+                            <div class="field">
+                                <div class="label">Marque</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_pup_marque" type="text" placeholder="Marque">
+                                </div>
+                            </div>
+                            <button class="button is-primary" id="btn_save_marque">Enregistrer</button>
+                            <button class="modal-close is-large" aria-label="close" id="btn_pup_marque_close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <!popUp Ajouter un model>
+                <div class="modal" id="pup_model">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" id="contenu_pup_model">
+                        <div class="box">
+                            <h2 class="title is-4">Ajouter une modèle</h2>
+                            <div class="fixed-grid has-1-cols">
+
+                                <div class="grid">
+
+                                    <div class="cell">
+                                        <div class="field">
+                                            <div class="label">Marque:</div>
+                                            <div class="select">
+                                                <select id="slt_pup_marque">
+                                                    <option>-- Marque --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="cell">
+                                        <div class="field">
+                                            <div class="label">Modèle:</div>
+                                            <div class="control">
+                                                <input class="input" id="ipt_pup_model" type="text" placeholder="Modèle"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="cell">
+                                        <div class="field">
+                                            <div class="label">Catégorie:</div>
+                                            <div class="control" id ="rdo_pup_categorie">
+                                            </div>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="button is-primary" id="btn_save_model">Enregistrer</button>
+                            <button class="modal-close is-large" aria-label="close" id="btn_pup_model_close"></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!popUp Ajouter une Catégorie>
+                <div class="modal" id="pup_categorie">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" id="contenu_popup">
+                        <div class="box">
+                            <h2 class="title is-4">Ajouter une Catégorie</h2>
+                            <div class="field">
+                                <div class="label">Catégorie</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_pup_categorie" type="text" placeholder="Catégorie">
+                                </div>
+                            </div>
+                            <button class="button is-primary" id="btn_save_categorie">Enregistrer</button>
+                            <button class="modal-close is-large" aria-label="close" id="btn_pup_categorie_close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!popUp Ajouter un type d'energie>
+                <div class="modal" id="pup_energie">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" id="contenu_popup">
+                        <div class="box">
+                            <h2 class="title is-4">Ajouter une type d'énergie</h2>
+                            <div class="field">
+                                <div class="label">Energie</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_pup_categorie" type="text" placeholder="Energie">
+                                </div>
+                            </div>
+                            <button class="button is-primary" id="SaveMarque">Enregistrer</button>
+                            <button class="modal-close is-large" aria-label="close" id="btn_pup_energie_close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                 
+    <script src="Ajouter_Vhl.js"></script> 
+{% endblock %}

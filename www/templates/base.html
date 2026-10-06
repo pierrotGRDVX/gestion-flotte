@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{title_onglet}}</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+        <link 
+            rel="stylesheet"
+            href="voiture.css">
+
+        
+    </head>
+
+
+    <body  background-color="rgb(204,204,204)" >
+        <section class="hero is-small" id="en_tete">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a href="/pageParametres" class="navbar-item">Paramètres </a>
+                            <span class="navbar-item">
+                            </span>
+                            </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body">
+            <div id="logo-container">
+                <img src="images/65promo.png" alt="Insigne Général de Langlade">
+            </div>    
+            <div class="container has-text-centered">
+                <p class="title" id="base_title">{{title}}</p>
+                <p class="subtitle">La gestion de Flotte Dolo</p>
+            </div>
+        </div>
+
+        <div class="hero-foot">
+            <nav class="tabs is-boxed is-fullwidth">
+                <div class="container">
+                    <ul>
+                        <li class="navbar-item"><a href="/" id="titre_en_tete">Acceuil</a></li>
+                        <li><a href="/pageAjoutInter" id="titre_en_tete">Nouvelle Intervention</a></li>
+                        <li><a href="/pageGestionVhl" id="titre_en_tete">Gestion Flottes</a></li>
+                        <li><a href="/pageGestionPax" id="titre_en_tete">Gestion Personnels</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        </section>
+        <div>
+
+
+        <div>
+        {% block content %}
+
+        {% endblock %}
+        </div>
+    </body>
+</html>        

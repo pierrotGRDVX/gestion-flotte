@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <script src="Parametres.js"></script> 
+    <!barre lateral>
+        <div class="sidebar">
+        <aside class="menu">
+            
+        </aside>
+    </div>
+
+    <!contenu Principale>    
+<div class="contenue-central">
+    <! box gestionde la base de données>
+    <div class="box">
+        <h1 id="titreCategorie">Gestion de base de données</h1>
+        <div class="fixed-grid has-1-cols">
+            <div class="grid">
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">Remise à zero de la BDD</div>
+                        <button class="button is-primary" id="btn_reset">RAZ BDD</button>       
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">insertion données d'essai</div>
+                        <button class="button is-primary" id="btn_insert_donnees">inserer données</button>     
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

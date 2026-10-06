@@ -1,0 +1,89 @@
+body {
+    background-color: #BAE3FF; /* Noir profond */
+}
+
+.sidebar {
+            height: 100vh;
+            position: fixed;
+            width: 200px;
+            padding: 1rem;
+            background-color:  #BAE3FF;
+        }
+
+.contenue-central {
+            background-color: #BAE3FF;
+            margin-left: 200px;
+            padding: 1rem;
+        }
+
+.select {
+            margin-left: 50px;
+           
+}
+
+.cell {
+            padding-left: 0%;
+}
+
+#titreCategorie{
+            color: rgb(88, 61, 169);
+            text-decoration: underline;
+            text-transform: uppercase;
+            text-size-adjust: 40px;
+            font-weight: bold ;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;    
+             padding: 1rem;
+
+}
+
+.box {
+    background-color: rgb(153, 178, 197);
+    margin: 1px; /* Réduit la marge autour de l'élément */
+    padding: 8px; /* Réduit l'espace interne de l'élément */
+    margin-bottom: -18px; /* Rapproche l'élément suivant */
+    height: auto;
+}
+
+.table.is-striped tr:nth-child(even) {
+    background-color: #37415106;
+}
+
+.table.is-striped tr:nth-child(odd) {
+    background-color: #37415136;
+}
+
+.body{
+    background-color: rgb(204,204,204);
+}
+
+#Immat {
+            width: 50px;
+            height: 15px;
+
+}
+
+#contenu_popup {
+    height: 230px;
+}
+
+#contenu_pup_model {
+    height: 370px;
+
+}
+
+#en_tete {
+       background-color:  rgb(153, 178, 197);
+}
+
+ /* Style pour placer l'image sur le côté */
+    #logo-container {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        z-index: 10;
+    }
+    #logo-container img {
+        max-width: 200px;
+        height: auto;
+    }
+

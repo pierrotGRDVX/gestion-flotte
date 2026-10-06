@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="vehicules.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2769"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="adresse" custom_title="0" dock_id="1" table="4,7:mainadresse"/><dock_state state="000000ff00000000fd0000000100000002000005b000000390fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000000005b00000012100ffffff000005b00000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="adresse" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="70"/><column index="2" value="49"/><column index="3" value="59"/><column index="4" value="167"/><column index="5" value="151"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="categorie" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="62"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="categories_detenues" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="80"/><column index="2" value="63"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="permis" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="79"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="proprietaire" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="66"/><column index="2" value="81"/><column index="4" value="35"/><column index="5" value="87"/><column index="6" value="118"/><column index="7" value="189"/><column index="8" value="154"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="ville" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="48"/><column index="2" value="87"/><column index="3" value="77"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">DROP TABLE IF EXISTS categorie;
+
+CREATE TABLE categorie(
+	categorie VARCHAR(32) PRIMARY KEY
+);
+
+INSERT INTO categorie( categorie) VALUES ('AM');
+INSERT INTO categorie( categorie) VALUES ('A1');
+INSERT INTO categorie( categorie) VALUES ('A2');
+INSERT INTO categorie( categorie) VALUES ('A');
+INSERT INTO categorie( categorie) VALUES ('B1');
+INSERT INTO categorie( categorie) VALUES ('B');
+INSERT INTO categorie( categorie) VALUES ('C1');
+INSERT INTO categorie( categorie) VALUES ('C');
+INSERT INTO categorie( categorie) VALUES ('D1');
+INSERT INTO categorie( categorie) VALUES ('D');
+INSERT INTO categorie( categorie) VALUES ('BE');
+INSERT INTO categorie( categorie) VALUES ('C1E');
+INSERT INTO categorie( categorie) VALUES ('CE');
+INSERT INTO categorie( categorie) VALUES ('D1E');
+INSERT INTO categorie( categorie) VALUES ('DE');</sql><sql name="création BDD*">DROP TABLE IF EXISTS resultat_ct;
+DROP TABLE IF EXISTS controle_technique;
+DROP TABLE IF EXISTS ct_effectue;
+DROP TABLE IF EXISTS proprietaire;
+DROP TABLE IF EXISTS adresse;
+DROP TABLE IF EXISTS ville;
+DROP TABLE IF EXISTS categories_detenues;
+DROP TABLE IF EXISTS categorie;
+DROP TABLE IF EXISTS permis;
+DROP TABLE IF EXISTS marque;
+
+CREATE TABLE  marque(
+	marque VARCHAR(32) PRIMARY KEY
+	);
+
+CREATE TABLE categorie(
+	categorie VARCHAR(32) PRIMARY KEY
+);
+
+CREATE TABLE permis(
+	num_permis VARCHAR(128) PRIMARY KEY
+);
+
+CREATE TABLE resultat_ct(
+	resultat_ct VARCHAR(32) PRIMARY KEY CHECK (resultat_ct IN ('ok', 'reporte', 'refuse'))
+);
+
+CREATE TABLE controle_technique(
+	id_ct INTEGER PRIMARY KEY,
+	date_ct INTEGER NOT NULL,
+	resultat_ct VARCHAR(32) NOT NULL,
+	observation_ct VARCHAR(256),
+	FOREIGN KEY (resultat_ct) REFERENCES resultat_ct(resultat_ct)
+	);
+
+CREATE TABLE ville(
+	id_ville INTEGER PRIMARY KEY,
+	nom_ville VARCHAR(256) NOT NULL,
+	code_postal NUMERIC NOT NULL
+);	
+
+CREATE TABLE adresse(
+	id_adresse INTEGER PRIMARY KEY,
+	id_ville INTEGER NOT NULL,
+	num_rue INTEGER,
+	rue	VARCHAR(256),
+	complement VARCHAR(256),
+	FOREIGN KEY (id_ville) REFERENCES ville(id_ville)
+);
+
+CREATE TABLE ct_effectue(
+	immat VARCHAR(32) NOT NULL,
+	id_ct NUMERIC UNIQUE NOT NULL,
+	PRIMARY KEY(immat,id_ct),
+	FOREIGN KEY (id_ct) REFERENCES controle_technique(id_ct),
+	FOREIGN KEY (immat) REFERENCES vehicule(immat)
+);
+
+CREATE TABLE proprietaire(
+	id_proprio INTEGER PRIMARY KEY,
+	nom_proprio VARCHAR(256) NOT NULL,
+	prenom_proprio VARCHAR(256) NOT NULL,
+	date_naissance VARCHAR5(32) NOT NULL,
+	sexe VARCHAR(32) NOT NULL,
+	email_proprio VARCHAR(256) NOT NULL,
+	id_adresse_proprio INTEGER NOT NULL,
+	num_permis VARCHAR(128) NOT NULL,
+	FOREIGN KEY (id_adresse_proprio) REFERENCES adresse(id_adresse)
+	FOREIGN KEY (num_permis) REFERENCES permis(num_permis  )
+);
+
+CREATE TABLE categories_detenues(
+	num_permis VARCHAR(128) NOT NULL,
+	categorie VARCHAR(32),
+	FOREIGN KEY (categorie) REFERENCES categorie(categorie),
+	FOREIGN key (num_permis) REFERENCES permis(num_permis),
+	PRIMARY KEY (num_permis, categorie)
+);
+</sql><sql name="SQL 3">SELECT num_rue, rue, nom_ville,code_postal FROM adresse JOIN ville ON ville.id_ville = adresse.id_ville;</sql><sql name="SQL 4">SELECT ville.nom_ville, ville.code_postal, adresse.id_adresse, adresse.num_rue, adresse.rue, adresse.complement FROM adresse JOIN ville ON ville.id_ville = adresse.id_ville;
+</sql><sql name="SQL 5">CREATE TABLE permis(
+	num_permis VARCHAR(128)
+);</sql><sql name="SQL 6">SELECT proprietaire.id_proprio, proprietaire.nom_proprio, proprietaire.prenom_proprio FROM proprietaire;</sql><current_tab id="1"/></tab_sql></sqlb_project>

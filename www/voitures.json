@@ -1,0 +1,28 @@
+{
+  "vehicules": [
+    {
+      "immatriculation": "FM-658-ZG",
+      "marque": "Peugeot",
+      "modele": "207",
+      "kilometrage": 45000
+    },
+    {
+      "immatriculation": "CD-456-EF",
+      "marque": "Peugeot",
+      "modele": "308",
+      "kilometrage": 72000
+    },
+    {
+      "immatriculation": "EF-789-GH",
+      "marque": "Citroën",
+      "modele": "C4",
+      "kilometrage": 32000
+    },
+    {
+      "immatriculation": "GH-101-IJ",
+      "marque": "Volkswagen",
+      "modele": "Golf",
+      "kilometrage": 58000
+    }
+  ]
+}

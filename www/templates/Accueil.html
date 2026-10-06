@@ -1,0 +1,62 @@
+
+<link 
+            rel="stylesheet"
+            href="voiture.css">
+            
+{% extends 'base.html' %}
+
+{% block content %}
+            <script src="Accueil.js"></script> 
+            <!barre lateral>
+            <div class="sidebar">
+                <aside class="menu">
+                    <div class="field">
+                    </div>
+                </aside>
+            </div>
+
+            <!Contenue princial>
+            <div class="contenue-central">
+
+                <!cartouche rassemblant differentes alerte>
+                <div class="box">
+                    <h1 id="titreCategorie">Etat des véhicules</h1>
+                    <div class="grid has-3-cols is-column-gap-1 is-col-min-2">
+                        <div class="cell"><span class="tag" id="tag_info_ok">1</span><span class="tag is-success"> En Etat </span></div>
+                        <div class="cell"><span class="tag" id="tag_info_ed">2</span><span class="tag is-warning">Endommagé</span></div>
+                        <div class="cell"><span class="tag" id="tag_info_nr">3</span><span class="tag is-danger">En Panne</span></div>
+                    </div>
+                </div>
+                    
+
+                <!cartouche rassemblant differentes infos géSnérales>
+                <div class="box">
+                    <h1 id="titreCategorie">infos générales de la flotte</h1>
+                    <div>
+
+                    </div>
+                </div>
+
+                <!Table des differentes véhicules enregistrées dans la base de données> 
+                <div class="box">
+                    <table class="table is-hoverable is-striped">
+                        <thead>
+                            <tr>
+                                <th><abbr title="Immat">Immatriculation</abbr></th>
+                                <th><abbr title="Type">Type</abbr></th>
+                                <th><abbr title="Marque">Marque</abbr></th>
+                                <th><abbr title="Model">Model</abbr></th>
+                                <th><abbr title="CT">CT</abbr></th>
+                                <th><abbr title="Etat">Etat</abbr></th>
+                            </tr>
+                        </thead>
+                        <!apparait ici la liste des vehicule recu depuis le java script>
+                        <tbody id="tab_vehicule"></tbody>
+                        </tbody>    
+                    </table>
+                </div>
+            </div>
+        </div>
+    <script src="Accueil.js"></script>    
+    </body>
+{% endblock %}

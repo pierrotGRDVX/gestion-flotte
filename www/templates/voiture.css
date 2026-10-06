@@ -1,0 +1,72 @@
+:root {
+    --sidebar-bg: #CCCCCC;
+    --main-bg: #E0E0E0;
+    --box-bg: #99B2C5;
+    --primary-color: #583DA9;
+    --secondary-color: #374151;
+}
+
+body {
+    font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    background-color: var(--main-bg);
+}
+
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    width: 12.5rem;
+    padding: 1rem;
+    background-color: var(--sidebar-bg);
+}
+
+.contenue-central {
+    margin-left: 12.5rem;
+    padding: 1rem;
+}
+
+#titreCategorie {
+    font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    padding: 1rem;
+}
+
+.box {
+    background-color: var(--box-bg);
+    margin: 0.1rem;
+    padding: 0.5rem;
+    height: auto;
+}
+
+.table {
+    font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table.is-striped tr:nth-child(odd) {
+    background-color: #37415106;
+}
+
+.table.is-striped tr:nth-child(even) {
+    background-color: #37415136;
+}
+
+.select {
+    margin-left: 3.125rem;
+    font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
+}
+
+.cell {
+    padding-left: 0;
+}
+
+#Immat {
+    width: 3.125rem;
+    height: 0.9375rem;
+}

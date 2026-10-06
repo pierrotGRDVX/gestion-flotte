@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <!barre lateral>
+        <div class="sidebar">
+            <aside class="menu">
+                <div class="field">
+                    <div class="label">changer Etat</div>
+                    <button class="button is-success" id="btn_pup_etat">changer</button>
+                </div>
+            </aside>
+        </div>
+
+
+        <!contenu Principale>    
+        <div class="contenue-central">
+            <!box contenant les informations presentes sur le certificat d'Immatriculation>
+            <div class="box">
+                <h1 id="titreCategorie">Caractérsitiques techniques:</h1>
+                <div class="fixed-grid has-2-cols">
+                    <div class="grid">     
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Immatriculation:</div>
+                                <input class="has-fixed-size input" id="ipt_immatriculation" type="text" readonly placeholder="XX-000-XX" rows="1"/>       
+                            </div>
+                        </div>
+                        <div class="cell"></div>
+                        <div class="cell is-row-start-2">
+                            <div class="field">
+                                <div class="label">Marque:</div>
+                                <input class="has-fixed-size input" id="ipt_marque" type="text" readonly placeholder="Marque" rows="1"/> 
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Modèle:</div>
+                                <input class="has-fixed-size input" id="ipt_model" type="text" readonly placeholder="Modèle" rows="1"/>  
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Date de mise en circulation:</div>
+                                <input class="has-fixed-size input" id="ipt_mise_en_circulation" type="text" readonly placeholder="00-00-0000" rows="1">   
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Type de carburant:</div>
+                                <input class="has-fixed-size input" id="ipt_energie" type="text" readonly placeholder="" rows="1">  
+                            </div>
+                        </div>
+                        <div class="cell is-col-span-2">
+                            <div class="field">
+                                <div class="label">Catégorie:</div>
+                                <div class="control" id ="rdo_categorie">
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <! box contenant les informations sur l'état du véhicule à l'acquisition>
+            <div class="box">
+                <h1 id="titreCategorie">Etat actuel:</h1>
+                <div class="fixed-grid has-2-cols">
+                    <div class="grid">
+                        <div class="cell">
+                            <div class="label">Etat:</div>
+                            <div class="field" id="fld_etat"> 
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Couleur:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_couleur" type="text" readonly placeholder="Couleur">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Kilomètrage:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_kilometrage" type="text" readonly placeholder="Kilometrage">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Prix d'achat:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_prix" type="text" readonly placeholder="€">
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">date du contrôle technique:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_date_ct" type="text" readonly placeholder="00-00-0000">
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <! box enregistrer>
+            <div class="box">
+                <h1 id="titreCategorie">Enregistrer</h1>
+                <button id="btn_enregistrer" class="button is-primary">Envoyer</button>
+            </div>
+            
+
+            </div>
+            <!popUp>
+                <!popUp Ajouter une marque>
+                <div class="modal" id="pup_marque">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" id="contenu_popup">
+                        <div class="box">
+                            <h2 class="title is-4">Ajouter une marque</h2>
+                            <div class="field">
+                                <div class="label">Marque</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_pup_marque" type="text" placeholder="Marque">
+                                </div>
+                            </div>
+                            <button class="button is-primary" id="btn_save_marque">Enregistrer</button>
+                            <button class="modal-close is-large" aria-label="close" id="btn_pup_marque_close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <!popUp Ajouter un model>
+                <div class="modal" id="pup_model">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" id="contenu_pup_model">
+                        <div class="box">
+                            <h2 class="title is-4">Ajouter une modèle</h2>
+                            <div class="fixed-grid has-1-cols">
+
+                                <div class="grid">
+
+                                    <div class="cell">
+                                        <div class="field">
+                                            <div class="label">Marque:</div>
+                                            <div class="select">
+                                                <select id="slt_pup_marque">
+                                                    <option>-- Marque --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="cell">
+                                        <div class="field">
+                                            <div class="label">Modèle:</div>
+                                            <div class="control">
+                                                <input class="input" id="ipt_pup_model" type="text" placeholder="Modèle"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="cell">
+                                        <div class="field">
+                                            <div class="label">Catégorie:</div>
+                                            <div class="control" id ="rdo_pup_categorie">
+                                            </div>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="button is-primary" id="btn_save_model">Enregistrer</button>
+                            <button class="modal-close is-large" aria-label="close" id="btn_pup_model_close"></button>
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+                
+
+                 
+    <script src="Infos_Vhl.js"></script> 
+
+
+    <!popUp Changer Etat>
+                <div class="modal" id="pup_etat">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" id="contenu_popup">
+                        <div class="box">
+                            <h2 class="title is-4">Changer état</h2>
+                             <div class="grid has-3-cols is-column-gap-1 is-col-min-2">
+                                <div class="cell"><button class="button is-success is-fullwidth" id="btn_ok">Ok</button></div>
+                                <div class="cell"><button class="button is-warning is-fullwidth" id="btn_ed">Endommagé</button></div>
+                                <div class="cell"><button class="button is-danger is-fullwidth"  id="btn_nr">Non roulant</button></div>
+                            </div>
+                            <button class="modal-close is-large" aria-label="close" id="btn_pup_etat_close"></button>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}

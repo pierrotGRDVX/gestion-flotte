@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <!barre lateral>
+            <div class="sidebar">
+                <aside class="menu">
+                    <div class="field">
+                    </div>
+                </aside>
+            </div>
+            <!Contenue princial>
+            <div class="contenue-central">
+
+                <!cartouche rassemblant differentes alerte>
+                <div class="box">
+                    <h1 id="titreCategorie">Etat des véhicules</h1>
+                    <div class="grid has-3-cols is-column-gap-1 is-col-min-2">
+                        <div class="cell"><span class="tag" id="tag_info_ok"></span><span class="tag is-success"> En Etat </span></div>
+                        <div class="cell"><span class="tag" id="tag_info_ed"></span><span class="tag is-warning">Endommagé</span></div>
+                        <div class="cell"><span class="tag" id="tag_info_nr"></span><span class="tag is-danger">En Panne</span></div>
+                    </div>
+                </div>  
+
+                <!cartouche contenant le bouton ajouter une véhicule>
+                <div class="box">
+                    <h1 id="titreCategorie">Ajouter un véhicule</h1>
+                    <div  class="button is-success"><a href="pageAjoutVhl">Ajouter</a></div>
+                </div>
+
+                <!Table des differentes véhicules enregistrées dans la base de données> 
+                <div class="box">
+                    <table class="table is-hoverable is-striped" >
+                        <thead>
+                            <tr>
+                                <th><abbr title="Immat">Immatriculation</abbr></th>
+                                <th><abbr title="Type">Type</abbr></th>
+                                <th><abbr title="Marque">Marque</abbr></th>
+                                <th><abbr title="Model">Model</abbr></th>
+                                <th><abbr title="CT">CT</abbr></th>
+                                <th><abbr title="Etat">Etat</abbr></th>
+                                <th><abbr title="attribution">Attribution</abbr></th>
+                            </tr>
+                        </thead>
+                        <!apparait ici la liste des vehicule recu depuis le java script>
+                        <tbody id="tab_vehicule"></tbody>
+                        </tbody>    
+                    </table>
+                </div>
+            </div>
+        </div>
+    <script src="Gestion_Vhl.js"></script>    
+    </body>
+{% endblock %}
