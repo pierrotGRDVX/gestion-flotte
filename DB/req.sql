@@ -1,6 +1,6 @@
 [VEHICULE]
 
-insert_vehicule = INSERT INTO vehicule(immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat) VALUES (?,?,?,?,?,?,?,?,?);
+insert_vehicule = INSERT INTO vehicule(immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat) VALUES (?,?,?,?,?,?,?,?,?,?);
 
 insert_marque = INSERT INTO marque(marque) VALUES(?);
 
