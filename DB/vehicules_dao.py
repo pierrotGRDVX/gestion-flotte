@@ -18,7 +18,7 @@ class vehiculeDAO:
     def insertVehicule(self, immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat):
         cur = self.bdd.cursor()
         requete = self.req['insert_vehicule']
-        cur.execute(requete, (immat, date_mec, id_proprio,id_modele, num_serie, patc, ptra, kilometrage_achat, prix_achat,etat))
+        cur.execute(requete, (immat, date_mec, id_proprio,id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat,etat))
         self.bdd.commit()
     
     def insertCategorie(self, categorie):
