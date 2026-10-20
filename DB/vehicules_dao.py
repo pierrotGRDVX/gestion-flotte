@@ -68,5 +68,3 @@ class vehiculeDAO:
         cur.execute(requete, (immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation))
         self.bdd.commit()
 
-    def listeIntervention(self, immat):
-    # SELECT ... WHERE immat = ? → renvoie une liste de DTO
