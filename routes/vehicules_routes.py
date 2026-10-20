@@ -59,3 +59,23 @@ def listeCategorie():
     donnees = dao.listeCategorie()
     AdresseDicts = [m.listeCategorie() for m in donnees]
     return jsonify(AdresseDicts)
+
+#insere une nouvelle intervention
+@vehicules_bp.route("/nouvelle/intervention", methods=["POST"])
+def nouvelleIntervention():
+    data = request.json
+    print("reception données nouvelle intervention")
+    db = get_db()
+    dao = vehiculeDAO(db)
+    dao.insertIntervention(
+        data["immat"],
+        data["date"],
+        data["cout_inter"],
+        data["prix_litre"],
+        data["volume"],
+        data["kilometrage"],
+        data["id_type_inter"],
+        data["observation"]
+    )
+    db.commit()
+    return {"message": "nouvelle intervention enregistrée"}, 201
