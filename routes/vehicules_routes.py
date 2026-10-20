@@ -79,3 +79,12 @@ def nouvelleIntervention():
     )
     db.commit()
     return {"message": "nouvelle intervention enregistrée"}, 201
+
+#retourne la liste des interventions d'un vehicule
+@vehicules_bp.route("/liste/intervention/<immat>")
+def listeIntervention(immat):
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnees = dao.listeIntervention(immat)
+    interventionsDicts = [m.listeIntervention() for m in donnees]
+    return jsonify(interventionsDicts)
