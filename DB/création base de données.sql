@@ -144,3 +144,5 @@ CREATE TABLE ct_effectue (
     FOREIGN KEY (immat) REFERENCES vehicule(immat),
     FOREIGN KEY (id_ct) REFERENCES controle_technique(id_ct)
 );
+
+INSERT INTO type_intervention(nom_intervention) VALUES ('plein'), ('nettoyage'), ('reparation'), ('gardiennage');
