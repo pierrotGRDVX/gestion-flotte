@@ -62,6 +62,30 @@ class vehiculeDAO:
             )
         return donnees
 
+    def listeIntervention(self, immat):
+        cur = self.bdd.cursor()
+        requete = self.req['liste_intervention']
+        cur.execute(requete, (immat,))
+        rows = cur.fetchall()
+        print("liste interventions")
+
+        donnees = []
+        for row in rows:
+            donnees.append(
+                vehiculesDTO(
+                    immat = row["immat"],
+                    id_inter = row["id_inter"],
+                    date = row["date"],
+                    cout_inter = row["cout_inter"],
+                    prix_litre = row["prix_litre"],
+                    volume = row["volume"],
+                    kilometrage = row["kilometrage"],
+                    id_type_inter = row["id_type_inter"],
+                    observation = row["observation"]
+                )
+            )
+        return donnees
+        
     def insertIntervention(self, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation):
         cur = self.bdd.cursor()
         requete = self.req['insert_intervention']
