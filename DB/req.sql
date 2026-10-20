@@ -9,8 +9,6 @@ liste_marque = SELECT * FROM marque;
 insert_categorie = INSERT INTO categorie(categorie) VALUES (?);
 
 liste_categorie = SELECT * FROM categorie;
-
-[INTERVENTION]
   
 insert_intervention = INSERT INTO intervention(immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation) VALUES (?,?,?,?,?,?,?,?);
 
