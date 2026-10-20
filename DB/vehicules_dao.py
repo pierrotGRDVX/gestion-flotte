@@ -61,3 +61,12 @@ class vehiculeDAO:
                 )
             )
         return donnees
+
+    def insertIntervention(self, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation):
+        cur = self.bdd.cursor()
+        requete = self.req['insert_intervention']
+        cur.execute(requete, (immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation))
+        self.bdd.commit()
+
+    def listeIntervention(self, immat):
+    # SELECT ... WHERE immat = ? → renvoie une liste de DTO
