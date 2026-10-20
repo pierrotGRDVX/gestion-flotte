@@ -120,7 +120,7 @@ CREATE TABLE controle_technique (
 );
 
 CREATE TABLE intervention (
-    id_inter        VARCHAR(256) PRIMARY KEY,
+    id_inter        INTEGER PRIMARY KEY,
     immat           VARCHAR(32) NOT NULL,
     date            DATE,
     cout_inter      NUMERIC,
