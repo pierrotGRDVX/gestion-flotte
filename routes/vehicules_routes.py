@@ -157,3 +157,12 @@ def listeIntervention(immat):
     donnees = dao.listeIntervention(immat)
     interventionsDicts = [m.listeIntervention() for m in donnees]
     return jsonify(interventionsDicts)
+
+#retourne la liste des vehicules
+@vehicules_bp.route("/liste/vehicule")
+def listeVehicule():
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnees = dao.listeVehicule()
+    vehiculesDicts = [m.listeVehicule() for m in donnees]
+    return jsonify(vehiculesDicts)
