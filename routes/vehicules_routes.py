@@ -10,7 +10,7 @@ def nouveauVehicule():
     data = request.json
     print(data)
     db = get_db()
-    dao = VehiculeDAO(db)
+    dao = vehiculeDAO(db)
 
     dao.insertVehicule(
         data["immat"],
@@ -59,6 +59,75 @@ def listeCategorie():
     donnees = dao.listeCategorie()
     AdresseDicts = [m.listeCategorie() for m in donnees]
     return jsonify(AdresseDicts)
+
+#supprime une categorie
+@vehicules_bp.route("/supprimer/categorie", methods=["POST"])
+def supprimerCategorie():
+    data = request.json
+    db = get_db()
+    dao = vehiculeDAO(db)
+    dao.supprimerCategorie(
+        data["categorie"]
+    )
+    db.commit()
+    return {"message": "categorie supprimee"}, 201
+
+#retourne la liste des marques
+@vehicules_bp.route("/liste/marque")
+def listeMarque():
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnees = dao.listeMarque()
+    marquesDicts = [m.listeMarque() for m in donnees]
+    return jsonify(marquesDicts)
+
+#ajoute un nouveau modele
+@vehicules_bp.route("/nouveau/modele", methods=["POST"])
+def nouveauModele():
+    data = request.json
+    db = get_db()
+    dao = vehiculeDAO(db)
+    dao.insertModele(
+        data["modele"],
+        data["marque"],
+        data["categorie"],
+        data["cylindree"],
+        data["puissance"],
+        data["nbr_place"]
+    )
+    db.commit()
+    return {"message": "nouveau modele enregistre"}, 201
+
+#retourne la liste des modeles
+@vehicules_bp.route("/liste/modele")
+def listeModele():
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnees = dao.listeModele()
+    modelesDicts = [m.listeModele() for m in donnees]
+    return jsonify(modelesDicts)
+
+#supprime un modele
+@vehicules_bp.route("/supprimer/modele", methods=["POST"])
+def supprimerModele():
+    data = request.json
+    db = get_db()
+    dao = vehiculeDAO(db)
+    dao.supprimerModele(
+        data["id_modele"]
+    )
+    db.commit()
+    return {"message": "modele supprime"}, 201
+
+#retourne les infos d'un vehicule
+@vehicules_bp.route("/info/vehicule/<immat>")
+def infoVehicule(immat):
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnee = dao.infoVehicule(immat)
+    if donnee is None:
+        return {"message": "vehicule introuvable"}, 404
+    return jsonify(donnee.infoVehicule())
 
 #insere une nouvelle intervention
 @vehicules_bp.route("/nouvelle/intervention", methods=["POST"])

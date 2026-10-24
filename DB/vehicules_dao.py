@@ -27,15 +27,74 @@ class vehiculeDAO:
         cur.execute(requete,(categorie,))
         self.bdd.commit()
 
-    def listeMarque(self):
+    def supprimerCategorie(self, categorie):
         cur = self.bdd.cursor()
-        cur.execute(self.req["marque_liste"])
+        requete = self.req['supprimer_categorie']
+        cur.execute(requete, (categorie,))
+        self.bdd.commit()
+
+    def insertModele(self, modele, marque, categorie, cylindree, puissance, nbr_place):
+        cur = self.bdd.cursor()
+        requete = self.req['insert_modele']
+        cur.execute(requete, (modele, marque, categorie, cylindree, puissance, nbr_place))
+        self.bdd.commit()
+
+    def listeModele(self):
+        cur = self.bdd.cursor()
+        requete = self.req['liste_modele']
+        cur.execute(requete)
         rows = cur.fetchall()
         donnees = []
         for row in rows:
             donnees.append(
-                MEFDonnees(
-                    row["marque"]
+                vehiculesDTO(
+                    id_modele = row["id_modele"],
+                    modele = row["modele"],
+                    marque = row["marque"],
+                    categorie = row["categorie"],
+                    cylindree = row["cylindree"],
+                    puissance = row["puissance"],
+                    nbr_place = row["nbr_place"]
+                )
+            )
+        return donnees
+
+    def supprimerModele(self, id_modele):
+        cur = self.bdd.cursor()
+        requete = self.req['supprimer_modele']
+        cur.execute(requete, (id_modele,))
+        self.bdd.commit()
+
+    def infoVehicule(self, immat):
+        cur = self.bdd.cursor()
+        requete = self.req['info_vehicule']
+        cur.execute(requete, (immat,))
+        row = cur.fetchone()
+        if row is None:
+            return None
+        return vehiculesDTO(
+            immat = row["immat"],
+            date_mec = row["date_mec"],
+            num_serie = row["num_serie"],
+            ptac = row["ptac"],
+            ptra = row["ptra"],
+            kilometrage_achat = row["kilometrage_achat"],
+            prix_achat = row["prix_achat"],
+            etat = row["etat"],
+            marque = row["marque"],
+            modele = row["modele"],
+            categorie = row["categorie"]
+        )
+
+    def listeMarque(self):
+        cur = self.bdd.cursor()
+        cur.execute(self.req["liste_marque"])
+        rows = cur.fetchall()
+        donnees = []
+        for row in rows:
+            donnees.append(
+                vehiculesDTO(
+                    marque = row["marque"]
                 )
             )
         return donnees
