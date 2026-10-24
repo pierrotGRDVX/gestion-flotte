@@ -28,6 +28,26 @@ def listeVille():
     villesDicts = [m.listeVille() for m in donnees]
     return jsonify(villesDicts)
 
+#supprime une ville
+@proprio_bp.route("/supprimer/ville", methods=["POST"])
+def supprimerVille():
+    data = request.json
+    db = get_db()
+    dao = proprioDAO(db)
+    dao.supprimerVille(
+        data["id_ville"]
+    )
+    db.commit()
+    return {"message": "ville supprimee"}, 201
+
+#retourne le nombre de villes
+@proprio_bp.route("/nbr/ville")
+def returnNbrVille():
+    db = get_db()
+    dao = proprioDAO(db)
+    nbr = dao.returnNbrVille()
+    return jsonify({"nbr_ville": nbr})
+
 #ajoute une nouvelle adresse
 @proprio_bp.route("/nouvelle/adresse", methods=["POST"])
 def nouvelleAdresse():
@@ -43,6 +63,18 @@ def nouvelleAdresse():
     )
     db.commit()
     return {"message": "nouvelle ville enregistrée"}, 201
+
+#supprime une adresse
+@proprio_bp.route("/supprimer/adresse", methods=["POST"])
+def supprimerAdresse():
+    data = request.json
+    db = get_db()
+    dao = proprioDAO(db)
+    dao.supprimerAdresse(
+        data["id_adresse"]
+    )
+    db.commit()
+    return {"message": "adresse supprimee"}, 201
 
 #retourne la liste des adresses
 @proprio_bp.route("/liste/adresse")
@@ -70,6 +102,18 @@ def nouveauPropriétaire():
         data["num_permis"])
     db.commit()
     return {"message": "nouveau permis enregistré"}
+
+#supprime un proprietaire
+@proprio_bp.route("/supprimer/proprio", methods=["POST"])
+def supprimerProprietaire():
+    data = request.json
+    db = get_db()
+    dao = proprioDAO(db)
+    dao.supprimerProprietaire(
+        data["id_proprio"]
+    )
+    db.commit()
+    return {"message": "proprietaire supprime"}, 201
 
 #retourne la lite des personnes enregistrées
 @proprio_bp.route("/liste/proprietaire")

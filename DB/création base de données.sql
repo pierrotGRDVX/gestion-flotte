@@ -80,6 +80,7 @@ CREATE TABLE proprietaire (
     id_proprio           INTEGER PRIMARY KEY,
     nom_proprio          VARCHAR(256) NOT NULL,
     prenom_proprio       VARCHAR(256) NOT NULL,
+    date_naissance       DATE,
     sexe                 VARCHAR(1),
     email_proprio        VARCHAR(256) NOT NULL,
     id_adresse_proprio   INTEGER NOT NULL,

@@ -21,6 +21,18 @@ class proprioDAO:
         cur.execute(requete, (nom_ville, code_postal))
         self.bdd.commit()
     
+    def supprimerVille(self, id_ville):
+        cur = self.bdd.cursor()
+        requete = self.req['supprimer_ville']
+        cur.execute(requete, (id_ville,))
+        self.bdd.commit()
+
+    def returnNbrVille(self):
+        cur = self.bdd.cursor()
+        cur.execute(self.req["nbr_ville"])
+        row = cur.fetchone()
+        return row[0]
+
     #fonction retournant la liste des villes
     def listeVille(self):
         cur = self.bdd.cursor()
@@ -41,6 +53,12 @@ class proprioDAO:
         cur = self.bdd.cursor()
         requete = self.req['insert_adresse']
         cur.execute(requete, (id_ville, num_rue, rue, complement))
+        self.bdd.commit()
+
+    def supprimerAdresse(self, id_adresse):
+        cur = self.bdd.cursor()
+        requete = self.req['supprimer_adresse']
+        cur.execute(requete, (id_adresse,))
         self.bdd.commit()
 
     def listeAdresse(self):
@@ -68,6 +86,12 @@ class proprioDAO:
         cur.execute(requete, (nom_proprio, prenom_proprio, date_naissance,sexe, email_proprio, id_adresse_proprio,num_permis))
         self.bdd.commit()
         return "bonjour"
+
+    def supprimerProprietaire(self, id_proprio):
+        cur = self.bdd.cursor()
+        requete = self.req['supprimer_pax']
+        cur.execute(requete, (id_proprio,))
+        self.bdd.commit()
 
     def listeProprio(self):
         cur = self.bdd.cursor()
