@@ -1,0 +1,99 @@
+# Fonctions du projet gestion de flotte
+
+*Inventaire généré depuis le code (serveurFlask.py, routes/, DB/).*
+
+**Conventions de nommage :** `insertX` \= écriture en BDD · `listeX` \= lecture BDD · `nouveau/nouvelle` \= création via POST · `raz` \= remise à zéro.
+
+---
+
+## 1\. Fonctions Véhicules
+
+*fichier routes : routes/vehicules\_routes.py · classe DAO : vehiculeDAO (DB/vehicules\_dao.py)*
+
+| Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| Ajouter un nouveau véhicule | nouveauVehicule(immat, date\_mec, id\_proprio, id\_modele, num\_serie, ptac, ptra, kilometrage\_achat, prix\_achat, etat) | POST | /cars | .json | success | insertVehicule(...) mêmes paramètres |
+| Obtenir la liste des véhicules | `listeVehicule()` | GET | `/liste/vehicule` | — | .json (immat, categorie, date\_ct, resultat\_ct, marque, modele) | `listeVehicule()` → DTO |
+| Ajouter une nouvelle marque | nouvelleMarque(marque) | POST | /nouvelle/marque | .json | success | insertMarque(marque) |
+| Ajouter une nouvelle catégorie | nouvelleCategorie(categorie) | POST | /nouvelle/categorie | .json | success | insertCategorie(categorie) |
+| Obtenir la liste des catégories | listeCategorie() | GET | /liste/categorie | — | .json | listeCategorie() → DTO listeCategorie() |
+| Supprimer une catégorie | `supprimerCategorie(categorie)` | POST | `/supprimer/categorie` | .json | success | `supprimerCategorie(categorie)` |
+| Obtenir la liste des marques | ⚠️ aucune route | — | — | — | .json | listeMarque() |
+| Ajouter un nouveau modèle | `nouveauModele(modele, marque, categorie, cylindree, puissance, nbr_place)` | POST | `/nouveau/modele` | .json | success | `insertModele(...)` |
+| Obtenir la liste des modèles | `listeModele()` | GET | `/liste/modele` | — | .json | `listeModele()` → DTO |
+| Supprimer un modèle | `supprimerModele(id_modele)` | POST | `/supprimer/modele` | .json | success | `supprimerModele(id_modele)` |
+| Obtenir les infos d'un véhicule | `infoVehicule(immat)` | GET | `/info/vehicule/<immat>` | — | .json | `infoVehicule(immat)` → DTO |
+| Ajouter une nouvelle intervention | nouvelleIntervention( immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) | POST | /nouvelle/intervention | .json | success | insertIntervention(immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) |
+|  |  |  |  |  |  |  |
+
+&nbsp;
+
+## 2\. Fonctions Propriétaires
+
+*fichier routes : routes/proprio\_routes.py · classe DAO : proprioDAO (DB/proprio\_dao.py)*
+
+| Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| Insérer une nouvelle ville | nouvelleVille(nom\_ville, code\_postal) | POST | /nouvelle/ville | .json | success | insertVille(nom\_ville, code\_postal) |
+| Obtenir le nombre de villes | ⚠️ non implémenté | — | — | — | integer | à créer : returnNbrVille() |
+| Obtenir la liste des villes | listeVille() | GET | /liste/ville | — | .json | listeVille() → DTO listeVille() |
+| Supprimer une ville | `supprimerVille(id_ville)` | POST | `/supprimer/ville` | .json | success | `supprimerVille(id_ville)` |
+| Insérer un nouvelle adresse | nouvelleAdresse(id\_ville, num\_rue, rue, complément) | POST | /nouvelle/adresse | .json | success | insertAdresse(...)` mêmes paramètres |
+| Obtenir la liste des adresses | listeAdresse() | GET | /liste/adresse | — | .json | listeAdresse() → DTO listeAdresse() |
+| Supprimer une adresse | `supprimerAdresse(id_adresse)` | POST | `/supprimer/adresse` | .json | success | `supprimerAdresse(id_adresse)` |
+| Insérer un nouveau propriétaire | nouveauProprietaire(nom\_proprio, prenom\_proprio, date\_naissance, sexe, email\_proprio, id\_adresse\_proprio, num\_permis) | POST | /nouveau/proprio | .json | success | insert\_pax(...) mêmes paramètres |
+| Obtenir la liste des propriétaires | listeProprio() | GET | /liste/proprietaire | — | .json | listeProprio() → DTO listeProprio() |
+| Supprimer un propriétaire | `supprimerProprietaire(id_proprio)` | POST | `/supprimer/proprio` | .json | success | `supprimerProprietaire(id_proprio)` |
+| Insérer un nouveau permis \+ catégories | nouveauPermis(num\_permis, liste\_categorie) | POST | /nouveau/permis | .json | success | insert\_permis(num\_permis, liste\_categorie) |
+| Ajouter une catégorie à un permis | nouvelleCategoriePermis(num\_permis, liste\_categorie) | POST | /nouvelle/categoriepermis | .json | success | insert\_categorie\_permis(num\_permis, liste\_categorie) |
+
+&nbsp;
+
+## 3\. Gestion de la base de données
+
+*fichier routes : routes/parametres\_routes.py · classe DAO : baseDeDonneesDAO (DB/bdd\_dao.py)*
+
+| Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| Remise à zéro de la BDD | razBDD() ⚠️ la fonction s'appelle encore listeVille dans le code | GET | /razBDD | — | success / error | razBDD() |
+
+&nbsp;
+
+## 4\. Pages HTML
+
+*fichier routes : routes/gestion\_routes.py*
+
+| Description | Fonction Flask | HTTP | Path | Template HTML |
+| :---- | :---- | :---- | :---- | :---- |
+| Page d'accueil | index() | GET | / | Accueil.html |
+| Gestion des véhicules | Gestion\_Vhl() | GET | /pageGestionVhl | Gestion\_Vhl.html |
+| Nouvelle intervention | Ajout\_Inter() | GET | /pageAjoutInter | Nvle\_Inter.html (reçoit la liste des véhicules) |
+| Ajouter un personnel | Ajout\_Pax() | GET | /pageAjoutPay | Ajouter\_Pax.html |
+| Gestion du personnel | Gestion\_Pax() | GET | /pageGestionPax | Gestion\_Pay.html |
+| Ajouter un véhicule | Ajout\_Vhl() | GET | /pageAjoutVhl | Ajouter\_Vhl.html |
+| Infos d'un véhicule | pageInfoVhl(valeur) | GET | /pageInfoVhl | Infos\_Vhl.html |
+| Paramètres | pageParametres() | GET | /pageParametres | Parametres.html |
+
+&nbsp;
+
+---
+
+## ⚠️ Bugs et écarts détectés dans le code
+
+1. **POST /cars** appelle `VehiculeDAO` (avec majuscule) alors que la classe s'appelle `vehiculeDAO` → erreur à l'exécution.  
+2. **routes/routes\_bdd.py** : fichier inutilisé, importe des modules qui n'existent pas → à supprimer.  
+3. **/razBDD** : la fonction route s'appelle `listeVille` (copier-coller) → à renommer.  
+4. **nombreVille()** : décrit dans l'ancien document mais absent du code.  
+5. **listeMarque()** : existe dans le DAO mais aucune route ne l'expose.
+
+---
+
+## 📋 Gabarit pour ajouter une fonction
+
+Copier la ligne ci-dessous et remplir chaque colonne :
+
+| Description | fonctionFlask(paramètres) | METHODE | /chemin/de/la/route | .json ou vide | success / .json / integer | fonctionDAO(paramètres) |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| (ce que fait la fonction) | (nom et paramètres) | GET/POST | (chemin) | (entrée) | (sortie) | (nom et paramètres) |
+
+&nbsp;
