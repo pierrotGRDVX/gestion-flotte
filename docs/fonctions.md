@@ -18,7 +18,7 @@
 | Ajouter une nouvelle catégorie | nouvelleCategorie(categorie) | POST | /nouvelle/categorie | .json | success | insertCategorie(categorie) |
 | Obtenir la liste des catégories | listeCategorie() | GET | /liste/categorie | — | .json | listeCategorie() → DTO listeCategorie() |
 | Supprimer une catégorie | `supprimerCategorie(categorie)` | POST | `/supprimer/categorie` | .json | success | `supprimerCategorie(categorie)` |
-| Obtenir la liste des marques | ⚠️ aucune route | — | — | — | .json | listeMarque() |
+| Obtenir la liste des marques | `listeMarque()` | GET | `/liste/marque` | — | .json (marque) | `listeMarque()` → DTO |
 | Ajouter un nouveau modèle | `nouveauModele(modele, marque, categorie, cylindree, puissance, nbr_place)` | POST | `/nouveau/modele` | .json | success | `insertModele(...)` |
 | Obtenir la liste des modèles | `listeModele()` | GET | `/liste/modele` | — | .json | `listeModele()` → DTO |
 | Supprimer un modèle | `supprimerModele(id_modele)` | POST | `/supprimer/modele` | .json | success | `supprimerModele(id_modele)` |
@@ -35,7 +35,7 @@
 | Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
 | Insérer une nouvelle ville | nouvelleVille(nom\_ville, code\_postal) | POST | /nouvelle/ville | .json | success | insertVille(nom\_ville, code\_postal) |
-| Obtenir le nombre de villes | ⚠️ non implémenté | — | — | — | integer | à créer : returnNbrVille() |
+| Obtenir le nombre de villes | returnNbrVille() | GET | /nbr/ville | — | .json (nbr_ville) | returnNbrVille() |
 | Obtenir la liste des villes | listeVille() | GET | /liste/ville | — | .json | listeVille() → DTO listeVille() |
 | Supprimer une ville | `supprimerVille(id_ville)` | POST | `/supprimer/ville` | .json | success | `supprimerVille(id_ville)` |
 | Insérer un nouvelle adresse | nouvelleAdresse(id\_ville, num\_rue, rue, complément) | POST | /nouvelle/adresse | .json | success | insertAdresse(...)` mêmes paramètres |
@@ -80,11 +80,15 @@
 
 ## ⚠️ Bugs et écarts détectés dans le code
 
-1. **POST /cars** appelle `VehiculeDAO` (avec majuscule) alors que la classe s'appelle `vehiculeDAO` → erreur à l'exécution.  
+1. ~~**POST /cars** appelle `VehiculeDAO` (avec majuscule)~~ → **corrigé** : la route appelle désormais `vehiculeDAO`.  
 2. **routes/routes\_bdd.py** : fichier inutilisé, importe des modules qui n'existent pas → à supprimer.  
 3. **/razBDD** : la fonction route s'appelle `listeVille` (copier-coller) → à renommer.  
-4. **nombreVille()** : décrit dans l'ancien document mais absent du code.  
-5. **listeMarque()** : existe dans le DAO mais aucune route ne l'expose.
+4. ~~**nombreVille()** : décrit dans l'ancien document mais absent du code~~ → **implémenté** : `returnNbrVille()` + route `GET /nbr/ville`.  
+5. ~~**listeMarque()** : existe dans le DAO mais aucune route ne l'expose~~ → **corrigé** : route `GET /liste/marque` exposée, bug `MEFDonnees` réparé.
+
+## 📌 À traiter plus tard
+
+- **Suppression sur la BDD** (`supprimerVille`, `supprimerAdresse`, `supprimerProprietaire`, `supprimerCategorie`, `supprimerModele`, `supprimerMarque`) : les routes et fonctions DAO existent, mais la gestion des suppressions (contraintes de clés étrangères, suppressions en cascade, confirmation utilisateur) sera étudiée plus tard. À noter : SQLite refusera la suppression si des enregistrements liés existent.
 
 ---
 
