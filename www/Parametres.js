@@ -4,16 +4,125 @@
 //lecteurs devenements
 
 document.addEventListener('DOMContentLoaded', () => {
-    //lecture du bouton remise à zero de la base de donnees
+    //titre et sous-titre de la page
+    document.getElementById("base_title").textContent = "Paramètres";
+    document.getElementById("base_subtitle").textContent = "Administration de la plateforme";
+
+    //lecture du bouton remise a zero de la base de donnees
     document.getElementById("btn_reset").addEventListener('click', async () => {
-            fetch('/razBDD')
-            console.log("BDD effacé")
+        if (!confirm("Attention : toutes les données vont être effacées. Continuer ?")) return;
+        const reponse = await fetch('/razBDD');
+        afficherMessage(reponse);
     });
 
+    //lecture du bouton insertion des donnees factices
+    document.getElementById("btn_insert_donnees").addEventListener('click', async () => {
+        const reponse = await fetch('/api/parametres/injecterDonneesFactices', { method: 'POST' });
+        afficherMessage(reponse);
+        chargerTables();
+    });
+
+    //lecture du bouton export CSV
+    document.getElementById("btn_export_csv").addEventListener('click', () => {
+        const table = document.getElementById("select_table_export").value;
+        if (table) window.location = '/api/parametres/exportCSV/' + table;
+    });
+
+    //lecture du bouton import CSV (ouvre le selecteur de fichier)
+    document.getElementById("btn_import_csv").addEventListener('click', () => {
+        document.getElementById("input_file_csv").click();
+    });
+
+    //lecture du fichier CSV choisi puis envoi vers le serveur
+    document.getElementById("input_file_csv").addEventListener('change', async (event) => {
+        const table = document.getElementById("select_table_import").value;
+        const fichier = event.target.files[0];
+        if (!table || !fichier) return;
+        const formData = new FormData();
+        formData.append('fichier', fichier);
+        const reponse = await fetch('/api/parametres/importCSV/' + table, { method: 'POST', body: formData });
+        afficherMessage(reponse);
+        event.target.value = '';
+    });
+
+    //lecture du bouton ajout d'une categorie
+    document.getElementById("btn_add_categorie").addEventListener('click', async () => {
+        const categorie = document.getElementById("input_new_categorie").value.trim();
+        if (!categorie) return;
+        const reponse = await fetch('/nouvelle/categorie', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ categorie: categorie })
+        });
+        afficherMessage(reponse);
+        document.getElementById("input_new_categorie").value = '';
+    });
+
+    //jeu de categories conforme au code de la route francais
+    document.getElementById("btn_cat_route").addEventListener('click', () => {
+        const liste = ["AM", "A1", "A2", "A", "B", "BE", "C1", "C", "CE", "D1", "D", "DE"];
+        appliquerJeuCategories(liste, "Remplacer la liste par les catégories du code de la route ?");
+    });
+
+    //jeu de categories simplifiees (vue flotte)
+    document.getElementById("btn_cat_simplifie").addEventListener('click', () => {
+        const liste = ["Moto", "VL", "PL", "TC"];
+        appliquerJeuCategories(liste, "Remplacer la liste par les catégories simplifiées ?");
+    });
+
+    //jeu de categories saisi par l'utilisateur
+    document.getElementById("btn_cat_autre").addEventListener('click', async () => {
+        const saisie = prompt("Entrez les catégories souhaitées, séparées par des virgules :", "");
+        if (!saisie) return;
+        const liste = saisie.split(',').map(c => c.trim()).filter(c => c !== "");
+        if (liste.length === 0) return;
+        appliquerJeuCategories(liste, null);
+    });
+
+    //chargement initial
+    chargerTables();
 });
+
+//envoie la nouvelle liste de categories au serveur
+async function appliquerJeuCategories(liste, confirmation) {
+    if (confirmation && !confirm(confirmation)) return;
+    const reponse = await fetch('/api/parametres/razCategories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories: liste })
+    });
+    afficherMessage(reponse);
+}
 
 
 //maj des elements HTML
+
+//affiche les tables dans les deux listes deroulantes
+async function chargerTables() {
+    const reponse = await fetch('/api/parametres/listeTables');
+    const donnees = await reponse.json();
+    if (donnees.status !== 'success') return;
+    for (const selectId of ["select_table_export", "select_table_import"]) {
+        const select = document.getElementById(selectId);
+        select.innerHTML = '';
+        for (const table of donnees.tables) {
+            const option = document.createElement('option');
+            option.value = table;
+            option.textContent = table;
+            select.appendChild(option);
+        }
+    }
+}
+
+//affiche le message retourne par le serveur
+async function afficherMessage(reponse) {
+    const donnees = await reponse.json();
+    const message = document.getElementById("message_parametres");
+    message.textContent = donnees.status === 'success'
+        ? '✔ ' + donnees.message
+        : '✘ Erreur : ' + donnees.message;
+    message.style.color = donnees.status === 'success' ? 'green' : 'red';
+}
 
 
 //intervention utilisateur
