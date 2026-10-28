@@ -56,10 +56,24 @@
 | Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
 | Remise à zéro de la BDD | razBDD() ⚠️ la fonction s'appelle encore listeVille dans le code | GET | /razBDD | — | success / error | razBDD() |
+| Injecter des données factices (essai de la plateforme) | injecterDonneesFactices() | POST | /api/parametres/injecterDonneesFactices | — | success / error | injecterDonneesFactices() → lit et exécute DB/DonneesBaseBDD.sql (appeler razBDD() avant pour partir d'une base propre) |
+| Lister les tables de la BDD | listeTables() | GET | /api/parametres/listeTables | — | .json (liste des noms de tables) | listerTables() |
+| Extraire une table au format CSV | exportCSV(table) | GET | /api/parametres/exportCSV/<table> | — | fichier .csv (téléchargement, en-tête des colonnes via cur.description) | extraireCSV(nomTable) |
+| Importer des données depuis un CSV | importCSV(table) | POST | /api/parametres/importCSV/<table> | fichier .csv (multipart/form-data) | success / error | injecterCSV(nomTable, contenuCSV) → INSERT paramétrés ligne par ligne dans une transaction (commit final ou rollback). ⚠️ valider le nom de table contre la liste blanche renvoyée par listerTables() |
 
 &nbsp;
 
-## 4\. Pages HTML
+## 4\. Partie configuration \(page Paramètres\)
+
+*Les catégories du code de la route \(AM, A1, A2, A, B, BE, C1, C, CE, D1, D, DE…\) sont déjà gérées par les routes de la section 1 \(nouvelleCategorie, listeCategorie, supprimerCategorie\), réutilisées par la page Paramètres\. La page www/templates/Parametres.html expose les 3 sections : base de données, personnalisation \(à venir\), configuration.*
+
+| Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| Modifier une catégorie | `modifierCategorie(categorie)` | PUT | `/api/parametres/categories/<categorie>` | .json (nouvelleCategorie) | success | `modifierCategorie(ancienneCategorie, nouvelleCategorie)` (vehicules\_dao.py, requête modifier\_categorie de req.sql) |
+
+&nbsp;
+
+## 5\. Pages HTML
 
 *fichier routes : routes/gestion\_routes.py*
 

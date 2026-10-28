@@ -33,6 +33,12 @@ class vehiculeDAO:
         cur.execute(requete, (categorie,))
         self.bdd.commit()
 
+    def modifierCategorie(self, ancienneCategorie, nouvelleCategorie):
+        cur = self.bdd.cursor()
+        requete = self.req['modifier_categorie']
+        cur.execute(requete, (nouvelleCategorie, ancienneCategorie))
+        self.bdd.commit()
+
     def insertModele(self, modele, marque, categorie, cylindree, puissance, nbr_place):
         cur = self.bdd.cursor()
         requete = self.req['insert_modele']
