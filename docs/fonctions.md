@@ -70,6 +70,7 @@
 | Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
 | Modifier une catégorie | `modifierCategorie(categorie)` | PUT | `/api/parametres/categories/<categorie>` | .json (nouvelleCategorie) | success | `modifierCategorie(ancienneCategorie, nouvelleCategorie)` (vehicules\_dao.py, requête modifier\_categorie de req.sql) |
+| Remplacer l'ensemble des catégories (jeux prédéfinis : code de la route / simplifiées Moto, VL, PL, TC / saisie manuelle) | `razCategories()` | POST | `/api/parametres/razCategories` | .json (categories) | success / error | `razCategories(nouvellesCategories)` (vehicules\_dao.py, requête raz\_categories de req.sql) |
 
 &nbsp;
 

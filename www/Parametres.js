@@ -60,10 +60,43 @@ document.addEventListener('DOMContentLoaded', () => {
         chargerCategories();
     });
 
+    //jeu de categories conforme au code de la route francais
+    document.getElementById("btn_cat_route").addEventListener('click', () => {
+        const liste = ["AM", "A1", "A2", "A", "B", "BE", "C1", "C", "CE", "D1", "D", "DE"];
+        appliquerJeuCategories(liste, "Remplacer la liste par les catégories du code de la route ?");
+    });
+
+    //jeu de categories simplifiees (vue flotte)
+    document.getElementById("btn_cat_simplifie").addEventListener('click', () => {
+        const liste = ["Moto", "VL", "PL", "TC"];
+        appliquerJeuCategories(liste, "Remplacer la liste par les catégories simplifiées ?");
+    });
+
+    //jeu de categories saisi par l'utilisateur
+    document.getElementById("btn_cat_autre").addEventListener('click', async () => {
+        const saisie = prompt("Entrez les catégories souhaitées, séparées par des virgules :", "");
+        if (!saisie) return;
+        const liste = saisie.split(',').map(c => c.trim()).filter(c => c !== "");
+        if (liste.length === 0) return;
+        appliquerJeuCategories(liste, null);
+    });
+
     //chargement initial
     chargerTables();
     chargerCategories();
 });
+
+//envoie la nouvelle liste de categories au serveur puis rafraichit le tableau
+async function appliquerJeuCategories(liste, confirmation) {
+    if (confirmation && !confirm(confirmation)) return;
+    const reponse = await fetch('/api/parametres/razCategories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories: liste })
+    });
+    afficherMessage(reponse);
+    chargerCategories();
+}
 
 
 //maj des elements HTML
