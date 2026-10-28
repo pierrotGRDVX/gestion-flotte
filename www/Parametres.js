@@ -4,6 +4,10 @@
 //lecteurs devenements
 
 document.addEventListener('DOMContentLoaded', () => {
+    //titre et sous-titre de la page
+    document.getElementById("base_title").textContent = "Paramètres";
+    document.getElementById("base_subtitle").textContent = "Administration de la plateforme";
+
     //lecture du bouton remise a zero de la base de donnees
     document.getElementById("btn_reset").addEventListener('click', async () => {
         if (!confirm("Attention : toutes les données vont être effacées. Continuer ?")) return;
