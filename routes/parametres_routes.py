@@ -74,6 +74,20 @@ def importCSV(table):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
+#remplacement de l'ensemble des categories par une nouvelle liste
+@parametres_bp.route("/api/parametres/razCategories", methods=['POST'])
+def razCategories():
+    db = get_db()
+    try:
+        donnees = request.get_json()
+        if not donnees or 'categories' not in donnees:
+            return jsonify({"status": "error", "message": "Champ 'categories' manquant."}), 400
+        dao = vehiculeDAO(db)
+        dao.razCategories(donnees['categories'])
+        return jsonify({"status": "success", "message": "Liste des catégories mise à jour avec succès."})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 #modification d'une categorie du code de la route
 @parametres_bp.route("/api/parametres/categories/<categorie>", methods=['PUT'])
 def modifierCategorie(categorie):

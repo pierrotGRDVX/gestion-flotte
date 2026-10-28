@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <script src="Parametres.js"></script> 
+    <script src="Parametres.js" defer></script> 
 
 <div class="contenue-central">
     <!-- box gestion de la base de donnees -->
@@ -73,15 +73,14 @@
     <!-- box configuration : categories du code de la route -->
     <div class="box">
         <h1 id="titreCategorie">Configuration : catégories du code de la route</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Catégorie</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="tbody_categories"></tbody>
-        </table>
+        <div class="field">
+            <div class="label">Choix du jeu de catégories (remplace la liste actuelle)</div>
+            <div class="buttons">
+                <button class="button is-primary" id="btn_cat_route" title="Remplace la liste actuelle par les 12 catégories du permis français : AM, A1, A2, A, B, BE, C1, C, CE, D1, D, DE.">Conforme code de la route</button>
+                <button class="button is-primary" id="btn_cat_simplifie" title="Remplace la liste actuelle par une vue simplifiée de flotte : Moto, VL (véhicule léger), PL (poids lourd), TC (transport en commun).">Catégories simplifiées</button>
+                <button class="button is-primary" id="btn_cat_autre" title="Vous permet de définir vous-même vos catégories : saisissez-les dans la boîte de dialogue, séparées par des virgules.">Autre (saisie manuelle)</button>
+            </div>
+        </div>
         <div class="field">
             <div class="label">Ajouter une catégorie</div>
             <div class="field-body">

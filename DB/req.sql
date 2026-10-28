@@ -17,6 +17,8 @@ supprimer_categorie = DELETE FROM categorie WHERE categorie = ?;
 
 modifier_categorie = UPDATE categorie SET categorie = ? WHERE categorie = ?;
 
+raz_categories = DELETE FROM categorie;
+
 insert_modele = INSERT INTO modele(modele, marque, categorie, cylindree, puissance, nbr_place) VALUES (?,?,?,?,?,?);
 
 liste_modele = SELECT id_modele, modele, marque, categorie, cylindree, puissance, nbr_place FROM modele;

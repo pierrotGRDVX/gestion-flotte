@@ -4,6 +4,10 @@
 //lecteurs devenements
 
 document.addEventListener('DOMContentLoaded', () => {
+    //titre et sous-titre de la page
+    document.getElementById("base_title").textContent = "Paramètres";
+    document.getElementById("base_subtitle").textContent = "Administration de la plateforme";
+
     //lecture du bouton remise a zero de la base de donnees
     document.getElementById("btn_reset").addEventListener('click', async () => {
         if (!confirm("Attention : toutes les données vont être effacées. Continuer ?")) return;
@@ -38,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('fichier', fichier);
         const reponse = await fetch('/api/parametres/importCSV/' + table, { method: 'POST', body: formData });
         afficherMessage(reponse);
-        chargerCategories();
         event.target.value = '';
     });
 
@@ -53,13 +56,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         afficherMessage(reponse);
         document.getElementById("input_new_categorie").value = '';
-        chargerCategories();
+    });
+
+    //jeu de categories conforme au code de la route francais
+    document.getElementById("btn_cat_route").addEventListener('click', () => {
+        const liste = ["AM", "A1", "A2", "A", "B", "BE", "C1", "C", "CE", "D1", "D", "DE"];
+        appliquerJeuCategories(liste, "Remplacer la liste par les catégories du code de la route ?");
+    });
+
+    //jeu de categories simplifiees (vue flotte)
+    document.getElementById("btn_cat_simplifie").addEventListener('click', () => {
+        const liste = ["Moto", "VL", "PL", "TC"];
+        appliquerJeuCategories(liste, "Remplacer la liste par les catégories simplifiées ?");
+    });
+
+    //jeu de categories saisi par l'utilisateur
+    document.getElementById("btn_cat_autre").addEventListener('click', async () => {
+        const saisie = prompt("Entrez les catégories souhaitées, séparées par des virgules :", "");
+        if (!saisie) return;
+        const liste = saisie.split(',').map(c => c.trim()).filter(c => c !== "");
+        if (liste.length === 0) return;
+        appliquerJeuCategories(liste, null);
     });
 
     //chargement initial
     chargerTables();
-    chargerCategories();
 });
+
+//envoie la nouvelle liste de categories au serveur
+async function appliquerJeuCategories(liste, confirmation) {
+    if (confirmation && !confirm(confirmation)) return;
+    const reponse = await fetch('/api/parametres/razCategories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories: liste })
+    });
+    afficherMessage(reponse);
+}
 
 
 //maj des elements HTML
@@ -79,66 +112,6 @@ async function chargerTables() {
             select.appendChild(option);
         }
     }
-}
-
-//affiche la liste des categories dans le tableau
-async function chargerCategories() {
-    const reponse = await fetch('/liste/categorie');
-    const categories = await reponse.json();
-    const tbody = document.getElementById("tbody_categories");
-    tbody.innerHTML = '';
-    for (const item of categories) {
-        const categorie = item.categorie;
-        const ligne = document.createElement('tr');
-
-        const celluleNom = document.createElement('td');
-        celluleNom.textContent = categorie;
-        ligne.appendChild(celluleNom);
-
-        const celluleActions = document.createElement('td');
-        celluleActions.appendChild(boutonModifier(categorie));
-        celluleActions.appendChild(boutonSupprimer(categorie));
-        ligne.appendChild(celluleActions);
-
-        tbody.appendChild(ligne);
-    }
-}
-
-//cree le bouton modifier d'une categorie
-function boutonModifier(categorie) {
-    const bouton = document.createElement('button');
-    bouton.className = 'button is-small is-warning';
-    bouton.textContent = 'Modifier';
-    bouton.addEventListener('click', async () => {
-        const nouvelleCategorie = prompt('Nouveau nom de la catégorie :', categorie);
-        if (!nouvelleCategorie || nouvelleCategorie === categorie) return;
-        const reponse = await fetch('/api/parametres/categories/' + encodeURIComponent(categorie), {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nouvelleCategorie: nouvelleCategorie })
-        });
-        afficherMessage(reponse);
-        chargerCategories();
-    });
-    return bouton;
-}
-
-//cree le bouton supprimer d'une categorie
-function boutonSupprimer(categorie) {
-    const bouton = document.createElement('button');
-    bouton.className = 'button is-small is-danger';
-    bouton.textContent = 'Supprimer';
-    bouton.addEventListener('click', async () => {
-        if (!confirm('Supprimer la catégorie ' + categorie + ' ?')) return;
-        const reponse = await fetch('/supprimer/categorie', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ categorie: categorie })
-        });
-        afficherMessage(reponse);
-        chargerCategories();
-    });
-    return bouton;
 }
 
 //affiche le message retourne par le serveur

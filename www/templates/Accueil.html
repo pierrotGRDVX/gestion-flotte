@@ -1,13 +1,7 @@
-
-<link 
-            rel="stylesheet"
-            href="voiture.css">
-            
 {% extends 'base.html' %}
 
 {% block content %}
-            <script src="Accueil.js"></script> 
-            <!barre lateral>
+            <script src="Accueil.js" defer></script> 
             <div class="sidebar">
                 <aside class="menu">
                     <div class="field">
@@ -51,12 +45,9 @@
                             </tr>
                         </thead>
                         <!apparait ici la liste des vehicule recu depuis le java script>
-                        <tbody id="tab_vehicule"></tbody>
-                        </tbody>    
+                        <tbody id="tab_vehicule"></tbody>  
                     </table>
                 </div>
             </div>
         </div>
-    <script src="Accueil.js"></script>    
-    </body>
 {% endblock %}
