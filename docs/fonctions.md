@@ -65,11 +65,11 @@
 
 ## 4\. Partie configuration \(page Paramètres\)
 
-*Les catégories du code de la route \(AM, A1, A2, A, B, BE, C1, C, CE, D1, D, DE…\) sont déjà gérées par les routes de la section 1 \(nouvelleCategorie, listeCategorie, supprimerCategorie\) → réutiliser ces routes dans la page Paramètres\. Fonction supplémentaire à créer :*
+*Les catégories du code de la route \(AM, A1, A2, A, B, BE, C1, C, CE, D1, D, DE…\) sont déjà gérées par les routes de la section 1 \(nouvelleCategorie, listeCategorie, supprimerCategorie\), réutilisées par la page Paramètres\. La page www/templates/Parametres.html expose les 3 sections : base de données, personnalisation \(à venir\), configuration.*
 
 | Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| Modifier une catégorie | `modifierCategorie(id_categorie, categorie)` | PUT | `/api/parametres/categories/<id_categorie>` | .json | success | `modifierCategorie(id_categorie, categorie)` \(à créer dans vehicules\_dao.py\) |
+| Modifier une catégorie | `modifierCategorie(categorie)` | PUT | `/api/parametres/categories/<categorie>` | .json (nouvelleCategorie) | success | `modifierCategorie(ancienneCategorie, nouvelleCategorie)` (vehicules\_dao.py, requête modifier\_categorie de req.sql) |
 
 &nbsp;
 
