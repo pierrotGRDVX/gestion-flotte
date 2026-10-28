@@ -21,7 +21,7 @@ def Gestion_Vhl():
 @gestion_bp.route("/pageAjoutInter", methods=["GET", "POST"])
 def Ajout_Inter():
     if request.method == 'GET':
-        VhlDTOs = vehiculeDAO(get_db()).getVehicule()
+        VhlDTOs = vehiculeDAO(get_db()).listeVehicule()
         return render_template("Nvle_Inter.html", title="Nouvelle intervention", title_onglet="Intervention",Marque="egq",Model="lkjb",liste_vhl=VhlDTOs )
     
 #Page d'ajout de personnel

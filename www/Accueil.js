@@ -4,7 +4,8 @@ let nbr_nr = 0;
 let nbr_ed = 0;
 
 
-fetch("/cars/listeVhl")
+//RECEPTION DES DONNEES
+fetch("/liste/vehicule")
   .then(response => response.json())
   .then(data => {
     console.info(data);
@@ -78,3 +79,23 @@ fetch("/cars/listeVhl")
     });
   })
   .catch(error => console.error("Erreur lors du chargement du JSON :", error));
+
+//MISE EN PLACE LECTEUR 
+// Attendre que le DOM soit chargé
+document.addEventListener('DOMContentLoaded', () => {
+    const tbody = document.getElementById('tab_vehicule');
+
+    // Écouteur d'événement pour les clics sur les lignes du tableau
+    tbody.addEventListener('click', (event) => {
+      const row = event.target.closest('tr'); // Trouve la ligne (<tr>) la plus proche de l'élément cliqué
+      if (!row) return; // Si on n'a pas cliqué sur une ligne, on sort
+
+      // Récupère toutes les cellules (<td>) de la ligne
+      const cells = row.querySelectorAll('td');
+
+      // Extrait les valeurs de chaque cellule
+      const rowData = {
+        id_proprio: cells[0].textContent,
+      }})
+
+});
