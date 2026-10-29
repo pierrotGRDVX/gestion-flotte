@@ -6,11 +6,11 @@ fetch("/liste/etat/vehicule")
   .then(response => response.json())
   .then(data => {
     data.forEach(items => {
-      if(items.etat === "en service"){
+      if(items.etat === "en_service"){
         document.getElementById("tag_info_ok").textContent = items.nbr_etat}
-      if(items.etat === "maintenance"){
+      if(items.etat === "endommagé"){
         document.getElementById("tag_info_ed").textContent = items.nbr_etat}
-      if(items.etat === "hors service"){
+      if(items.etat === "non_roulant"){
         document.getElementById("tag_info_nr").textContent = items.nbr_etat}
     });
   })
@@ -47,11 +47,11 @@ fetch("/liste/vehicule")
         insert = `<h1>${items.categorie}</h1>`;}
 
       //MEF de la colonne etat
-      if(items.etat === "en service"){
+      if(items.etat === "en_service"){
         val_etat = `<td class="is-success">${items.etat}</td>`}
-      if(items.etat === "maintenance"){
+      if(items.etat === "endommagé"){
         val_etat = `<td class="is-warning">${items.etat}</td>`}
-      if(items.etat === "hors service"){
+      if(items.etat === "non_roulant"){
         val_etat = `<td class="is-danger">${items.etat}</td>`}
 
       const conteneurHTML = document.createElement("tr");

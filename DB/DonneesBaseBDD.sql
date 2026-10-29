@@ -132,11 +132,11 @@ INSERT INTO proprietaire (id_proprio, nom_proprio, prenom_proprio, date_naissanc
 -- ============================================
 
 INSERT INTO vehicule (immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat) VALUES
-('AB-123-CD', '2019-04-15', 1, 1,  'VF15RJLJ555123456', 1550, 2500,  12000, 13500, 'en service'),
-('EF-456-GH', '2020-08-02', 2, 4,  'VF3JZLUH777654321', 2800, 4200,   8500, 21000, 'en service'),
-('IJ-789-KL', '2018-01-20', 3, 7,  'JTMHV05J123456789', 2100, 3500,  25000, 28000, 'en service'),
-('MN-012-OP', '2017-06-11', 5, 9,  'WDD20401234567890', 1950, 3200,  38000, 32000, 'maintenance'),
-('QR-345-ST', '2016-09-28', 6, 6,  'VF77JWHC987654321', 2050, 3400,  55000, 17500, 'hors service');
+('AB-123-CD', '2019-04-15', 1, 1,  'VF15RJLJ555123456', 1550, 2500,  12000, 13500, 'en_service'),
+('EF-456-GH', '2020-08-02', 2, 4,  'VF3JZLUH777654321', 2800, 4200,   8500, 21000, 'en_service'),
+('IJ-789-KL', '2018-01-20', 3, 7,  'JTMHV05J123456789', 2100, 3500,  25000, 28000, 'en_service'),
+('MN-012-OP', '2017-06-11', 5, 9,  'WDD20401234567890', 1950, 3200,  38000, 32000, 'endommagé'),
+('QR-345-ST', '2016-09-28', 6, 6,  'VF77JWHC987654321', 2050, 3400,  55000, 17500, 'non_roulant');
 
 -- ============================================
 -- Controles techniques et liens ct_effectue

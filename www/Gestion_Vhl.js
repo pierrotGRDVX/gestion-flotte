@@ -32,13 +32,13 @@ fetch("/cars/listeVhl")
         insert = `<h1>${items.categorie}</h1>`;}
 
       //MEF de la colonne etat
-      if(items.etat === "Ok"){
+      if(items.etat === "en_service"){
         nbr_ok= nbr_ok + 1
         val_etat = `<td class="is-success">${items.etat}</td>`} 
-      if(items.etat === "Endommage"){
+      if(items.etat === "endommagé"){
         nbr_ed = nbr_ed + 1
         val_etat = `<td class="is-warning">${items.etat}</td>`}   
-      if(items.etat === "Non_roulant"){
+      if(items.etat === "non_roulant"){
         nbr_nr = nbr_nr + 1
         val_etat = `<td class="is-danger">${items.etat}</td>`}
 
