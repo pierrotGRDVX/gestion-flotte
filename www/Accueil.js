@@ -1,7 +1,20 @@
 Listes =[];
-let nbr_ok = 0;
-let nbr_nr = 0;
-let nbr_ed = 0;
+
+
+//RECEPTION DU NOMBRE DE VEHICULES PAR ETAT (box "Etat des vehicules")
+fetch("/liste/etat/vehicule")
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(items => {
+      if(items.etat === "en_service"){
+        document.getElementById("tag_info_ok").textContent = items.nbr_etat}
+      if(items.etat === "endommagé"){
+        document.getElementById("tag_info_ed").textContent = items.nbr_etat}
+      if(items.etat === "non_roulant"){
+        document.getElementById("tag_info_nr").textContent = items.nbr_etat}
+    });
+  })
+  .catch(error => console.error("Erreur lors du chargement des etats :", error));
 
 
 //RECEPTION DES DONNEES
@@ -14,7 +27,23 @@ fetch("/liste/vehicule")
     // selection du conteneur HTML
     const contenu = document.getElementById("tab_vehicule");
 
-    //parcours du taleau "entree"
+    // date du jour et limite CT a 2 mois
+    const aujourdhui = new Date();
+    const limiteCT = new Date();
+    limiteCT.setMonth(limiteCT.getMonth() + 2);
+
+    // priorite de tri : 0 = CT depasse, 1 = non_roulant, 2 = CT < 2 mois, 3 = endommage, 4 = autres
+    function priorite(items){
+      const dateCT = items.date_ct ? new Date(items.date_ct) : null;
+      if(dateCT && dateCT < aujourdhui) return 0;
+      if(items.etat === "non_roulant") return 1;
+      if(dateCT && dateCT <= limiteCT) return 2;
+      if(items.etat === "endommagé") return 3;
+      return 4;
+    }
+    data.sort((a, b) => priorite(a) - priorite(b));
+
+    //parcours du tableau trie
     data.forEach(items => {
       //MEF de la colonne categorie
       if (items.categorie === "Voiture"){
@@ -34,15 +63,26 @@ fetch("/liste/vehicule")
         insert = `<h1>${items.categorie}</h1>`;}
 
       //MEF de la colonne etat
-      if(items.etat === "Ok"){
-        nbr_ok= nbr_ok + 1
-        val_etat = `<td class="is-success">${items.etat}</td>`} 
-      if(items.etat === "Endommage"){
-        nbr_ed = nbr_ed + 1
-        val_etat = `<td class="is-warning">${items.etat}</td>`}   
-      if(items.etat === "Non_roulant"){
-        nbr_nr = nbr_nr + 1
-        val_etat = `<td class="is-danger">${items.etat}</td>`}
+      if(items.etat === "en_service"){
+        val_etat = `<td class="has-background-success has-text-white">${items.etat}</td>`}
+      if(items.etat === "endommagé"){
+        val_etat = `<td class="has-background-warning has-text-black">${items.etat}</td>`}
+      if(items.etat === "non_roulant"){
+        val_etat = `<td class="has-background-danger has-text-white">${items.etat}</td>`}
+
+      //MEF de la colonne CT (mise en evidence si a moins de 2 mois)
+      const dateCT = items.date_ct ? new Date(items.date_ct) : null;
+      let val_ct = `<td>${items.date_ct || ""}</td>`;
+      if(dateCT && dateCT <= limiteCT){
+        val_ct = `<td class="has-background-warning has-text-black">${items.date_ct}</td>`}
+
+      //couleur de la ligne selon la priorite
+      const prio = priorite(items);
+      let classe_ligne = "";
+      if(prio === 0 || prio === 2 || prio === 3){
+        classe_ligne = "has-background-warning-light"}
+      if(prio === 1){
+        classe_ligne = "has-background-danger-light"}
 
       const conteneurHTML = document.createElement("tr");
       conteneurHTML.innerHTML= `
@@ -50,32 +90,12 @@ fetch("/liste/vehicule")
         <td>${insert}</td>
         <td>${items.marque}</td>
         <td>${items.modele}</td>
-        <td>${items.dateCT}</td>
-        <td>${val_etat}</td>
+        ${val_ct}
+        ${val_etat}
         `;
+      if(classe_ligne !== ""){
+        conteneurHTML.setAttribute("class", classe_ligne)}
       contenu.appendChild(conteneurHTML);
-
-      //MAJ tag ok
-      tag_info_ok.innerHTML = '';
-      tag_info_ok = document.getElementById("tag_info_ok")
-      const conteneurHTML_ok = document.createElement("div");
-      conteneurHTML_ok.innerHTML =   `<span>${nbr_ok}</span>`;
-      tag_info_ok.appendChild(conteneurHTML_ok);
-
-      //MAJ tag roulant
-      tag_info_ed.innerHTML = '';
-      tag_info_ed = document.getElementById("tag_info_ed")
-      const conteneurHTML_ed = document.createElement("div");
-      conteneurHTML_ed.innerHTML =   `<span>${nbr_ed}</span>`;
-      tag_info_ed.appendChild(conteneurHTML_ed);
-
-      //MAJ tag non roulant
-      tag_info_nr.innerHTML = '';
-      tag_info_nr = document.getElementById("tag_info_nr")
-      const conteneurHTML_nr = document.createElement("div");
-      conteneurHTML_nr.innerHTML =   `<span>${nbr_nr}</span>`;
-      tag_info_nr.appendChild(conteneurHTML_nr);
-      
     });
   })
   .catch(error => console.error("Erreur lors du chargement du JSON :", error));

@@ -12,7 +12,7 @@ insert_categorie = INSERT INTO categorie(categorie) VALUES (?);
 
 liste_categorie = SELECT * FROM categorie;
 
-liste_vehicule = SELECT vehicule.immat, categorie.categorie, controle_technique.date_ct, controle_technique.resultat_ct, marque.marque, modele.modele FROM vehicule JOIN modele ON vehicule.id_modele = modele.id_modele JOIN marque ON modele.marque = marque.marque JOIN categorie ON modele.categorie = categorie.categorie LEFT JOIN ct_effectue ON vehicule.immat = ct_effectue.immat LEFT JOIN controle_technique ON ct_effectue.id_ct = controle_technique.id_ct;
+liste_vehicule = SELECT vehicule.immat, vehicule.etat, categorie.categorie, controle_technique.date_ct, controle_technique.resultat_ct, marque.marque, modele.modele FROM vehicule JOIN modele ON vehicule.id_modele = modele.id_modele JOIN marque ON modele.marque = marque.marque JOIN categorie ON modele.categorie = categorie.categorie LEFT JOIN ct_effectue ON vehicule.immat = ct_effectue.immat LEFT JOIN controle_technique ON ct_effectue.id_ct = controle_technique.id_ct;
 
 supprimer_categorie = DELETE FROM categorie WHERE categorie = ?;
 
@@ -31,6 +31,8 @@ info_vehicule = SELECT vehicule.immat, vehicule.date_mec, vehicule.num_serie, ve
 insert_intervention = INSERT INTO intervention(immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation) VALUES (?,?,?,?,?,?,?,?);
 
 liste_intervention = SELECT id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation FROM intervention WHERE immat = ?;
+
+nbr_etat_vehicule = SELECT etat, COUNT(*) AS nbr FROM vehicule GROUP BY etat;
 
 [PROPRIO]
 

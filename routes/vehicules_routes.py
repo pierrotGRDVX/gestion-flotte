@@ -166,3 +166,12 @@ def listeVehicule():
     donnees = dao.listeVehicule()
     vehiculesDicts = [m.listeVehicule() for m in donnees]
     return jsonify(vehiculesDicts)
+
+#retourne le nombre de vehicules par etat (en_service, endommagé, non_roulant)
+@vehicules_bp.route("/liste/etat/vehicule")
+def listeEtatVehicule():
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnees = dao.listeEtatVehicule()
+    etatsDicts = [m.listeEtatVehicule() for m in donnees]
+    return jsonify(etatsDicts)

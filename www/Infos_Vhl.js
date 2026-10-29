@@ -72,15 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
   document.getElementById('btn_ok').addEventListener('click', async () => {
-    change_etat = "Ok";
+    change_etat = "en_service";
     SaveChangementEtat();
   });
   document.getElementById('btn_ed').addEventListener('click', async () => {
-    change_etat = "Endommage";
+    change_etat = "endommagé";
     SaveChangementEtat();
   });
   document.getElementById('btn_nr').addEventListener('click', async () => {
-    change_etat = "Non_roulant";
+    change_etat = "non_roulant";
     SaveChangementEtat();
   });
 
@@ -129,15 +129,15 @@ function MAJInput(donnees){
       document.getElementById(categ).checked = true;
       const fld_etat = document.getElementById('fld_etat')
       const conteneurHTML = document.createElement("button");
-      if (items.etat === "Ok"){
+      if (items.etat === "en_service"){
         conteneurHTML.className = "button is-success"
-        conteneurHTML.textContent = "Ok"
+        conteneurHTML.textContent = "en_service"
         fld_etat.appendChild(conteneurHTML)};
-      if (items.etat === "Endommage"){
+      if (items.etat === "endommagé"){
         conteneurHTML.className = "button is-warning"
         conteneurHTML.textContent = "Endommagé"
         fld_etat.appendChild(conteneurHTML)};
-      if (items.etat === "Non_roulant"){
+      if (items.etat === "non_roulant"){
         conteneurHTML.className = "button is-danger"
         conteneurHTML.textContent = "Non roulant"
         fld_etat.appendChild(conteneurHTML)};

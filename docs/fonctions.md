@@ -13,7 +13,7 @@
 | Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
 | Ajouter un nouveau véhicule | nouveauVehicule(immat, date\_mec, id\_proprio, id\_modele, num\_serie, ptac, ptra, kilometrage\_achat, prix\_achat, etat) | POST | /cars | .json | success | insertVehicule(...) mêmes paramètres |
-| Obtenir la liste des véhicules | `listeVehicule()` | GET | `/liste/vehicule` | — | .json (immat, categorie, date\_ct, resultat\_ct, marque, modele) | `listeVehicule()` → DTO |
+| Obtenir la liste des véhicules | `listeVehicule()` | GET | `/liste/vehicule` | — | .json (immat, etat, categorie, date\_ct, resultat\_ct, marque, modele) | `listeVehicule()` → DTO |
 | Ajouter une nouvelle marque | nouvelleMarque(marque) | POST | /nouvelle/marque | .json | success | insertMarque(marque) |
 | Ajouter une nouvelle catégorie | nouvelleCategorie(categorie) | POST | /nouvelle/categorie | .json | success | insertCategorie(categorie) |
 | Obtenir la liste des catégories | listeCategorie() | GET | /liste/categorie | — | .json | listeCategorie() → DTO listeCategorie() |
@@ -24,6 +24,7 @@
 | Supprimer un modèle | `supprimerModele(id_modele)` | POST | `/supprimer/modele` | .json | success | `supprimerModele(id_modele)` |
 | Obtenir les infos d'un véhicule | `infoVehicule(immat)` | GET | `/info/vehicule/<immat>` | — | .json | `infoVehicule(immat)` → DTO |
 | Ajouter une nouvelle intervention | nouvelleIntervention( immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) | POST | /nouvelle/intervention | .json | success | insertIntervention(immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) |
+| Compter les véhicules par état (en_service / endommagé / non_roulant) | `listeEtatVehicule()` | GET | `/liste/etat/vehicule` | — | .json (etat, nbr\_etat) | `listeEtatVehicule()` → DTO |
 |  |  |  |  |  |  |  |
 
 &nbsp;
