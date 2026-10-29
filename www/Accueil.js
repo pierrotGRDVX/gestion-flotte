@@ -27,7 +27,23 @@ fetch("/liste/vehicule")
     // selection du conteneur HTML
     const contenu = document.getElementById("tab_vehicule");
 
-    //parcours du taleau "entree"
+    // date du jour et limite CT a 2 mois
+    const aujourdhui = new Date();
+    const limiteCT = new Date();
+    limiteCT.setMonth(limiteCT.getMonth() + 2);
+
+    // priorite de tri : 0 = CT depasse, 1 = non_roulant, 2 = CT < 2 mois, 3 = endommage, 4 = autres
+    function priorite(items){
+      const dateCT = items.date_ct ? new Date(items.date_ct) : null;
+      if(dateCT && dateCT < aujourdhui) return 0;
+      if(items.etat === "non_roulant") return 1;
+      if(dateCT && dateCT <= limiteCT) return 2;
+      if(items.etat === "endommagé") return 3;
+      return 4;
+    }
+    data.sort((a, b) => priorite(a) - priorite(b));
+
+    //parcours du tableau trie
     data.forEach(items => {
       //MEF de la colonne categorie
       if (items.categorie === "Voiture"){
@@ -48,11 +64,25 @@ fetch("/liste/vehicule")
 
       //MEF de la colonne etat
       if(items.etat === "en_service"){
-        val_etat = `<td class="is-success">${items.etat}</td>`}
+        val_etat = `<td class="has-background-success has-text-white">${items.etat}</td>`}
       if(items.etat === "endommagé"){
-        val_etat = `<td class="is-warning">${items.etat}</td>`}
+        val_etat = `<td class="has-background-warning has-text-black">${items.etat}</td>`}
       if(items.etat === "non_roulant"){
-        val_etat = `<td class="is-danger">${items.etat}</td>`}
+        val_etat = `<td class="has-background-danger has-text-white">${items.etat}</td>`}
+
+      //MEF de la colonne CT (mise en evidence si a moins de 2 mois)
+      const dateCT = items.date_ct ? new Date(items.date_ct) : null;
+      let val_ct = `<td>${items.date_ct || ""}</td>`;
+      if(dateCT && dateCT <= limiteCT){
+        val_ct = `<td class="has-background-warning has-text-black">${items.date_ct}</td>`}
+
+      //couleur de la ligne selon la priorite
+      const prio = priorite(items);
+      let classe_ligne = "";
+      if(prio === 0 || prio === 2 || prio === 3){
+        classe_ligne = "has-background-warning-light"}
+      if(prio === 1){
+        classe_ligne = "has-background-danger-light"}
 
       const conteneurHTML = document.createElement("tr");
       conteneurHTML.innerHTML= `
@@ -60,9 +90,11 @@ fetch("/liste/vehicule")
         <td>${insert}</td>
         <td>${items.marque}</td>
         <td>${items.modele}</td>
-        <td>${items.dateCT}</td>
-        <td>${val_etat}</td>
+        ${val_ct}
+        ${val_etat}
         `;
+      if(classe_ligne !== ""){
+        conteneurHTML.setAttribute("class", classe_ligne)}
       contenu.appendChild(conteneurHTML);
     });
   })

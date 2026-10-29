@@ -198,6 +198,7 @@ class vehiculeDAO:
             donnees.append(
                 vehiculesDTO(
                     immat = row["immat"],
+                    etat = row["etat"],
                     categorie = row["categorie"],
                     date_ct = row["date_ct"],
                     resultat_ct = row["resultat_ct"],
