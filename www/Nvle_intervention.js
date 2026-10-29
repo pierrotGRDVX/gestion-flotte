@@ -213,6 +213,25 @@ function ChoixNettoyage(){
     `;
     contenu.appendChild(conteneurHTML);
     initChampDate("txa_date");
+    //calcul auto du 3e champ quand 2 des 3 sont remplis (volume * prix/L = prix)
+    const champVolume = document.getElementById("txa_volume");
+    const champCout = document.getElementById("txa_cout");
+    const champPrix = document.getElementById("txa_prix");
+    function calculAutoPlein(source){
+        const volume = parseFloat(champVolume.value.replace(",", "."));
+        const cout = parseFloat(champCout.value.replace(",", "."));
+        const prix = parseFloat(champPrix.value.replace(",", "."));
+        if (source !== champVolume && !isNaN(volume) && !isNaN(cout)) {
+            champPrix.value = (volume * cout).toFixed(2);
+        } else if (source !== champCout && !isNaN(volume) && !isNaN(prix)) {
+            champCout.value = (prix / volume).toFixed(2);
+        } else if (source !== champPrix && !isNaN(cout) && !isNaN(prix)) {
+            champVolume.value = (prix / cout).toFixed(2);
+        }
+    }
+    champVolume.addEventListener("input", () => calculAutoPlein(champVolume));
+    champCout.addEventListener("input", () => calculAutoPlein(champCout));
+    champPrix.addEventListener("input", () => calculAutoPlein(champPrix));
     };
 
 function ChoixCT(){
