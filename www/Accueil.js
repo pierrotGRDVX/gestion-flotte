@@ -42,7 +42,7 @@ fetch("/liste/vehicule")
       if(items.etat === "endommagé") return 3;
       return 4;
     }
-    data.sort((a, b) => priorite(a) - priorite(b));
+    data.sort((a, b) => priorite(b) - priorite(a));
 
     //parcours du tableau trie
     data.forEach(items => {
