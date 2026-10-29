@@ -199,6 +199,7 @@ class vehiculeDAO:
                 vehiculesDTO(
                     immat = row["immat"],
                     etat = row["etat"],
+                    kilometrage_achat = row["kilometrage_achat"],
                     categorie = row["categorie"],
                     date_ct = row["date_ct"],
                     resultat_ct = row["resultat_ct"],

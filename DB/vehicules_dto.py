@@ -76,6 +76,7 @@ class vehiculesDTO:
         return {
             "immat": self.immat,
             "etat": self.etat,
+            "kilometrage": self.kilometrage_achat,
             "categorie": self.categorie,
             "date_ct": self.date_ct,
             "resultat_ct": self.resultat_ct,
