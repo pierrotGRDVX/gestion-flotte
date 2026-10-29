@@ -54,23 +54,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     });
 
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
-    }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    //date du jour affichée par défaut et formatage auto JJ/MM/AAAA
+    initChampDate("ipt_date");
 });
+
+//retourne la date du jour au format JJ/MM/AAAA
+function dateDuJourJJMMAAAA(){
+    const d = new Date();
+    const jj = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const aaaa = d.getFullYear();
+    return jj + "/" + mm + "/" + aaaa;
+}
+
+//remplit le champ avec la date du jour et formate la saisie en JJ/MM/AAAA
+function initChampDate(idChamp){
+    const champ = document.getElementById(idChamp);
+    if (!champ) return;
+    champ.value = dateDuJourJJMMAAAA();
+    champ.addEventListener("input", function(e) {
+        let value = e.target.value.replace(/\D/g, "").slice(0, 8); // Supprime tout sauf chiffres
+        if (value.length > 2) {
+            value = value.slice(0,2) + "/" + value.slice(2);
+        }
+        if (value.length > 5) {
+            value = value.slice(0,5) + "/" + value.slice(5,9);
+        }
+        e.target.value = value;
+    });
+}
 
 
 
@@ -157,7 +169,7 @@ function MAJinformationsVhl(valeur){
     const model = choix.modele;
     document.getElementById("txa_marque").value = marque;
     document.getElementById("txa_model").value = model;
-    document.getElementById("txa_kilometrage").value = km;
+    document.getElementById("txa_kilometrage_prec").value = km;
     };
 
 //affichage du choix netoyage ou réparation
@@ -200,22 +212,26 @@ function ChoixNettoyage(){
                     </div>      
     `;
     contenu.appendChild(conteneurHTML);
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
+    initChampDate("txa_date");
+    //calcul auto du 3e champ quand 2 des 3 sont remplis (volume * prix/L = prix)
+    const champVolume = document.getElementById("txa_volume");
+    const champCout = document.getElementById("txa_cout");
+    const champPrix = document.getElementById("txa_prix");
+    function calculAutoPlein(source){
+        const volume = parseFloat(champVolume.value.replace(",", "."));
+        const cout = parseFloat(champCout.value.replace(",", "."));
+        const prix = parseFloat(champPrix.value.replace(",", "."));
+        if (source !== champVolume && !isNaN(volume) && !isNaN(cout)) {
+            champPrix.value = (volume * cout).toFixed(2);
+        } else if (source !== champCout && !isNaN(volume) && !isNaN(prix)) {
+            champCout.value = (prix / volume).toFixed(2);
+        } else if (source !== champPrix && !isNaN(cout) && !isNaN(prix)) {
+            champVolume.value = (prix / cout).toFixed(2);
+        }
     }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    champVolume.addEventListener("input", () => calculAutoPlein(champVolume));
+    champCout.addEventListener("input", () => calculAutoPlein(champCout));
+    champPrix.addEventListener("input", () => calculAutoPlein(champPrix));
     };
 
 function ChoixCT(){
@@ -257,22 +273,7 @@ function ChoixCT(){
                     </div>
     `;
     contenu.appendChild(conteneurHTML);
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
-    }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    initChampDate("ipt_date");
 };
 
 //affichage du choix netoyage ou réparation
@@ -307,125 +308,117 @@ function ChoixParking(){
                     </div>      
     `;
     contenu.appendChild(conteneurHTML);
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
-    }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    initChampDate("ipt_date");
     };
 
-//Controle si les case necessaire sont bien remplis
+//colorie un champ en rouge (invalide) ou le remet normal (valide)
+function coloreChamp(champ, invalide){
+    if (!champ) return;
+    champ.classList.toggle("is-danger", invalide);
+}
+
+//recupere le champ date affiche (statique ou dynamique selon le choix de depense)
+function champDateAffiche(){
+    return document.getElementById("ipt_date") || document.getElementById("txa_date");
+}
+
+//Controle si les cases affichees sont bien remplies, si le kilometrage saisi
+//est superieur au precedent kilometrage, puis envoie l'intervention au serveur
 function ControleRemplissage(){
     console.info("Fonction controle cases vides")
-    const val_immat = document.getElementById("slt_immatriculation").value
-    const choix = document.getElementById("slt_depense")?.value ||"";
-    const val_date = document.getElementById("ipt_date")?.value ||"";
-    const val_kilometrage = document.getElementById("txa_kilometrage").value;
-    const val_cout = document.getElementById("txa_cout")?.value|| "";
-    const val_prix = document.getElementById("txa_prix").value;
-    const val_volume = document.getElementById("txa_volume")?.value|| "";
-    //depense plein
+    const slt_immatriculation = document.getElementById("slt_immatriculation");
+    const choix = document.getElementById("slt_depense")?.value || "";
+    const champDate = champDateAffiche();
+    const val_immat = slt_immatriculation.value;
+    const val_date = champDate?.value || "";
+    const champKm = document.getElementById("txa_kilometrage");
+    const val_kilometrage = champKm?.value || "";
+    const champCout = document.getElementById("txa_cout");
+    const val_cout = champCout?.value || "";
+    const champPrix = document.getElementById("txa_prix");
+    const val_prix = champPrix?.value || "";
+    const champVolume = document.getElementById("txa_volume");
+    const val_volume = champVolume?.value || "";
+    const kmPrec = parseFloat(document.getElementById("txa_kilometrage_prec")?.value) || 0;
+
+    //liste des champs obligatoires selon le type de depense choisi
+    let champsObligatoires = [slt_immatriculation, champDate, champPrix];
+    let idTypeInter = null;
     if (choix === "Plein") {
-        if(val_date === "" || val_kilometrage === "" || val_cout === "" || val_prix === "" || val_volume === ""){
-            alert('Remplir toutes les données');
-        }else{
-            alert('donnees remplies');
-            data = {
-                dateIntervention: val_date,
-                kilometrage: val_kilometrage,
-                prix: val_prix,
-                cout: val_cout,
-                volume: val_volume,
-                immat : val_immat };
-            fetch('/cars/newPlein', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            });
-            return data}};
+        champsObligatoires = champsObligatoires.concat([champKm, champCout, champVolume]);
+        idTypeInter = 1;
+    } else if (choix === "Nettoyage") {
+        champsObligatoires = champsObligatoires.concat([champKm]);
+        idTypeInter = 2;
+    } else if (choix === "Réparation") {
+        champsObligatoires = champsObligatoires.concat([champKm]);
+        idTypeInter = 3;
+    } else if (choix === "Contrôle technique") {
+        champsObligatoires = champsObligatoires.concat([champKm]);
+        idTypeInter = 4;
+    } else if (choix === "Parking/Gardienage") {
+        idTypeInter = 4;
+    } else {
+        coloreChamp(slt_immatriculation, false);
+        coloreChamp(champDate, false);
+        coloreChamp(champPrix, true);
+        alert("Choisir un type de dépense");
+        return false;
+    }
 
-    //depense Nettoyage et Reparation
-    if (choix === "Nettoyage" ) {
-        if(val_date === "" || val_kilometrage === "" || val_prix === "" ){
-            alert('Remplir toutes les données');
-        }else{
-            alert('donnees remplies');
-            data = {
-                dateIntervention: val_date,
-                prix: val_prix,
-                immat : val_immat}
-            fetch('/cars/newClean', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            });
-            return data}};
+    //verifie que tous les champs affiches sont remplis et les colore en rouge sinon
+    let toutRempli = true;
+    champsObligatoires.forEach(champ => {
+        const vide = !champ || champ.value.trim() === "" || (champ === slt_immatriculation && champ.value === "--Sélectionner--");
+        coloreChamp(champ, vide);
+        if (vide) toutRempli = false;
+    });
+    if (!toutRempli) {
+        alert("Remplir toutes les données (champs en rouge)");
+        return false;
+    }
 
-    //depense Nettoyage et Reparation
-    if (choix === "Réparation" ) {
-        if(val_date === "" || val_kilometrage === "" || val_prix === "" ){
-            alert('Remplir toutes les données');
-        }else{
-            alert('donnees remplies');
-            data = {
-                dateIntervention: val_date,
-                kilometrage: val_kilometrage,
-                prix: val_prix,
-                immat : val_immat}
-            fetch('/cars/newIntervention', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            });
-            return data}};
+    //verifie que le kilometrage saisi est superieur au precedent kilometrage
+    if (champKm && val_kilometrage !== "") {
+        const kmSaisi = parseFloat(val_kilometrage.replace(",", "."));
+        if (isNaN(kmSaisi) || kmSaisi <= kmPrec) {
+            coloreChamp(champKm, true);
+            alert("Le kilométrage doit être supérieur au précédent kilométrage (" + kmPrec + " km)");
+            return false;
+        }
+    }
 
-     //depense Nettoyage et Reparation
-    if (choix === "Contrôle technique" ) {
-        if(val_date === "" || val_kilometrage === "" || val_prix === "" ){
-            alert('Remplir toutes les données');
-        }else{
-            alert('donnees remplies');
-            data = {
-                dateIntervention: val_date,
-                kilometrage: val_kilometrage,
-                prix: val_prix,
-                immat: val_immat}
-            fetch('/cars/newCT', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            });
-            return data}};
-    
-             //depense Nettoyage et Reparation
-    if (choix === "Parking/Gardienage" ) {
-        if(val_date === "" || val_prix === "" ){
-            alert('Remplir toutes les données');
-        }else{
-            alert('donnees remplies');
-            data = {
-                dateIntervention: val_date,
-                id: 5,
-                prix: val_prix}
-            return data}};
-
+    //convertit la date JJ/MM/AAAA en AAAA-MM-JJ pour la base de donnees
+    const dateBDD = val_date.split("/").reverse().join("-");
+    const donnees = {
+        immat: val_immat,
+        date: dateBDD,
+        cout_inter: val_cout !== "" ? parseFloat(val_cout.replace(",", ".")) : null,
+        prix_litre: val_cout !== "" && choix === "Plein" ? parseFloat(val_cout.replace(",", ".")) : null,
+        volume: val_volume !== "" ? parseFloat(val_volume.replace(",", ".")) : null,
+        kilometrage: val_kilometrage !== "" ? parseFloat(val_kilometrage.replace(",", ".")) : null,
+        id_type_inter: idTypeInter,
+        observation: null
+    };
+    //envoi de la nouvelle intervention au serveur Flask pour insertion en BDD
+    fetch("/nouvelle/intervention", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donnees),
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Erreur serveur: " + response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.info("intervention enregistrée", data);
+            alert("Intervention enregistrée");
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'enregistrement:", error);
+            alert("Erreur lors de l'enregistrement de l'intervention");
+        });
+    return donnees;
 };
