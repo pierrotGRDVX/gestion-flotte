@@ -111,7 +111,7 @@ function ChoixPlein(){
     conteneurHTML.id = "box_plein";
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreSpe">Détail des dépenses</h1>
+                    <h1 id="titreCategorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-5-cols">
                         <div class="grid">
                             <div class="cell">
@@ -183,7 +183,7 @@ function ChoixNettoyage(){
     
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreSpe">Détail des dépenses</h1>
+                    <h1 id="titreCategorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-3-cols">
                         <div class="grid">
                             <div class="cell">
@@ -240,7 +240,7 @@ function ChoixCT(){
     conteneurHTML.id = "box_plein";
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreSpe">Détail des dépenses</h1>
+                    <h1 id="titreCategorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-3-cols">
                         <div class="grid">
                             <div class="cell">
@@ -298,7 +298,7 @@ function ChoixParking(){
     
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreSpe">Détail des dépenses</h1>
+                    <h1 id="titreCategorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-2-cols">
                         <div class="grid">
                             <div class="cell">
