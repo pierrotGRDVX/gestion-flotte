@@ -3,7 +3,7 @@ let nbr_ok = 0;
 let nbr_nr = 0;
 let nbr_ed = 0;
 
-fetch("/cars/listeVhl")
+fetch("/liste/vehicule")
   .then(response => response.json())
   .then(data => {
     console.info(data);

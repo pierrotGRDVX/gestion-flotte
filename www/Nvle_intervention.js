@@ -17,7 +17,7 @@ fetch('/nbrInter')
 
 //fonction chargeant la liste des vehicules en .json
 //déclenchement dès le chargement de la page
-fetch('/cars/listeVhl')
+fetch('/liste/vehicule')
     .then(response => response.json())
     .then(data => {
         console.log("liste des véhicules chargées",data)
@@ -96,23 +96,10 @@ function MAJSelectionImmat(){
     vehicules.forEach(items => {
          const conteneurHTML = document.createElement("option");
 
-         conteneurHTML.innerHTML = `${items.immat}`;
+         conteneurHTML.value = `${items.immat}`;
+         conteneurHTML.textContent = `${items.immat}`;
          contenu.appendChild(conteneurHTML);
     });
-    };
-
-function MAJinformationsVhla(valeur){
-    console.info("fonction maj informations vhl installées");
-    // Selectionne le model correspondant a la marque selectionné
-    const tableau = vehicules.filter(v => v.immat === valeur);
-    const choix = tableau[0];
-    console.info(choix);
-    const km = choix.kilometrage;
-    const marque = choix.marque;
-    const model = choix.modele;
-    document.getElementById("txa_marque").value = marque;
-    document.getElementById("txa_model").value = model;
-    document.getElementById("txa_kilometrage").value = km;
     };
 
 //affichage du choix plein
