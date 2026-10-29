@@ -45,7 +45,7 @@ fetch('/cars/balanceone', {
       console.error("Erreur lors de la requête:", error);
   });
 
-fetch('/cars/listeVhl')
+fetch('/liste/vehicule')
   .then(response => response.json())
   .then(data => {
   console.log('liste des vehicules',data)

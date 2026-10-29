@@ -17,7 +17,7 @@ fetch('/nbrInter')
 
 //fonction chargeant la liste des vehicules en .json
 //déclenchement dès le chargement de la page
-fetch('/cars/listeVhl')
+fetch('/liste/vehicule')
     .then(response => response.json())
     .then(data => {
         console.log("liste des véhicules chargées",data)
