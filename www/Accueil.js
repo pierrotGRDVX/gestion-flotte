@@ -70,11 +70,16 @@ fetch("/liste/vehicule")
       if(items.etat === "non_roulant"){
         val_etat = `<td class="has-background-danger has-text-white">${items.etat}</td>`}
 
-      //MEF de la colonne CT (mise en evidence si a moins de 2 mois)
+      //MEF de la colonne CT (mise en evidence si a moins de 2 mois), format JJ/MM/AAAA
       const dateCT = items.date_ct ? new Date(items.date_ct) : null;
-      let val_ct = `<td>${items.date_ct || ""}</td>`;
+      let date_ct_fr = "";
+      if(dateCT){
+        const jj = String(dateCT.getDate()).padStart(2, "0");
+        const mm = String(dateCT.getMonth() + 1).padStart(2, "0");
+        date_ct_fr = `${jj}/${mm}/${dateCT.getFullYear()}`}
+      let val_ct = `<td>${date_ct_fr}</td>`;
       if(dateCT && dateCT <= limiteCT){
-        val_ct = `<td class="has-background-warning has-text-black">${items.date_ct}</td>`}
+        val_ct = `<td class="has-background-warning has-text-black">${date_ct_fr}</td>`}
 
       //couleur de la ligne selon la priorite
       const prio = priorite(items);
