@@ -54,23 +54,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     });
 
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
-    }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    //date du jour affichée par défaut et formatage auto JJ/MM/AAAA
+    initChampDate("ipt_date");
 });
+
+//retourne la date du jour au format JJ/MM/AAAA
+function dateDuJourJJMMAAAA(){
+    const d = new Date();
+    const jj = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const aaaa = d.getFullYear();
+    return jj + "/" + mm + "/" + aaaa;
+}
+
+//remplit le champ avec la date du jour et formate la saisie en JJ/MM/AAAA
+function initChampDate(idChamp){
+    const champ = document.getElementById(idChamp);
+    if (!champ) return;
+    champ.value = dateDuJourJJMMAAAA();
+    champ.addEventListener("input", function(e) {
+        let value = e.target.value.replace(/\D/g, "").slice(0, 8); // Supprime tout sauf chiffres
+        if (value.length > 2) {
+            value = value.slice(0,2) + "/" + value.slice(2);
+        }
+        if (value.length > 5) {
+            value = value.slice(0,5) + "/" + value.slice(5,9);
+        }
+        e.target.value = value;
+    });
+}
 
 
 
@@ -200,22 +212,7 @@ function ChoixNettoyage(){
                     </div>      
     `;
     contenu.appendChild(conteneurHTML);
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
-    }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    initChampDate("txa_date");
     };
 
 function ChoixCT(){
@@ -257,22 +254,7 @@ function ChoixCT(){
                     </div>
     `;
     contenu.appendChild(conteneurHTML);
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
-    }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    initChampDate("ipt_date");
 };
 
 //affichage du choix netoyage ou réparation
@@ -307,22 +289,7 @@ function ChoixParking(){
                     </div>      
     `;
     contenu.appendChild(conteneurHTML);
-    //MEF de l'input date
-    //Lecture en continue
-    document.getElementById("ipt_date").addEventListener("input", function(e) {
-
-    let value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf chiffres
-
-    if (value.length > 2) {
-        value = value.slice(0,2) + "-" + value.slice(2);
-    }
-
-    if (value.length > 5) {
-        value = value.slice(0,5) + "-" + value.slice(5,9);
-    }
-
-    e.target.value = value;
-    });
+    initChampDate("ipt_date");
     };
 
 //Controle si les case necessaire sont bien remplis
@@ -330,7 +297,7 @@ function ControleRemplissage(){
     console.info("Fonction controle cases vides")
     const val_immat = document.getElementById("slt_immatriculation").value
     const choix = document.getElementById("slt_depense")?.value ||"";
-    const val_date = document.getElementById("ipt_date")?.value ||"";
+    const val_date = document.getElementById("ipt_date")?.value || document.getElementById("txa_date")?.value ||"";
     const val_kilometrage = document.getElementById("txa_kilometrage").value;
     const val_cout = document.getElementById("txa_cout")?.value|| "";
     const val_prix = document.getElementById("txa_prix").value;
