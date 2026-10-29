@@ -32,6 +32,8 @@ insert_intervention = INSERT INTO intervention(immat, date, cout_inter, prix_lit
 
 liste_intervention = SELECT id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation FROM intervention WHERE immat = ?;
 
+nbr_etat_vehicule = SELECT etat, COUNT(*) AS nbr FROM vehicule GROUP BY etat;
+
 [PROPRIO]
 
 insert_ville = INSERT INTO ville(nom_ville, code_postal) VALUES (?,?);
