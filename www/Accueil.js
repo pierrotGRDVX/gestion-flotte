@@ -5,6 +5,7 @@ Listes =[];
 fetch("/liste/etat/vehicule")
   .then(response => response.json())
   .then(data => {
+    console.log("nombre de vehicule pour chaque etat", data);
     data.forEach(items => {
       if(items.etat === "en_service"){
         document.getElementById("tag_info_ok").textContent = items.nbr_etat}
@@ -45,22 +46,6 @@ fetch("/liste/vehicule")
 
     //parcours du tableau trie
     data.forEach(items => {
-      //MEF de la colonne categorie
-      if (items.categorie === "Voiture"){
-        source_logo = "images/icone_voiture.png"
-        alter = "icône voiture"}
-      if (items.categorie === "Camion"){
-        source_logo = "images/icone_camion.png"
-        alter = "icône camion"}
-      if (items.categorie === "Autobus"){
-        source_logo = "images/icone_bus.png"
-        alter = "icône Autobus"}
-      if (items.categorie === "Moto"){
-        source_logo = "images/icone_moto.png"
-        alter = "icône Moto"}
-      insert = `<img src="${source_logo}" alt="${alter}" width="50" height="50"></img>`;
-      if(items.categorie !=="Voiture" && items.categorie !=="Camion" && items.categorie !=="Autobus"&& items.categorie !=="Moto"){
-        insert = `<h1>${items.categorie}</h1>`;}
 
       //MEF de la colonne etat
       if(items.etat === "en_service"){
@@ -87,7 +72,7 @@ fetch("/liste/vehicule")
       const conteneurHTML = document.createElement("tr");
       conteneurHTML.innerHTML= `
         <td>${items.immat}</td>
-        <td>${insert}</td>
+        <td>${items.categorie}</td>
         <td>${items.marque}</td>
         <td>${items.modele}</td>
         ${val_ct}
