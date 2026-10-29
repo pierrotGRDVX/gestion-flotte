@@ -1,19 +1,5 @@
 let vehicules = [];
-let nbrInter = [];
 let immatriculation = [];
-
-//telecharge le nombre d'intervention déjà effectué
-//déclenchement dès le chargement de la page
-fetch('/nbrInter')
-    .then(response => response.json())
-    .then(data => {
-        console.log("nombre d'interventions chargées",data)
-        nbrInter = data.nombre_inter
-        console.log("nombre inter", nbrInter)
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement du JSON:', error);
-    });
 
 //fonction chargeant la liste des vehicules en .json
 //déclenchement dès le chargement de la page
@@ -349,7 +335,6 @@ function ControleRemplissage(){
     const val_cout = document.getElementById("txa_cout")?.value|| "";
     const val_prix = document.getElementById("txa_prix").value;
     const val_volume = document.getElementById("txa_volume")?.value|| "";
-    nbrInter=nbrInter+1.
     //depense plein
     if (choix === "Plein") {
         if(val_date === "" || val_kilometrage === "" || val_cout === "" || val_prix === "" || val_volume === ""){
@@ -357,7 +342,6 @@ function ControleRemplissage(){
         }else{
             alert('donnees remplies');
             data = {
-                id: nbrInter,
                 dateIntervention: val_date,
                 kilometrage: val_kilometrage,
                 prix: val_prix,
@@ -380,7 +364,6 @@ function ControleRemplissage(){
         }else{
             alert('donnees remplies');
             data = {
-                id: nbrInter,
                 dateIntervention: val_date,
                 prix: val_prix,
                 immat : val_immat}
@@ -400,7 +383,6 @@ function ControleRemplissage(){
         }else{
             alert('donnees remplies');
             data = {
-                id: nbrInter,
                 dateIntervention: val_date,
                 kilometrage: val_kilometrage,
                 prix: val_prix,
@@ -421,7 +403,6 @@ function ControleRemplissage(){
         }else{
             alert('donnees remplies');
             data = {
-                id: nbrInter,
                 dateIntervention: val_date,
                 kilometrage: val_kilometrage,
                 prix: val_prix,
