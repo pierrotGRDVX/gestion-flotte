@@ -169,6 +169,23 @@ class vehiculeDAO:
         cur.execute(requete, (immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation))
         self.bdd.commit()
 
+    def listeEtatVehicule(self):
+        cur = self.bdd.cursor()
+        requete = self.req['nbr_etat_vehicule']
+        cur.execute(requete)
+        rows = cur.fetchall()
+        print("liste etat vehicules")
+
+        donnees = []
+        for row in rows:
+            donnees.append(
+                vehiculesDTO(
+                    etat = row["etat"],
+                    nbr_etat = row["nbr"]
+                )
+            )
+        return donnees
+
     def listeVehicule(self):
         cur = self.bdd.cursor()
         requete = self.req['liste_vehicule']
