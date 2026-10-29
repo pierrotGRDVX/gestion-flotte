@@ -75,6 +75,7 @@ class vehiculesDTO:
     def listeVehicule(self):
         return {
             "immat": self.immat,
+            "etat": self.etat,
             "categorie": self.categorie,
             "date_ct": self.date_ct,
             "resultat_ct": self.resultat_ct,
