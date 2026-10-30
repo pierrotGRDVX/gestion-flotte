@@ -109,6 +109,38 @@ fetch("/liste/vehicule")
   })
   .catch(error => console.error("Erreur lors du chargement du JSON :", error));
 
+
+//ONGLET DISTANCE PARCOURU : remplissage du selecteur et calcul de la distance totale
+fetch("/liste/vehicule")
+  .then(response => response.json())
+  .then(data => {
+    const selecteur = document.getElementById("slt_distance");
+    data.forEach(items => {
+      const option = document.createElement("option");
+      option.value = items.immat;
+      option.textContent = items.immat;
+      selecteur.appendChild(option);
+    });
+
+    selecteur.addEventListener("change", function(){
+      const immat = selecteur.value;
+      const champDist = document.getElementById("ipt_Dist_total");
+      if(immat === "--Sélectionner--"){
+        champDist.value = "";
+        return;
+      }
+      fetch("/info/vehicule/" + encodeURIComponent(immat))
+        .then(response => response.json())
+        .then(info => {
+          const kmActuel = parseFloat(info.kilometrage) || 0;
+          const kmAchat = parseFloat(info.kilometrage_achat) || 0;
+          champDist.value = (kmActuel - kmAchat) + " km";
+        })
+        .catch(error => console.error("Erreur lors du chargement des infos du vehicule :", error));
+    });
+  })
+  .catch(error => console.error("Erreur lors du chargement de la liste des vehicules :", error));
+
 //MISE EN PLACE LECTEUR 
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
