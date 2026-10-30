@@ -27,9 +27,29 @@ fetch(`/info/vehicule/${encodeURIComponent(immat)}`)
       console.error("Erreur lors de la requête:", error);
   });
 
+fetch(`/liste/intervention/${encodeURIComponent(immat)}`)
+  .then(response => response.json())
+  .then(data => {
+      console.log("Chargement interventions lancé", data);
+      MAJTableauInterventions(data);
+  })
+  .catch(error => {
+      console.error("Erreur lors de la requête:", error);
+  });
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Gestion des onglets
+  document.querySelectorAll('.tabs li[data-tab]').forEach(function(onglet){
+    onglet.addEventListener('click', function(){
+      document.querySelectorAll('.tabs li').forEach(function(li){ li.classList.remove('is-active'); });
+      onglet.classList.add('is-active');
+      document.querySelectorAll('.tab-content').forEach(function(contenu){ contenu.style.display = 'none'; });
+      document.getElementById(onglet.dataset.tab).style.display = 'block';
+    });
+  });
 
   // Ouvrir le pop up Energie
   document.getElementById('btn_pup_etat').addEventListener('click', async () => {
@@ -89,6 +109,20 @@ function MAJInput(items){
         conteneurHTML.className = "button is-danger"
         conteneurHTML.textContent = "Non roulant"
         fld_etat.appendChild(conteneurHTML)};
+    };
+
+function MAJTableauInterventions(interventions){
+      const tbody = document.getElementById('body_interventions');
+      tbody.innerHTML = "";
+      interventions.forEach(function(inter){
+        const tr = document.createElement("tr");
+        [inter.date, inter.nom_intervention, inter.kilometrage, inter.cout_inter, inter.prix_litre, inter.volume, inter.observation].forEach(function(valeur){
+          const td = document.createElement("td");
+          td.textContent = (valeur === null || valeur === undefined) ? "" : valeur;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
     };
 
 function SaveChangementEtat(){

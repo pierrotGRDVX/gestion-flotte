@@ -30,7 +30,7 @@ info_vehicule = SELECT vehicule.immat, vehicule.date_mec, vehicule.num_serie, ve
 
 insert_intervention = INSERT INTO intervention(immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation) VALUES (?,?,?,?,?,?,?,?);
 
-liste_intervention = SELECT id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation FROM intervention WHERE immat = ?;
+liste_intervention = SELECT intervention.id_inter, intervention.immat, intervention.date, intervention.cout_inter, intervention.prix_litre, intervention.volume, intervention.kilometrage, intervention.id_type_inter, type_intervention.nom_intervention, intervention.observation FROM intervention LEFT JOIN type_intervention ON intervention.id_type_inter = type_intervention.id_type_inter WHERE intervention.immat = ? ORDER BY intervention.date DESC;
 
 nbr_etat_vehicule = SELECT etat, COUNT(*) AS nbr FROM vehicule GROUP BY etat;
 

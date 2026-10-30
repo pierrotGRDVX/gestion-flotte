@@ -14,6 +14,18 @@
 
         <!contenu Principale>    
         <div class="contenue-central">
+            <!onglets>
+            <div class="tabs is-boxed">
+                <ul>
+                    <li class="is-active" data-tab="tab_identite"><a>Carte d'identité</a></li>
+                    <li data-tab="tab_interventions"><a>Interventions</a></li>
+                    <li data-tab="tab_calculs"><a>Données calculées</a></li>
+                    <li data-tab="tab_graphiques"><a>Graphiques</a></li>
+                </ul>
+            </div>
+
+            <!onglet 1 : carte d'identité du véhicule>
+            <div id="tab_identite" class="tab-content">
             <!box contenant les informations presentes sur le certificat d'Immatriculation>
             <div class="box">
                 <h1 id="titreCategorie">Caractérsitiques techniques:</h1>
@@ -112,9 +124,48 @@
                 <h1 id="titreCategorie">Enregistrer</h1>
                 <button id="btn_enregistrer" class="button is-primary">Envoyer</button>
             </div>
-            
 
             </div>
+
+            <!onglet 2 : tableau des interventions>
+            <div id="tab_interventions" class="tab-content" style="display:none">
+                <div class="box">
+                    <h1>Interventions du véhicule:</h1>
+                    <table class="table is-striped is-fullwidth" id="tbl_interventions">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Kilométrage</th>
+                                <th>Coût</th>
+                                <th>Prix litre</th>
+                                <th>Volume</th>
+                                <th>Observation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body_interventions">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!onglet 3 : données calculées (à développer)>
+            <div id="tab_calculs" class="tab-content" style="display:none">
+                <div class="box">
+                    <h1>Données calculées</h1>
+                    <p>À développer.</p>
+                </div>
+            </div>
+
+            <!onglet 4 : graphiques (à développer)>
+            <div id="tab_graphiques" class="tab-content" style="display:none">
+                <div class="box">
+                    <h1>Graphiques</h1>
+                    <p>À développer.</p>
+                </div>
+            </div>
+
+        </div>
             <!popUp>
                 <!popUp Ajouter une marque>
                 <div class="modal" id="pup_marque">

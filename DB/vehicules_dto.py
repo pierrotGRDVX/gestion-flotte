@@ -1,6 +1,6 @@
 class vehiculesDTO:
 
-    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0, energie = ""):
+    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", nom_intervention = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0, energie = ""):
         self.categorie = categorie
         self.immat = immat
         self.marque = marque
@@ -22,6 +22,7 @@ class vehiculesDTO:
         self.volume = volume
         self.kilometrage = kilometrage
         self.id_type_inter = id_type_inter
+        self.nom_intervention = nom_intervention
         self.observation = observation
         self.id_inter = id_inter
         self.date_ct = date_ct
@@ -75,6 +76,7 @@ class vehiculesDTO:
             "volume": self.volume,
             "kilometrage": self.kilometrage,
             "id_type_inter": self.id_type_inter,
+            "nom_intervention": self.nom_intervention,
             "observation": self.observation}
 
     def listeVehicule(self):

@@ -162,6 +162,7 @@ class vehiculeDAO:
                     volume = row["volume"],
                     kilometrage = row["kilometrage"],
                     id_type_inter = row["id_type_inter"],
+                    nom_intervention = row["nom_intervention"],
                     observation = row["observation"]
                 )
             )
