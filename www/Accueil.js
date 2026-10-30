@@ -53,19 +53,19 @@ fetch("/liste/vehicule")
 
       //MEF de la colonne etat (icone selon l'etat)
       if(items.etat === "en_service"){
-        val_etat = `<td><i class="fas fa-check-square"></i></td>`}
+        val_etat = `<td><span class="icon has-text-success"><i class="fas fa-check-square"></i></span></td>`}
       if(items.etat === "endommagé"){
-        val_etat = `<td><i class="fas fa-exclamation-triangle"></i></td>`}
+        val_etat = `<td><span class="icon has-text-warning"><i class="fas fa-exclamation-triangle"></i></span></td>`}
       if(items.etat === "non_roulant"){
-        val_etat = `<td><i class="fas fa-ban"></i></td>`}
+        val_etat = `<td><span class="icon has-text-danger"><i class="fas fa-ban"></i></span></td>`}
 
       //MEF de la colonne CT (icone selon echeance)
       const dateCT = items.date_ct ? new Date(items.date_ct) : null;
-      let val_ct = `<td><i class="fas fa-check-square"></i></td>`;
+      let val_ct = `<td><span class="icon has-text-success"><i class="fas fa-check-square"></i></span></td>`;
       if(dateCT && dateCT < aujourdhui){
-        val_ct = `<td><i class="fas fa-ban"></i></td>`}
+        val_ct = `<td><span class="icon has-text-danger"><i class="fas fa-ban"></i></span></td>`}
       else if(dateCT && dateCT <= limiteCT){
-        val_ct = `<td><i class="fas fa-exclamation-triangle"></i></td>`}
+        val_ct = `<td><span class="icon has-text-warning"><i class="fas fa-exclamation-triangle"></i></span></td>`}
 
       const conteneurHTML = document.createElement("tr");
       conteneurHTML.innerHTML= `
