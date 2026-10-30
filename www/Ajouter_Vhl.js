@@ -98,65 +98,65 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ouvrir le pop up Marque
     document.getElementById('btn_marque').addEventListener('click', () => {
         console.info("bouton marque cliqué");
-        pup_marque.classList.add('is-active');
+        document.getElementById('pup_marque').classList.add('is-active');
     });
 
     // Fermer le pop up Marque
     document.getElementById('btn_pup_marque_close').addEventListener('click', () => {
-        pup_marque.classList.remove('is-active');
+        document.getElementById('pup_marque').classList.remove('is-active');
     });
 
     // Fermer la popup Marque en cliquant à l'extérieur
     document.getElementById('pup_marque').querySelector('.modal-background').addEventListener('click', () => {
-        pup_marque.classList.remove('is-active');
+        document.getElementById('pup_marque').classList.remove('is-active');
     });
 
     // Ouvrir le pop up Modèle
     document.getElementById('btn_model').addEventListener('click', () => {
         console.info("bouton modèle cliqué");
-        pup_model.classList.add('is-active');
+        document.getElementById('pup_model').classList.add('is-active');
     });
 
     // Fermer le pop up Modèle
     document.getElementById('btn_pup_model_close').addEventListener('click', () => {
-        pup_model.classList.remove('is-active');
+        document.getElementById('pup_model').classList.remove('is-active');
     });
 
     // Fermer la popup Modèle en cliquant à l'extérieur
     document.getElementById('pup_model').querySelector('.modal-background').addEventListener('click', () => {
-        pup_model.classList.remove('is-active');
+        document.getElementById('pup_model').classList.remove('is-active');
     });
 
     // Ouvrir le pop up Energie
     document.getElementById('btn_energie').addEventListener('click', () => {
         console.info("bouton énergie cliqué");
-        pup_energie.classList.add('is-active');
+        document.getElementById('pup_energie').classList.add('is-active');
     });
 
     // Fermer le pop up Energie
     document.getElementById('btn_pup_energie_close').addEventListener('click', () => {
-        pup_energie.classList.remove('is-active');
+        document.getElementById('pup_energie').classList.remove('is-active');
     });
 
     // Fermer la popup Energie en cliquant à l'extérieur
     document.getElementById('pup_energie').querySelector('.modal-background').addEventListener('click', () => {
-        pup_energie.classList.remove('is-active');
+        document.getElementById('pup_energie').classList.remove('is-active');
     });
 
     // Ouvrir le pop up Categorie
     document.getElementById('btn_categorie').addEventListener('click', () => {
         console.info("bouton catégorie cliqué");
-        pup_categorie.classList.add('is-active');
+        document.getElementById('pup_categorie').classList.add('is-active');
     });
 
     // Fermer le pop up Categorie
     document.getElementById('btn_pup_categorie_close').addEventListener('click', () => {
-        pup_categorie.classList.remove('is-active');
+        document.getElementById('pup_categorie').classList.remove('is-active');
     });
 
     // Fermer la popup Categorie en cliquant à l'extérieur
     document.getElementById('pup_categorie').querySelector('.modal-background').addEventListener('click', () => {
-        pup_categorie.classList.remove('is-active');
+        document.getElementById('pup_categorie').classList.remove('is-active');
     });
 
     //enregistrer la marque
@@ -167,8 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (valeur === '') {
             alert('Veuillez entrer une marque');
         } else {
-            EnregisterNvlleMarque(valeur);
-            window.location.reload();
+            EnregisterNvlleMarque(valeur).then(() => window.location.reload());
         }
     });
 
@@ -183,8 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (val_marque === '-- Marque --' || val_model === '' || val_categorie === null) {
             alert('Veuillez renseigner la marque, le modèle et la catégorie');
         } else {
-            EnregisterNvxModele(val_marque, val_model, val_categorie);
-            window.location.reload();
+            EnregisterNvxModele(val_marque, val_model, val_categorie).then(() => window.location.reload());
         }
     });
 
@@ -196,8 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (valeur === '') {
             alert('Veuillez entrer un type d\'énergie');
         } else {
-            EnregisterNvlleEnergie(valeur);
-            window.location.reload();
+            EnregisterNvlleEnergie(valeur).then(() => window.location.reload());
         }
     });
 
@@ -209,8 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (valeur === '') {
             alert('Veuillez entrer une categorie');
         } else {
-            EnregisterNvlleCategorie(valeur);
-            window.location.reload();
+            EnregisterNvlleCategorie(valeur).then(() => window.location.reload());
         }
         });
 
@@ -263,12 +259,12 @@ function MAJSelectionCategorie(data) {
     });
 }
 
-function EnregisterNvlleMarque(marque) {
+async function EnregisterNvlleMarque(marque) {
     const data = {
         marque: marque
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouvelle/marque', {
+    return fetch('/nouvelle/marque', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -280,7 +276,7 @@ function EnregisterNvlleMarque(marque) {
     });
 }
 
-function EnregisterNvxModele(marque, modele, categorie) {
+async function EnregisterNvxModele(marque, modele, categorie) {
     const data = {
         modele: modele,
         marque: marque,
@@ -290,7 +286,7 @@ function EnregisterNvxModele(marque, modele, categorie) {
         nbr_place: null
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouveau/modele', {
+    return fetch('/nouveau/modele', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -302,12 +298,12 @@ function EnregisterNvxModele(marque, modele, categorie) {
     });
 }
 
-function EnregisterNvlleEnergie(nom) {
+async function EnregisterNvlleEnergie(nom) {
     const data = {
         nom: nom
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouvelle/energie', {
+    return fetch('/nouvelle/energie', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -334,12 +330,12 @@ function MAJSelectionMarque(data){
     });
 }
 
-function EnregisterNvlleCategorie(categorie) {
+async function EnregisterNvlleCategorie(categorie) {
     const data = {
         categorie: categorie
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouvelle/categorie', {
+    return fetch('/nouvelle/categorie', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
