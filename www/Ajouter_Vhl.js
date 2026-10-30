@@ -24,12 +24,12 @@ fetch('/liste/categorie')
         console.error('Erreur lors du chargement des catégories :', error);
     });
 
-fetch('/cars/listeMarq')
+fetch('/liste/marque')
     .then(response => response.json())
     .then(data => {
         console.log("liste des marques",data)
-        marque = data
-        MAJSelectionMarque(marque); 
+        liste_marque = data
+        MAJSelectionMarque(liste_marque); 
     })
     .catch(error => {
         console.error('Erreur lors du chargement de la liste des marques:', error);
@@ -39,14 +39,53 @@ fetch('/cars/listeMarq')
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
 
-    const btnMarque = document.getElementById('btn_marque');
-    if (btnMarque) {
-        btnMarque.addEventListener('click', () => {
-            console.info("bouton marque cliqué");
-            const pupMarque = document.getElementById('pup_marque');
-            if (pupMarque) pupMarque.classList.add('is-active');
-        });
-    }
+    // Ouvrir le pop up Marque
+    document.getElementById('btn_marque').addEventListener('click', () => {
+        console.info("bouton marque cliqué");
+        pup_marque.classList.add('is-active');
+    });
+
+    // Fermer le pop up Marque
+    document.getElementById('btn_pup_marque_close').addEventListener('click', () => {
+        pup_marque.classList.remove('is-active');
+    });
+
+    // Fermer la popup Marque en cliquant à l'extérieur
+    document.getElementById('pup_marque').querySelector('.modal-background').addEventListener('click', () => {
+        pup_marque.classList.remove('is-active');
+    });
+
+    // Ouvrir le pop up Modèle
+    document.getElementById('btn_model').addEventListener('click', () => {
+        console.info("bouton modèle cliqué");
+        pup_model.classList.add('is-active');
+    });
+
+    // Fermer le pop up Modèle
+    document.getElementById('btn_pup_model_close').addEventListener('click', () => {
+        pup_model.classList.remove('is-active');
+    });
+
+    // Fermer la popup Modèle en cliquant à l'extérieur
+    document.getElementById('pup_model').querySelector('.modal-background').addEventListener('click', () => {
+        pup_model.classList.remove('is-active');
+    });
+
+    // Ouvrir le pop up Energie
+    document.getElementById('btn_energie').addEventListener('click', () => {
+        console.info("bouton énergie cliqué");
+        pup_energie.classList.add('is-active');
+    });
+
+    // Fermer le pop up Energie
+    document.getElementById('btn_pup_energie_close').addEventListener('click', () => {
+        pup_energie.classList.remove('is-active');
+    });
+
+    // Fermer la popup Energie en cliquant à l'extérieur
+    document.getElementById('pup_energie').querySelector('.modal-background').addEventListener('click', () => {
+        pup_energie.classList.remove('is-active');
+    });
 
     // Ouvrir le pop up Categorie
     document.getElementById('btn_categorie').addEventListener('click', () => {
@@ -62,6 +101,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fermer la popup Categorie en cliquant à l'extérieur
     document.getElementById('pup_categorie').querySelector('.modal-background').addEventListener('click', () => {
         pup_categorie.classList.remove('is-active');
+    });
+
+    //enregistrer la marque
+    document.getElementById('btn_save_marque').addEventListener('click', () => {
+        console.info("bouton enregistrer nouvelle marque cliqué");
+        valeur = document.getElementById('ipt_pup_marque').value.trim();
+        console.info(valeur)
+        if (valeur === '') {
+            alert('Veuillez entrer une marque');
+        } else {
+            EnregisterNvlleMarque(valeur);
+            window.location.reload();
+        }
+    });
+
+    //enregistrer le modele
+    document.getElementById('btn_save_model').addEventListener('click', () => {
+        console.info("bouton enregistrer nouveau modèle cliqué");
+        const val_marque = document.getElementById('slt_pup_marque').value;
+        const val_model = document.getElementById('ipt_pup_model').value.trim();
+        const radioSelectionne = document.querySelector('#rdo_pup_categorie input[type="radio"]:checked');
+        const val_categorie = radioSelectionne ? radioSelectionne.value : null;
+        console.info(val_marque, val_model, val_categorie);
+        if (val_marque === '-- Marque --' || val_model === '' || val_categorie === null) {
+            alert('Veuillez renseigner la marque, le modèle et la catégorie');
+        } else {
+            EnregisterNvxModele(val_marque, val_model, val_categorie);
+            window.location.reload();
+        }
+    });
+
+    //enregistrer l'energie
+    document.getElementById('btn_save_energie').addEventListener('click', () => {
+        console.info("bouton enregistrer nouvelle énergie cliqué");
+        valeur = document.getElementById('ipt_pup_energie').value.trim();
+        console.info(valeur)
+        if (valeur === '') {
+            alert('Veuillez entrer un type d\'énergie');
+        } else {
+            EnregisterNvlleEnergie(valeur);
+            window.location.reload();
+        }
     });
 
     //enregister la categorie
@@ -90,26 +171,110 @@ function MAJSelectionCategorie(data) {
     }
 
     const conteneurHTML = document.getElementById("rdo_categorie");
+    const conteneurPup = document.getElementById("rdo_pup_categorie");
     if (!conteneurHTML) {
         console.error("Conteneur introuvable : rdo_categorie");
         return;
     }
 
     conteneurHTML.innerHTML = '';
+    if (conteneurPup) conteneurPup.innerHTML = '';
 
     data.forEach(item => {
         const categoryValue = item.categorie || item;
+
         const label = document.createElement("label");
         label.className = "checkbox";
-
         const input = document.createElement("input");
         input.type = "radio";
         input.name = "categorie"; // Même nom pour regrouper les boutons radio
         input.value = categoryValue;
-
         label.appendChild(input);
         label.appendChild(document.createTextNode(categoryValue));
         conteneurHTML.appendChild(label);
+
+        if (conteneurPup) {
+            const labelPup = document.createElement("label");
+            labelPup.className = "radio";
+            const inputPup = document.createElement("input");
+            inputPup.type = "radio";
+            inputPup.name = "categorie_pup";
+            inputPup.value = categoryValue;
+            labelPup.appendChild(inputPup);
+            labelPup.appendChild(document.createTextNode(categoryValue));
+            conteneurPup.appendChild(labelPup);
+        }
+    });
+}
+
+function EnregisterNvlleMarque(marque) {
+    const data = {
+        marque: marque
+    };
+    console.log('Données à envoyer :', data);
+    fetch('/nouvelle/marque', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données de la marque :', error);
+    });
+}
+
+function EnregisterNvxModele(marque, modele, categorie) {
+    const data = {
+        modele: modele,
+        marque: marque,
+        categorie: categorie,
+        cylindree: null,
+        puissance: null,
+        nbr_place: null
+    };
+    console.log('Données à envoyer :', data);
+    fetch('/nouveau/modele', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données du modèle :', error);
+    });
+}
+
+function EnregisterNvlleEnergie(nom) {
+    const data = {
+        nom: nom
+    };
+    console.log('Données à envoyer :', data);
+    fetch('/nouvelle/energie', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données de l\'énergie :', error);
+    });
+}
+
+function MAJSelectionMarque(data){
+    const slt_marque = document.getElementById("slt_marque");
+    const slt_pup_marque = document.getElementById("slt_pup_marque");
+    data.forEach(items => {
+        const optA = document.createElement("option");
+        optA.textContent = items.marque;
+        slt_marque.appendChild(optA);
+        if (slt_pup_marque) {
+            const optB = document.createElement("option");
+            optB.textContent = items.marque;
+            slt_pup_marque.appendChild(optB);
+        }
     });
 }
 
