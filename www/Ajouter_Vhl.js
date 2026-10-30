@@ -39,14 +39,53 @@ fetch('/cars/listeMarq')
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
 
-    const btnMarque = document.getElementById('btn_marque');
-    if (btnMarque) {
-        btnMarque.addEventListener('click', () => {
-            console.info("bouton marque cliqué");
-            const pupMarque = document.getElementById('pup_marque');
-            if (pupMarque) pupMarque.classList.add('is-active');
-        });
-    }
+    // Ouvrir le pop up Marque
+    document.getElementById('btn_marque').addEventListener('click', () => {
+        console.info("bouton marque cliqué");
+        pup_marque.classList.add('is-active');
+    });
+
+    // Fermer le pop up Marque
+    document.getElementById('btn_pup_marque_close').addEventListener('click', () => {
+        pup_marque.classList.remove('is-active');
+    });
+
+    // Fermer la popup Marque en cliquant à l'extérieur
+    document.getElementById('pup_marque').querySelector('.modal-background').addEventListener('click', () => {
+        pup_marque.classList.remove('is-active');
+    });
+
+    // Ouvrir le pop up Modèle
+    document.getElementById('btn_model').addEventListener('click', () => {
+        console.info("bouton modèle cliqué");
+        pup_model.classList.add('is-active');
+    });
+
+    // Fermer le pop up Modèle
+    document.getElementById('btn_pup_model_close').addEventListener('click', () => {
+        pup_model.classList.remove('is-active');
+    });
+
+    // Fermer la popup Modèle en cliquant à l'extérieur
+    document.getElementById('pup_model').querySelector('.modal-background').addEventListener('click', () => {
+        pup_model.classList.remove('is-active');
+    });
+
+    // Ouvrir le pop up Energie
+    document.getElementById('btn_energie').addEventListener('click', () => {
+        console.info("bouton énergie cliqué");
+        pup_energie.classList.add('is-active');
+    });
+
+    // Fermer le pop up Energie
+    document.getElementById('btn_pup_energie_close').addEventListener('click', () => {
+        pup_energie.classList.remove('is-active');
+    });
+
+    // Fermer la popup Energie en cliquant à l'extérieur
+    document.getElementById('pup_energie').querySelector('.modal-background').addEventListener('click', () => {
+        pup_energie.classList.remove('is-active');
+    });
 
     // Ouvrir le pop up Categorie
     document.getElementById('btn_categorie').addEventListener('click', () => {
