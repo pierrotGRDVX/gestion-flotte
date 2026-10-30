@@ -103,9 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Récupère toutes les cellules (<td>) de la ligne
       const cells = row.querySelectorAll('td');
 
-      // Extrait les valeurs de chaque cellule
-      const rowData = {
-        id_proprio: cells[0].textContent,
-      }})
+      // première cellule = immatriculation du véhicule
+      const immat = cells[0].textContent;
+
+      // ouvre la page Infos_Vhl du véhicule sélectionné
+      window.location.href = `/pageInfoVhl?valeur=${encodeURIComponent(immat)}`;
+    });
 
 });
