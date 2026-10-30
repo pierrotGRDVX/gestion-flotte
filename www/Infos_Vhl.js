@@ -6,7 +6,7 @@ let change_etat = [];
 console.log("immatriculation", immat)
 //telechargconsole.log("data", data);e les listes marque/categorie/model
 //déclenchement dès le chargement de la page
-fetch('/ListCat')
+fetch('/liste/categorie')
     .then(response => response.json())
     .then(data => {
       console.log("chargement liste des categories lancée", data)
@@ -33,7 +33,7 @@ fetch(`/info/vehicule/${encodeURIComponent(immat)}`)
   })
   .then(data => {
       console.log("Chargement infos véhicule lancé", data);
-      MAJInput([data]);
+      MAJInput(data);
   })
   .catch(error => {
       console.error("Erreur lors de la requête:", error);
@@ -97,10 +97,7 @@ function MAJSelectionCategorie(data){
     };
 
 
-function MAJInput(donnees){
-    donnees.forEach(items => {
-      document.getElementById('ipt_immatriculation').textContent = items.immat;
-      console.log("details véhicule",items.immat);
+function MAJInput(items){
       document.getElementById('ipt_immatriculation').value = items.immat;
       document.getElementById('ipt_marque').value = items.marque;
       document.getElementById('ipt_model').value = items.modele;
@@ -111,8 +108,10 @@ function MAJInput(donnees){
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
       categ = items.categorie
-      document.getElementById(categ).checked = true;
+      const radio_categ = document.getElementById(categ);
+      if (radio_categ) radio_categ.checked = true;
       const fld_etat = document.getElementById('fld_etat')
+      fld_etat.innerHTML = "";
       const conteneurHTML = document.createElement("button");
       if (items.etat === "en_service"){
         conteneurHTML.className = "button is-success"
@@ -126,9 +125,6 @@ function MAJInput(donnees){
         conteneurHTML.className = "button is-danger"
         conteneurHTML.textContent = "Non roulant"
         fld_etat.appendChild(conteneurHTML)};
-        
-        })
-      
     };
 
 function SaveChangementEtat(){
