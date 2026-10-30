@@ -45,6 +45,10 @@ fetch("/liste/vehicule")
 
     //parcours du tableau trie
     data.forEach(items => {
+      let source_logo = "";
+      let alter = "";
+      let insert = "";
+      let val_etat = "";
       //MEF de la colonne categorie
       if (items.categorie === "Voiture"){
         source_logo = "images/icone_voiture.png"
