@@ -4,18 +4,6 @@ let vehicule = [];
 let change_etat = [];
 
 console.log("immatriculation", immat)
-//telechargconsole.log("data", data);e les listes marque/categorie/model
-//déclenchement dès le chargement de la page
-fetch('/liste/categorie')
-    .then(response => response.json())
-    .then(data => {
-      console.log("chargement liste des categories lancée", data)
-      MAJSelectionCategorie(data);
-        
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement du JSON:', error);
-    });
 const Save = document.getElementById('btn_enregistrer');
 
 
@@ -73,28 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-//fonction ajoutant les categories dans les options
-function MAJSelectionCategorie(data){
-    const contenu_A = document.getElementById("rdo_categorie");
-
-    data.forEach(items => {
-        const radioLabel_A = document.createElement("label");
-        radioLabel_A.className = "radio";
-
-        const radioInput_A = document.createElement("input");
-        radioInput_A.type = "radio";
-        radioInput_A.name = "answer";
-        radioInput_A.id = (items.categorie);
-
-        const radioText_A = document.createElement("span")
-        radioText_A.textContent =(items.categorie);
-
-        radioLabel_A.appendChild(radioInput_A);
-        radioLabel_A.appendChild(radioText_A);
-        contenu_A.appendChild(radioLabel_A);
-
-    });
-    };
 
 
 function MAJInput(items){
@@ -107,9 +73,7 @@ function MAJInput(items){
       document.getElementById('ipt_date_ct').value = items.date_ct;
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
-      categ = items.categorie
-      const radio_categ = document.getElementById(categ);
-      if (radio_categ) radio_categ.checked = true;
+      document.getElementById('rdo_categorie').textContent = items.categorie;
       const fld_etat = document.getElementById('fld_etat')
       fld_etat.innerHTML = "";
       const conteneurHTML = document.createElement("button");
