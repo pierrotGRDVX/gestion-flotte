@@ -1,9 +1,11 @@
 -- ============================================
 -- DonneesBaseBDD.sql - donnees d'exemple
 -- gestion de flotte
--- Compatible avec le MLD mld_vehicule.drawio (table energie ajoutee)
+-- Regeneré pour le schema actuel de "création base de données.sql"
+-- (table energie + colonne vehicule.energie)
 -- Categories = categories du code de la route francais
--- (AM, A1, A2, A, B, BE, C1, C, CE, D1, D, DE)
+-- Etats vehicule conformes a l application :
+-- en_service / endommagé / non_roulant
 -- Ordre des INSERT respecte les cles etrangeres :
 -- ville -> adresse -> marque/categorie/energie/permis -> modele
 -- -> proprietaire -> vehicule -> controle_technique/ct_effectue
@@ -120,16 +122,16 @@ INSERT INTO proprietaire (id_proprio, nom_proprio, prenom_proprio, date_naissanc
 -- ============================================
 
 INSERT INTO vehicule (immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat, energie) VALUES
-('AB-123-CD', '2019-04-15', 1, 1, 'VF15RJLJ555123456', 1550, 2500, 12000, 13500, 'en service', 'Essence'),
-('EF-456-GH', '2020-08-02', 2, 4, 'VF3JZLUH777654321', 2800, 4200, 8500, 21000, 'en service', 'Diesel'),
-('IJ-789-KL', '2018-01-20', 3, 7, 'JTMHV05J123456789', 2100, 3500, 25000, 28000, 'en service', 'Hybride'),
-('MN-012-OP', '2017-06-11', 3, 8, 'WDD90612345678901', 3500, 5300, 38000, 32000, 'maintenance', 'Diesel'),
-('QR-345-ST', '2016-09-28', 4, 6, 'VF77JWHC987654321', 2050, 3400, 55000, 17500, 'hors service', 'Diesel'),
-('UV-678-WX', '2021-03-10', 5, 3, 'VF3PHNSJU12345678', 1250, 2000, 3000, 19000, 'en service', 'Essence'),
-('YZ-901-AB', '2022-01-05', 1, 12, 'JTDKB20U123456789', 1250, 2100, 1500, 22500, 'en service', 'Hybride'),
-('CD-234-EF', '2015-05-17', 2, 9, 'WF0XXXTTFX1234567', 3600, 5500, 62000, 28000, 'en service', 'Diesel'),
-('GH-567-IJ', '2020-11-23', 5, 10, 'ZFA25000012345678', 3500, 5200, 15000, 27000, 'en service', 'Diesel'),
-('KL-890-MN', '2019-07-30', 4, 5, 'VF7SXHKU987654321', 1350, 2200, 22000, 14800, 'maintenance', 'Essence');
+('AB-123-CD', '2019-04-15', 1, 1, 'VF15RJLJ555123456', 1550, 2500, 12000, 13500, 'en_service', 'Essence'),
+('EF-456-GH', '2020-08-02', 2, 4, 'VF3JZLUH777654321', 2800, 4200, 8500, 21000, 'en_service', 'Diesel'),
+('IJ-789-KL', '2018-01-20', 3, 7, 'JTMHV05J123456789', 2100, 3500, 25000, 28000, 'en_service', 'Hybride'),
+('MN-012-OP', '2017-06-11', 3, 8, 'WDD90612345678901', 3500, 5300, 38000, 32000, 'endommagé', 'Diesel'),
+('QR-345-ST', '2016-09-28', 4, 6, 'VF77JWHC987654321', 2050, 3400, 55000, 17500, 'non_roulant', 'Diesel'),
+('UV-678-WX', '2021-03-10', 5, 3, 'VF3PHNSJU12345678', 1250, 2000, 3000, 19000, 'en_service', 'Essence'),
+('YZ-901-AB', '2022-01-05', 1, 12, 'JTDKB20U123456789', 1250, 2100, 1500, 22500, 'en_service', 'Hybride'),
+('CD-234-EF', '2015-05-17', 2, 9, 'WF0XXXTTFX1234567', 3600, 5500, 62000, 28000, 'en_service', 'Diesel'),
+('GH-567-IJ', '2020-11-23', 5, 10, 'ZFA25000012345678', 3500, 5200, 15000, 27000, 'en_service', 'Diesel'),
+('KL-890-MN', '2019-07-30', 4, 5, 'VF7SXHKU987654321', 1350, 2200, 22000, 14800, 'endommagé', 'Essence');
 -- ============================================
 -- Controles techniques et liens ct_effectue
 -- ============================================
