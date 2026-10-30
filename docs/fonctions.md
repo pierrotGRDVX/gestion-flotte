@@ -24,6 +24,7 @@
 | Supprimer un modèle | `supprimerModele(id_modele)` | POST | `/supprimer/modele` | .json | success | `supprimerModele(id_modele)` |
 | Obtenir les infos d'un véhicule | `infoVehicule(immat)` | GET | `/info/vehicule/<immat>` | — | .json | `infoVehicule(immat)` → DTO |
 | Ajouter une nouvelle intervention | nouvelleIntervention( immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) | POST | /nouvelle/intervention | .json | success | insertIntervention(immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) |
+| Ajouter un nouveau contrôle technique (résultat : ok / reporte / refuse) | `nouveauControleTechnique(immat, date_ct, resultat_ct, observation_ct)` | POST | `/nouvelle/controle-technique` | .json | success | `insertControleTechnique(immat, date_ct, resultat_ct, observation_ct)` → insère dans `controle_technique` puis lien `ct_effectue` |
 | Compter les véhicules par état (en_service / endommagé / non_roulant) | `listeEtatVehicule()` | GET | `/liste/etat/vehicule` | — | .json (etat, nbr\_etat) | `listeEtatVehicule()` → DTO |
 |  |  |  |  |  |  |  |
 

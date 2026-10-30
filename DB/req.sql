@@ -30,6 +30,10 @@ info_vehicule = SELECT vehicule.immat, vehicule.date_mec, vehicule.num_serie, ve
 
 insert_intervention = INSERT INTO intervention(immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation) VALUES (?,?,?,?,?,?,?,?);
 
+insert_controle_technique = INSERT INTO controle_technique(date_ct, resultat_ct, observation_ct) VALUES (?,?,?);
+
+insert_ct_effectue = INSERT INTO ct_effectue(immat, id_ct) VALUES (?,?);
+
 liste_intervention = SELECT id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation FROM intervention WHERE immat = ?;
 
 nbr_etat_vehicule = SELECT etat, COUNT(*) AS nbr FROM vehicule GROUP BY etat;
