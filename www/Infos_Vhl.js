@@ -76,12 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     change_etat = "non_roulant";
     SaveChangementEtat();
   });
-
   });
-
-
-
-
 
 function formatDate(iso){
       if (!iso) return "";
@@ -135,7 +130,7 @@ function MAJTableauInterventions(interventions){
       tbodyInter.innerHTML = "";
       interventions.forEach(function(inter){
         if (inter.nom_intervention === "plein"){
-          tbodyPleins.appendChild(ligneTableau([formatDate(inter.date), inter.kilometrage, inter.cout_inter, inter.prix_litre, inter.volume, inter.observation]));
+          tbodyPleins.appendChild(ligneTableau([formatDate(inter.date), inter.kilometrage, inter.cout_inter, inter.prix_litre, inter.volume]));
         } else {
           tbodyInter.appendChild(ligneTableau([formatDate(inter.date), inter.nom_intervention, inter.kilometrage, inter.cout_inter, inter.observation]));
         }
