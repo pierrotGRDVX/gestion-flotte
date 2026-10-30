@@ -1,5 +1,5 @@
 Listes =[];
-
+let val_etat = 0;
 
 //RECEPTION DU NOMBRE DE VEHICULES PAR ETAT (box "Etat des vehicules")
 fetch("/liste/etat/vehicule")
