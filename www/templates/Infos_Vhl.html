@@ -15,7 +15,7 @@
         <!contenu Principale>    
         <div class="contenue-central">
             <!onglets>
-            <div class="tabs is-boxed">
+            <div class="tabs is-centered is-boxed">
                 <ul>
                     <li class="is-active" data-tab="tab_identite"><a><span class="icon"><i class="fa-regular fa-id-card"></i></span><span>Carte d'identité</span></a></li>
                     <li data-tab="tab_pleins"><a><span class="icon"><i class="fa-solid fa-gas-pump"></i></span><span>Pleins</span></a></li>
@@ -127,6 +127,33 @@
             </div>
 
             <!onglet 2 : tableau des pleins>
+            <div class="box">
+                <h1 id="titreCategorie">Distances parcourus:</h1>
+                <div class="fixed-grid has-1-cols">
+                    <div class="grid">
+                        <div class="cell">
+                            <div class="field is-horizontal">
+                                <div class="label">Distance parcouru total:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_Dist_total" type="text" readonly rows="1">
+                                </div>    
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="label">Distance parcouru cette année:</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_Dist_annuel" type="text" readonly rows="1">
+                                </div>    
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="label">Distance parcouru ce mois-ci</div>
+                                <div class="control">
+                                    <input class="input" id="ipt_Dist_mensuel" type="text" readonly rows="1">
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="tab_pleins" class="tab-content" style="display:none">
                 <div class="box">
                     <h1 id="titreCategorie">Pleins du véhicule:</h1>
