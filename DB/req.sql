@@ -26,11 +26,11 @@ liste_modele = SELECT id_modele, modele, marque, categorie, cylindree, puissance
 
 supprimer_modele = DELETE FROM modele WHERE id_modele = ?;
 
-info_vehicule = SELECT vehicule.immat, vehicule.date_mec, vehicule.num_serie, vehicule.ptac, vehicule.ptra, vehicule.kilometrage_achat, vehicule.prix_achat, vehicule.etat, vehicule.energie, modele.marque, modele.modele, categorie.categorie FROM vehicule JOIN modele ON modele.id_modele = vehicule.id_modele JOIN categorie ON categorie.categorie = modele.categorie WHERE vehicule.immat = ?;
+info_vehicule = SELECT vehicule.immat, vehicule.date_mec, vehicule.num_serie, vehicule.ptac, vehicule.ptra, vehicule.kilometrage_achat, vehicule.prix_achat, vehicule.etat, vehicule.energie, modele.marque, modele.modele, categorie.categorie, COALESCE((SELECT intervention.kilometrage FROM intervention WHERE intervention.immat = vehicule.immat AND intervention.kilometrage IS NOT NULL ORDER BY intervention.id_inter DESC LIMIT 1), vehicule.kilometrage_achat) AS kilometrage, (SELECT controle_technique.date_ct FROM ct_effectue JOIN controle_technique ON ct_effectue.id_ct = controle_technique.id_ct WHERE ct_effectue.immat = vehicule.immat ORDER BY controle_technique.date_ct DESC LIMIT 1) AS date_ct, (SELECT controle_technique.resultat_ct FROM ct_effectue JOIN controle_technique ON ct_effectue.id_ct = controle_technique.id_ct WHERE ct_effectue.immat = vehicule.immat ORDER BY controle_technique.date_ct DESC LIMIT 1) AS resultat_ct FROM vehicule JOIN modele ON modele.id_modele = vehicule.id_modele JOIN categorie ON categorie.categorie = modele.categorie WHERE vehicule.immat = ?;
 
 insert_intervention = INSERT INTO intervention(immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation) VALUES (?,?,?,?,?,?,?,?);
 
-liste_intervention = SELECT id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation FROM intervention WHERE immat = ?;
+liste_intervention = SELECT intervention.id_inter, intervention.immat, intervention.date, intervention.cout_inter, intervention.prix_litre, intervention.volume, intervention.kilometrage, intervention.id_type_inter, type_intervention.nom_intervention, intervention.observation FROM intervention LEFT JOIN type_intervention ON intervention.id_type_inter = type_intervention.id_type_inter WHERE intervention.immat = ? ORDER BY intervention.date DESC;
 
 nbr_etat_vehicule = SELECT etat, COUNT(*) AS nbr FROM vehicule GROUP BY etat;
 

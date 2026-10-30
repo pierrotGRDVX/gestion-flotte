@@ -22,8 +22,9 @@
 | Ajouter un nouveau modèle | `nouveauModele(modele, marque, categorie, cylindree, puissance, nbr_place)` | POST | `/nouveau/modele` | .json | success | `insertModele(...)` |
 | Obtenir la liste des modèles | `listeModele()` | GET | `/liste/modele` | — | .json | `listeModele()` → DTO |
 | Supprimer un modèle | `supprimerModele(id_modele)` | POST | `/supprimer/modele` | .json | success | `supprimerModele(id_modele)` |
-| Obtenir les infos d'un véhicule | `infoVehicule(immat)` | GET | `/info/vehicule/<immat>` | — | .json (inclut energie) | `infoVehicule(immat)` → DTO |
+| Obtenir les infos d'un véhicule | `infoVehicule(immat)` | GET | `/info/vehicule/<immat>` | — | .json (immat, date_mec, num_serie, ptac, ptra, kilometrage_achat, kilometrage, prix_achat, etat, energie, marque, modele, categorie, date_ct, resultat_ct). `kilometrage` = kilométrage de la dernière intervention du véhicule ayant un kilométrage, sinon `kilometrage_achat` ; `date_ct`/`resultat_ct` = dernier contrôle technique enregistré | `infoVehicule(immat)` → DTO |
 | Ajouter une nouvelle intervention | nouvelleIntervention( immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) | POST | /nouvelle/intervention | .json | success | insertIntervention(immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) |
+| Obtenir la liste des interventions d'un véhicule | `listeIntervention(immat)` | GET | `/liste/intervention/<immat>` | — | .json (id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, nom_intervention, observation), trié par date décroissante | `listeIntervention(immat)` → DTO |
 | Compter les véhicules par état (en_service / endommagé / non_roulant) | `listeEtatVehicule()` | GET | `/liste/etat/vehicule` | — | .json (etat, nbr\_etat) | `listeEtatVehicule()` → DTO |
 | Ajouter une nouvelle énergie | nouvelleEnergie(nom) | POST | /nouvelle/energie | .json | success | insertEnergie(nom) |
 | Obtenir la liste des énergies | `listeEnergie()` | GET | `/liste/energie` | — | .json (nom) | `listeEnergie()` → DTO listeEnergie() |

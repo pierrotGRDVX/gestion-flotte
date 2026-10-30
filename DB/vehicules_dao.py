@@ -102,7 +102,10 @@ class vehiculeDAO:
             energie = row["energie"],
             marque = row["marque"],
             modele = row["modele"],
-            categorie = row["categorie"]
+            categorie = row["categorie"],
+            kilometrage = row["kilometrage"],
+            date_ct = row["date_ct"],
+            resultat_ct = row["resultat_ct"]
         )
 
     def listeMarque(self):
@@ -159,6 +162,7 @@ class vehiculeDAO:
                     volume = row["volume"],
                     kilometrage = row["kilometrage"],
                     id_type_inter = row["id_type_inter"],
+                    nom_intervention = row["nom_intervention"],
                     observation = row["observation"]
                 )
             )
