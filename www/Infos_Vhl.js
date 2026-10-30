@@ -32,6 +32,7 @@ fetch(`/liste/intervention/${encodeURIComponent(immat)}`)
   .then(data => {
       console.log("Chargement interventions lancé", data);
       MAJTableauInterventions(data);
+      MAJGraphiquePleins(data);
   })
   .catch(error => {
       console.error("Erreur lors de la requête:", error);
@@ -174,6 +175,32 @@ function MAJTableauInterventions(interventions){
           tbodyPleins.appendChild(ligneTableau([formatDate(inter.date), inter.kilometrage, inter.cout_inter, inter.prix_litre, inter.volume]));
         } else {
           tbodyInter.appendChild(ligneTableau([formatDate(inter.date), inter.nom_intervention, inter.kilometrage, inter.cout_inter, inter.observation]));
+        }
+      });
+    };
+
+function MAJGraphiquePleins(interventions){
+      const canvas = document.getElementById('graph_pleins');
+      if (!canvas || typeof Chart === 'undefined') return;
+      const pleins = interventions
+        .filter(function(inter){ return inter.nom_intervention === "plein" && inter.kilometrage != null && inter.volume != null; })
+        .sort(function(a, b){ return a.kilometrage - b.kilometrage; });
+      new Chart(canvas.getContext('2d'), {
+        type: 'scatter',
+        data: {
+          datasets: [{
+            label: 'Volume (L)',
+            data: pleins.map(function(p){ return { x: p.kilometrage, y: p.volume }; }),
+            backgroundColor: 'rgba(0, 209, 178, 0.7)'
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { title: { display: true, text: 'Kilométrage (km)' } },
+            y: { title: { display: true, text: 'Consommation (L)' }, beginAtZero: true }
+          },
+          plugins: { legend: { display: true } }
         }
       });
     };
