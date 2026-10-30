@@ -59,18 +59,13 @@ fetch("/liste/vehicule")
       if(items.etat === "non_roulant"){
         val_etat = `<td class="has-background-danger has-text-white">${items.etat}</td>`}
 
-      //MEF de la colonne CT (mise en evidence si a moins de 2 mois), format JJ/MM/AAAA
+      //MEF de la colonne CT (icone selon echeance)
       const dateCT = items.date_ct ? new Date(items.date_ct) : null;
-      let date_ct_fr = "";
-      if(dateCT){
-        const jj = String(dateCT.getDate()).padStart(2, "0");
-        const mm = String(dateCT.getMonth() + 1).padStart(2, "0");
-        date_ct_fr = `${jj}/${mm}/${dateCT.getFullYear()}`}
-      let val_ct = `<td>${date_ct_fr} <i class="fas fa-check-square"></i></td>`;
+      let val_ct = `<td><i class="fas fa-check-square"></i></td>`;
       if(dateCT && dateCT < aujourdhui){
-        val_ct = `<td>${date_ct_fr} <i class="fas fa-ban"></i></td>`}
+        val_ct = `<td><i class="fas fa-ban"></i></td>`}
       else if(dateCT && dateCT <= limiteCT){
-        val_ct = `<td>${date_ct_fr} <i class="fas fa-exclamation-triangle"></i></td>`}
+        val_ct = `<td><i class="fas fa-exclamation-triangle"></i></td>`}
 
       const conteneurHTML = document.createElement("tr");
       conteneurHTML.innerHTML= `
