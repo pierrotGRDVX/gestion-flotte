@@ -23,15 +23,8 @@ const data = {
     immatriculation: immat
     };
 console.log('données a envoyer',data)
-console.info('fonction envoyer demarré'),
 
-fetch('/cars/balanceone', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
+fetch(`/info/vehicule/${encodeURIComponent(immat)}`)
   .then(response => {
     if (!response.ok) {
         throw new Error(`Erreur HTTP! statut: ${response.status}`);
@@ -39,19 +32,11 @@ fetch('/cars/balanceone', {
     return response.json();
   })
   .then(data => {
-      console.log("Chargement kilométrage lancé", data);
+      console.log("Chargement infos véhicule lancé", data);
+      MAJInput([data]);
   })
   .catch(error => {
       console.error("Erreur lors de la requête:", error);
-  });
-
-fetch('/liste/vehicule')
-  .then(response => response.json())
-  .then(data => {
-  console.log('liste des vehicules',data)
-  vehicule = data.filter(v => v.immat === immat);
-  console.log('vehicules',vehicule)
-  MAJInput(vehicule);
   });
 
 
@@ -122,7 +107,7 @@ function MAJInput(donnees){
       document.getElementById('ipt_mise_en_circulation').value = items.date_mec;
       document.getElementById('ipt_couleur').value = items.couleur;
       document.getElementById('ipt_kilometrage').value = items.kilometrage;
-      document.getElementById('ipt_date_ct').value = items.dateCT;
+      document.getElementById('ipt_date_ct').value = items.date_ct;
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
       categ = items.categorie

@@ -55,12 +55,15 @@ class vehiculesDTO:
             "ptac": self.ptac,
             "ptra": self.ptra,
             "kilometrage_achat": self.kilometrage_achat,
+            "kilometrage": self.kilometrage,
             "prix_achat": self.prix_achat,
             "etat": self.etat,
             "energie": self.energie,
             "marque": self.marque,
             "modele": self.modele,
-            "categorie": self.categorie}
+            "categorie": self.categorie,
+            "date_ct": self.date_ct,
+            "resultat_ct": self.resultat_ct}
 
     def listeIntervention(self):
         return {
