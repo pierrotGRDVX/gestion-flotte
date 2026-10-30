@@ -171,6 +171,21 @@ def nouvelleIntervention():
     db.commit()
     return {"message": "nouvelle intervention enregistrée"}, 201
 
+#insere un nouveau controle technique (resultat : ok, reporte, refuse)
+@vehicules_bp.route("/nouvelle/controle-technique", methods=["POST"])
+def nouveauControleTechnique():
+    data = request.json
+    print("reception données nouveau contrôle technique")
+    db = get_db()
+    dao = vehiculeDAO(db)
+    dao.insertControleTechnique(
+        data["immat"],
+        data["date_ct"],
+        data["resultat_ct"],
+        data.get("observation_ct")
+    )
+    return {"message": "nouveau contrôle technique enregistré"}, 201
+
 #retourne la liste des interventions d'un vehicule
 @vehicules_bp.route("/liste/intervention/<immat>")
 def listeIntervention(immat):

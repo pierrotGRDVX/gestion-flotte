@@ -174,6 +174,13 @@ class vehiculeDAO:
         cur.execute(requete, (immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation))
         self.bdd.commit()
 
+    def insertControleTechnique(self, immat, date_ct, resultat_ct, observation_ct):
+        cur = self.bdd.cursor()
+        cur.execute(self.req['insert_controle_technique'], (date_ct, resultat_ct, observation_ct))
+        id_ct = cur.lastrowid
+        cur.execute(self.req['insert_ct_effectue'], (immat, id_ct))
+        self.bdd.commit()
+
     def insertEnergie(self, nom):
         cur = self.bdd.cursor()
         requete = self.req['insert_energie']

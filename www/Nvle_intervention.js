@@ -271,6 +271,20 @@ function ChoixCT(){
                             </div>
                         </div>
                     </div>
+                    <div class="field">
+                        <div class="label">Résultat du contrôle:</div>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="rdl_resultat_ct" id="rdl_ct_accepte" value="ok"/> Accepté
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="rdl_resultat_ct" id="rdl_ct_reporte" value="reporte"/> Reporté
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="rdl_resultat_ct" id="rdl_ct_refuse" value="refuse"/> Refusé
+                            </label>
+                        </div>
+                    </div>
     `;
     contenu.appendChild(conteneurHTML);
     initChampDate("ipt_date");
@@ -355,7 +369,7 @@ function ControleRemplissage(){
         idTypeInter = 3;
     } else if (choix === "Contrôle technique") {
         champsObligatoires = champsObligatoires.concat([champKm]);
-        idTypeInter = 4;
+        idTypeInter = null; // le CT part dans controle_technique/ct_effectue, pas dans intervention
     } else if (choix === "Parking/Gardienage") {
         idTypeInter = 4;
     } else {
@@ -390,6 +404,42 @@ function ControleRemplissage(){
 
     //convertit la date JJ/MM/AAAA en AAAA-MM-JJ pour la base de donnees
     const dateBDD = val_date.split("/").reverse().join("-");
+
+    //cas du controle technique : un resultat (radio) est obligatoire
+    if (choix === "Contrôle technique") {
+        const radioCoche = document.querySelector('input[name="rdl_resultat_ct"]:checked');
+        if (!radioCoche) {
+            alert("Choisir le résultat du contrôle (Accepté / Reporté / Refusé)");
+            return false;
+        }
+        const donneesCT = {
+            immat: val_immat,
+            date_ct: dateBDD,
+            resultat_ct: radioCoche.value,
+            observation_ct: null
+        };
+        fetch("/nouvelle/controle-technique", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(donneesCT),
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Erreur serveur: " + response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.info("contrôle technique enregistré", data);
+                alert("Contrôle technique enregistré");
+            })
+            .catch(error => {
+                console.error("Erreur lors de l'enregistrement:", error);
+                alert("Erreur lors de l'enregistrement du contrôle technique");
+            });
+        return donneesCT;
+    }
+
     const donnees = {
         immat: val_immat,
         date: dateBDD,
