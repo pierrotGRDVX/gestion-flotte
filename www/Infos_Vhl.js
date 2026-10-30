@@ -83,14 +83,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+function formatDate(iso){
+      if (!iso) return "";
+      const parties = iso.split("-");
+      if (parties.length !== 3) return iso;
+      return parties[2] + "/" + parties[1] + "/" + parties[0];
+    };
+
 function MAJInput(items){
       document.getElementById('ipt_immatriculation').value = items.immat;
       document.getElementById('ipt_marque').value = items.marque;
       document.getElementById('ipt_model').value = items.modele;
-      document.getElementById('ipt_mise_en_circulation').value = items.date_mec;
+      document.getElementById('ipt_mise_en_circulation').value = formatDate(items.date_mec);
       document.getElementById('ipt_couleur').value = items.couleur;
       document.getElementById('ipt_kilometrage').value = items.kilometrage;
-      document.getElementById('ipt_date_ct').value = items.date_ct;
+      document.getElementById('ipt_date_ct').value = formatDate(items.date_ct);
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
       document.getElementById('rdo_categorie').textContent = items.categorie;
@@ -128,9 +135,9 @@ function MAJTableauInterventions(interventions){
       tbodyInter.innerHTML = "";
       interventions.forEach(function(inter){
         if (inter.nom_intervention === "plein"){
-          tbodyPleins.appendChild(ligneTableau([inter.date, inter.kilometrage, inter.cout_inter, inter.prix_litre, inter.volume, inter.observation]));
+          tbodyPleins.appendChild(ligneTableau([formatDate(inter.date), inter.kilometrage, inter.cout_inter, inter.prix_litre, inter.volume, inter.observation]));
         } else {
-          tbodyInter.appendChild(ligneTableau([inter.date, inter.nom_intervention, inter.kilometrage, inter.cout_inter, inter.observation]));
+          tbodyInter.appendChild(ligneTableau([formatDate(inter.date), inter.nom_intervention, inter.kilometrage, inter.cout_inter, inter.observation]));
         }
       });
     };
