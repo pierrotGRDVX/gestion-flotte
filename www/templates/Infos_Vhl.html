@@ -18,6 +18,7 @@
             <div class="tabs is-boxed">
                 <ul>
                     <li class="is-active" data-tab="tab_identite"><a>Carte d'identité</a></li>
+                    <li data-tab="tab_pleins"><a>Pleins</a></li>
                     <li data-tab="tab_interventions"><a>Interventions</a></li>
                     <li data-tab="tab_calculs"><a>Données calculées</a></li>
                     <li data-tab="tab_graphiques"><a>Graphiques</a></li>
@@ -127,7 +128,28 @@
 
             </div>
 
-            <!onglet 2 : tableau des interventions>
+            <!onglet 2 : tableau des pleins>
+            <div id="tab_pleins" class="tab-content" style="display:none">
+                <div class="box">
+                    <h1>Pleins du véhicule:</h1>
+                    <table class="table is-striped is-fullwidth" id="tbl_pleins">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Kilométrage</th>
+                                <th>Coût</th>
+                                <th>Prix litre</th>
+                                <th>Volume</th>
+                                <th>Observation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body_pleins">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!onglet 3 : tableau des autres interventions>
             <div id="tab_interventions" class="tab-content" style="display:none">
                 <div class="box">
                     <h1>Interventions du véhicule:</h1>
@@ -138,8 +160,6 @@
                                 <th>Type</th>
                                 <th>Kilométrage</th>
                                 <th>Coût</th>
-                                <th>Prix litre</th>
-                                <th>Volume</th>
                                 <th>Observation</th>
                             </tr>
                         </thead>
@@ -149,7 +169,7 @@
                 </div>
             </div>
 
-            <!onglet 3 : données calculées (à développer)>
+            <!onglet 4 : données calculées (à développer)>
             <div id="tab_calculs" class="tab-content" style="display:none">
                 <div class="box">
                     <h1>Données calculées</h1>
@@ -157,7 +177,7 @@
                 </div>
             </div>
 
-            <!onglet 4 : graphiques (à développer)>
+            <!onglet 5 : graphiques (à développer)>
             <div id="tab_graphiques" class="tab-content" style="display:none">
                 <div class="box">
                     <h1>Graphiques</h1>
