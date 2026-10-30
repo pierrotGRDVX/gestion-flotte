@@ -112,6 +112,17 @@ fetch("/liste/vehicule")
 //MISE EN PLACE LECTEUR 
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Gestion des onglets
+    document.querySelectorAll('.tabs li[data-tab]').forEach(function(onglet){
+      onglet.addEventListener('click', function(){
+        document.querySelectorAll('.tabs li').forEach(function(li){ li.classList.remove('is-active'); });
+        onglet.classList.add('is-active');
+        document.querySelectorAll('.tab-content').forEach(function(contenu){ contenu.style.display = 'none'; });
+        document.getElementById(onglet.dataset.tab).style.display = 'block';
+      });
+    });
+
     const tbody = document.getElementById('tab_vehicule');
 
     // Écouteur d'événement pour les clics sur les lignes du tableau

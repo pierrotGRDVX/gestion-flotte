@@ -11,40 +11,69 @@
             <!Contenue princial>
             <div class="contenue-central">
 
-                <!cartouche rassemblant differentes alerte>
-                <div class="box">
-                    <h1 id="titreCategorie">Etat des véhicules</h1>
-                    <div class="grid has-3-cols is-column-gap-1 is-col-min-2">
-                        <div class="cell"><span class="tag" id="tag_info_ok"></span><span class="tag is-success"> En Etat </span></div>
-                        <div class="cell"><span class="tag" id="tag_info_ed"></span><span class="tag is-warning">Endommagé</span></div>
-                        <div class="cell"><span class="tag" id="tag_info_nr"></span><span class="tag is-danger">En Panne</span></div>
+                <!onglets>
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li class="is-active" data-tab="tab_liste_vehicules"><a><span class="icon"><i class="fa-solid fa-car"></i></span><span>Liste des véhicules</span></a></li>
+                        <li data-tab="tab_distance"><a><span class="icon"><i class="fa-solid fa-road"></i></span><span>Distance parcouru</span></a></li>
+                        <li data-tab="tab_frais"><a><span class="icon"><i class="fa-solid fa-euro-sign"></i></span><span>Frais</span></a></li>
+                    </ul>
+                </div>
+
+                <!onglet 1 : liste des vehicules>
+                <div id="tab_liste_vehicules" class="tab-content">
+                    <!cartouche rassemblant differentes alerte>
+                    <div class="box">
+                        <h1 id="titreCategorie">Etat des véhicules</h1>
+                        <div class="grid has-3-cols is-column-gap-1 is-col-min-2">
+                            <div class="cell"><span class="tag" id="tag_info_ok"></span><span class="tag is-success"> En Etat </span></div>
+                            <div class="cell"><span class="tag" id="tag_info_ed"></span><span class="tag is-warning">Endommagé</span></div>
+                            <div class="cell"><span class="tag" id="tag_info_nr"></span><span class="tag is-danger">En Panne</span></div>
+                        </div>
+                    </div>  
+
+                    <!cartouche contenant le bouton ajouter une véhicule>
+                    <div class="box">
+                        <h1 id="titreCategorie">Ajouter un véhicule</h1>
+                        <div  class="button is-success"><a href="pageAjoutVhl">Ajouter</a></div>
                     </div>
-                </div>  
 
-                <!cartouche contenant le bouton ajouter une véhicule>
-                <div class="box">
-                    <h1 id="titreCategorie">Ajouter un véhicule</h1>
-                    <div  class="button is-success"><a href="pageAjoutVhl">Ajouter</a></div>
+                    <!Table des differentes véhicules enregistrées dans la base de données> 
+                    <div class="box">
+                        <table class="table is-hoverable is-striped" >
+                            <thead>
+                                <tr>
+                                    <th><abbr title="Immat">Immatriculation</abbr></th>
+                                    <th><abbr title="Type">Type</abbr></th>
+                                    <th><abbr title="Marque">Marque</abbr></th>
+                                    <th><abbr title="Model">Model</abbr></th>
+                                    <th><abbr title="CT">CT</abbr></th>
+                                    <th><abbr title="Etat">Etat</abbr></th>
+                                </tr>
+                            </thead>
+                            <!apparait ici la liste des vehicule recu depuis le java script>
+                            <tbody id="tab_vehicule"></tbody>
+                            </tbody>    
+                        </table>
+                    </div>
                 </div>
 
-                <!Table des differentes véhicules enregistrées dans la base de données> 
-                <div class="box">
-                    <table class="table is-hoverable is-striped" >
-                        <thead>
-                            <tr>
-                                <th><abbr title="Immat">Immatriculation</abbr></th>
-                                <th><abbr title="Type">Type</abbr></th>
-                                <th><abbr title="Marque">Marque</abbr></th>
-                                <th><abbr title="Model">Model</abbr></th>
-                                <th><abbr title="CT">CT</abbr></th>
-                                <th><abbr title="Etat">Etat</abbr></th>
-                            </tr>
-                        </thead>
-                        <!apparait ici la liste des vehicule recu depuis le java script>
-                        <tbody id="tab_vehicule"></tbody>
-                        </tbody>    
-                    </table>
+                <!onglet 2 : distance parcouru (a developper)>
+                <div id="tab_distance" class="tab-content" style="display:none">
+                    <div class="box">
+                        <h1 id="titreCategorie">Distance parcouru</h1>
+                        <p>À développer.</p>
+                    </div>
                 </div>
+
+                <!onglet 3 : frais (a developper)>
+                <div id="tab_frais" class="tab-content" style="display:none">
+                    <div class="box">
+                        <h1 id="titreCategorie">Frais</h1>
+                        <p>À développer.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     <script src="Gestion_Vhl.js" defer></script>    
