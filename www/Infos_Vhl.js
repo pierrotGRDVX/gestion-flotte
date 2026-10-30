@@ -95,7 +95,7 @@ function MAJInput(items){
       document.getElementById('ipt_date_ct').value = formatDate(items.date_ct);
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
-      document.getElementById('ipt_categorie').textContent = items.categorie;
+      document.getElementById('ipt_categorie').value = items.categorie;
       const fld_etat = document.getElementById('fld_etat')
       fld_etat.innerHTML = "";
       const conteneurHTML = document.createElement("button");
