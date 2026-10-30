@@ -15,10 +15,10 @@ class vehiculeDAO:
         #print(s)
         self.req = dict(req.items('VEHICULE'))
 
-    def insertVehicule(self, immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat):
+    def insertVehicule(self, immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat, energie):
         cur = self.bdd.cursor()
         requete = self.req['insert_vehicule']
-        cur.execute(requete, (immat, date_mec, id_proprio,id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat,etat))
+        cur.execute(requete, (immat, date_mec, id_proprio,id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat, energie))
         self.bdd.commit()
     
     def insertCategorie(self, categorie):
@@ -99,6 +99,7 @@ class vehiculeDAO:
             kilometrage_achat = row["kilometrage_achat"],
             prix_achat = row["prix_achat"],
             etat = row["etat"],
+            energie = row["energie"],
             marque = row["marque"],
             modele = row["modele"],
             categorie = row["categorie"]
@@ -169,6 +170,28 @@ class vehiculeDAO:
         cur.execute(requete, (immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation))
         self.bdd.commit()
 
+    def insertEnergie(self, nom):
+        cur = self.bdd.cursor()
+        requete = self.req['insert_energie']
+        cur.execute(requete, (nom,))
+        self.bdd.commit()
+
+    def listeEnergie(self):
+        cur = self.bdd.cursor()
+        requete = self.req['liste_energie']
+        cur.execute(requete)
+        rows = cur.fetchall()
+        print("liste energies")
+
+        donnees = []
+        for row in rows:
+            donnees.append(
+                vehiculesDTO(
+                    energie = row["nom"]
+                )
+            )
+        return donnees
+
     def listeEtatVehicule(self):
         cur = self.bdd.cursor()
         requete = self.req['nbr_etat_vehicule']
@@ -199,6 +222,7 @@ class vehiculeDAO:
                 vehiculesDTO(
                     immat = row["immat"],
                     etat = row["etat"],
+                    energie = row["energie"],
                     kilometrage_achat = row["kilometrage"],
                     categorie = row["categorie"],
                     date_ct = row["date_ct"],

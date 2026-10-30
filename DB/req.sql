@@ -1,6 +1,6 @@
 [VEHICULE]
 
-insert_vehicule = INSERT INTO vehicule(immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat) VALUES (?,?,?,?,?,?,?,?,?,?);
+insert_vehicule = INSERT INTO vehicule(immat, date_mec, id_proprio, id_modele, num_serie, ptac, ptra, kilometrage_achat, prix_achat, etat, energie) VALUES (?,?,?,?,?,?,?,?,?,?,?);
 
 insert_marque = INSERT INTO marque(marque) VALUES(?);
 
@@ -12,7 +12,7 @@ insert_categorie = INSERT INTO categorie(categorie) VALUES (?);
 
 liste_categorie = SELECT * FROM categorie;
 
-liste_vehicule = SELECT vehicule.immat, vehicule.etat, COALESCE((SELECT intervention.kilometrage FROM intervention WHERE intervention.immat = vehicule.immat AND intervention.kilometrage IS NOT NULL ORDER BY intervention.id_inter DESC LIMIT 1), vehicule.kilometrage_achat) AS kilometrage, categorie.categorie, controle_technique.date_ct, controle_technique.resultat_ct, marque.marque, modele.modele FROM vehicule JOIN modele ON vehicule.id_modele = modele.id_modele JOIN marque ON modele.marque = marque.marque JOIN categorie ON modele.categorie = categorie.categorie LEFT JOIN ct_effectue ON vehicule.immat = ct_effectue.immat LEFT JOIN controle_technique ON ct_effectue.id_ct = controle_technique.id_ct;
+liste_vehicule = SELECT vehicule.immat, vehicule.etat, vehicule.energie, COALESCE((SELECT intervention.kilometrage FROM intervention WHERE intervention.immat = vehicule.immat AND intervention.kilometrage IS NOT NULL ORDER BY intervention.id_inter DESC LIMIT 1), vehicule.kilometrage_achat) AS kilometrage, categorie.categorie, controle_technique.date_ct, controle_technique.resultat_ct, marque.marque, modele.modele FROM vehicule JOIN modele ON vehicule.id_modele = modele.id_modele JOIN marque ON modele.marque = marque.marque JOIN categorie ON modele.categorie = categorie.categorie LEFT JOIN ct_effectue ON vehicule.immat = ct_effectue.immat LEFT JOIN controle_technique ON ct_effectue.id_ct = controle_technique.id_ct;
 
 supprimer_categorie = DELETE FROM categorie WHERE categorie = ?;
 
@@ -26,13 +26,17 @@ liste_modele = SELECT id_modele, modele, marque, categorie, cylindree, puissance
 
 supprimer_modele = DELETE FROM modele WHERE id_modele = ?;
 
-info_vehicule = SELECT vehicule.immat, vehicule.date_mec, vehicule.num_serie, vehicule.ptac, vehicule.ptra, vehicule.kilometrage_achat, vehicule.prix_achat, vehicule.etat, modele.marque, modele.modele, categorie.categorie FROM vehicule JOIN modele ON modele.id_modele = vehicule.id_modele JOIN categorie ON categorie.categorie = modele.categorie WHERE vehicule.immat = ?;
+info_vehicule = SELECT vehicule.immat, vehicule.date_mec, vehicule.num_serie, vehicule.ptac, vehicule.ptra, vehicule.kilometrage_achat, vehicule.prix_achat, vehicule.etat, vehicule.energie, modele.marque, modele.modele, categorie.categorie FROM vehicule JOIN modele ON modele.id_modele = vehicule.id_modele JOIN categorie ON categorie.categorie = modele.categorie WHERE vehicule.immat = ?;
 
 insert_intervention = INSERT INTO intervention(immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation) VALUES (?,?,?,?,?,?,?,?);
 
 liste_intervention = SELECT id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, observation FROM intervention WHERE immat = ?;
 
 nbr_etat_vehicule = SELECT etat, COUNT(*) AS nbr FROM vehicule GROUP BY etat;
+
+insert_energie = INSERT INTO energie(nom) VALUES (?);
+
+liste_energie = SELECT * FROM energie;
 
 [PROPRIO]
 
