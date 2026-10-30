@@ -22,7 +22,8 @@ def nouveauVehicule():
         data["ptra"],
         data["kilometrage_achat"],
         data["prix_achat"],
-        data["etat"]
+        data["etat"],
+        data["energie"]
     )
     db.commit()
     return {"message": "Véhicule créé"}, 201
@@ -71,6 +72,27 @@ def supprimerCategorie():
     )
     db.commit()
     return {"message": "categorie supprimee"}, 201
+
+#ajoute une nouvelle energie
+@vehicules_bp.route("/nouvelle/energie", methods=["POST"])
+def nouvelleEnergie():
+    data = request.json
+    db = get_db()
+    dao = vehiculeDAO(db)
+    dao.insertEnergie(
+        data["nom"]
+    )
+    db.commit()
+    return {"message": "nouvelle energie enregistrée"}, 201
+
+#retourne la liste des energies
+@vehicules_bp.route("/liste/energie")
+def listeEnergie():
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnees = dao.listeEnergie()
+    energiesDicts = [m.listeEnergie() for m in donnees]
+    return jsonify(energiesDicts)
 
 #retourne la liste des marques
 @vehicules_bp.route("/liste/marque")

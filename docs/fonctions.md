@@ -12,8 +12,8 @@
 
 | Description | Fonction Flask | HTTP | Path | Entrée | Sortie | Fonction DAO |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-| Ajouter un nouveau véhicule | nouveauVehicule(immat, date\_mec, id\_proprio, id\_modele, num\_serie, ptac, ptra, kilometrage\_achat, prix\_achat, etat) | POST | /cars | .json | success | insertVehicule(...) mêmes paramètres |
-| Obtenir la liste des véhicules | `listeVehicule()` | GET | `/liste/vehicule` | — | .json (immat, etat, kilometrage, categorie, date\_ct, resultat\_ct, marque, modele). `kilometrage` = kilométrage de la dernière intervention du véhicule ayant un kilométrage, sinon `kilometrage_achat` | `listeVehicule()` → DTO |
+| Ajouter un nouveau véhicule | nouveauVehicule(immat, date\_mec, id\_proprio, id\_modele, num\_serie, ptac, ptra, kilometrage\_achat, prix\_achat, etat, energie) | POST | /cars | .json | success | insertVehicule(...) mêmes paramètres |
+| Obtenir la liste des véhicules | `listeVehicule()` | GET | `/liste/vehicule` | — | .json (immat, etat, energie, kilometrage, categorie, date\_ct, resultat\_ct, marque, modele). `kilometrage` = kilométrage de la dernière intervention du véhicule ayant un kilométrage, sinon `kilometrage_achat` | `listeVehicule()` → DTO |
 | Ajouter une nouvelle marque | nouvelleMarque(marque) | POST | /nouvelle/marque | .json | success | insertMarque(marque) |
 | Ajouter une nouvelle catégorie | nouvelleCategorie(categorie) | POST | /nouvelle/categorie | .json | success | insertCategorie(categorie) |
 | Obtenir la liste des catégories | listeCategorie() | GET | /liste/categorie | — | .json | listeCategorie() → DTO listeCategorie() |
@@ -22,9 +22,11 @@
 | Ajouter un nouveau modèle | `nouveauModele(modele, marque, categorie, cylindree, puissance, nbr_place)` | POST | `/nouveau/modele` | .json | success | `insertModele(...)` |
 | Obtenir la liste des modèles | `listeModele()` | GET | `/liste/modele` | — | .json | `listeModele()` → DTO |
 | Supprimer un modèle | `supprimerModele(id_modele)` | POST | `/supprimer/modele` | .json | success | `supprimerModele(id_modele)` |
-| Obtenir les infos d'un véhicule | `infoVehicule(immat)` | GET | `/info/vehicule/<immat>` | — | .json | `infoVehicule(immat)` → DTO |
+| Obtenir les infos d'un véhicule | `infoVehicule(immat)` | GET | `/info/vehicule/<immat>` | — | .json (inclut energie) | `infoVehicule(immat)` → DTO |
 | Ajouter une nouvelle intervention | nouvelleIntervention( immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) | POST | /nouvelle/intervention | .json | success | insertIntervention(immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) |
 | Compter les véhicules par état (en_service / endommagé / non_roulant) | `listeEtatVehicule()` | GET | `/liste/etat/vehicule` | — | .json (etat, nbr\_etat) | `listeEtatVehicule()` → DTO |
+| Ajouter une nouvelle énergie | nouvelleEnergie(nom) | POST | /nouvelle/energie | .json | success | insertEnergie(nom) |
+| Obtenir la liste des énergies | `listeEnergie()` | GET | `/liste/energie` | — | .json (nom) | `listeEnergie()` → DTO listeEnergie() |
 |  |  |  |  |  |  |  |
 
 &nbsp;

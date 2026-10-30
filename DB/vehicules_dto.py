@@ -1,6 +1,6 @@
 class vehiculesDTO:
 
-    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0):
+    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0, energie = ""):
         self.categorie = categorie
         self.immat = immat
         self.marque = marque
@@ -27,6 +27,7 @@ class vehiculesDTO:
         self.date_ct = date_ct
         self.resultat_ct = resultat_ct
         self.nbr_etat = nbr_etat
+        self.energie = energie
 
     def listeCategorie(self):
         return {
@@ -56,6 +57,7 @@ class vehiculesDTO:
             "kilometrage_achat": self.kilometrage_achat,
             "prix_achat": self.prix_achat,
             "etat": self.etat,
+            "energie": self.energie,
             "marque": self.marque,
             "modele": self.modele,
             "categorie": self.categorie}
@@ -76,6 +78,7 @@ class vehiculesDTO:
         return {
             "immat": self.immat,
             "etat": self.etat,
+            "energie": self.energie,
             "kilometrage": self.kilometrage_achat,
             "categorie": self.categorie,
             "date_ct": self.date_ct,
@@ -87,3 +90,7 @@ class vehiculesDTO:
         return {
             "etat": self.etat,
             "nbr_etat": self.nbr_etat}
+
+    def listeEnergie(self):
+        return {
+            "nom": self.energie}

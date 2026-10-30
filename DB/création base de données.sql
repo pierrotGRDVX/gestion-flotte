@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS type_intervention;
 DROP TABLE IF EXISTS categorie_detenues;
 DROP TABLE IF EXISTS permis;
 DROP TABLE IF EXISTS vehicule;
+DROP TABLE IF EXISTS energie;
 DROP TABLE IF EXISTS proprietaire;
 DROP TABLE IF EXISTS modele;
 DROP TABLE IF EXISTS marque;
@@ -89,6 +90,10 @@ CREATE TABLE proprietaire (
     FOREIGN KEY (num_permis) REFERENCES permis(num_permis)
 );
 
+CREATE TABLE energie (
+    nom  VARCHAR(256) PRIMARY KEY
+);
+
 CREATE TABLE vehicule (
     immat               VARCHAR(32) PRIMARY KEY,
     date_mec            DATE,
@@ -100,8 +105,10 @@ CREATE TABLE vehicule (
     kilometrage_achat   NUMERIC,
     prix_achat          NUMERIC,
     etat                VARCHAR(256),
+    energie             VARCHAR(256),
     FOREIGN KEY (id_proprio) REFERENCES proprietaire(id_proprio),
-    FOREIGN KEY (id_modele) REFERENCES modele(id_modele)
+    FOREIGN KEY (id_modele) REFERENCES modele(id_modele),
+    FOREIGN KEY (energie) REFERENCES energie(nom)
 );
 
 CREATE TABLE categorie_detenues (
