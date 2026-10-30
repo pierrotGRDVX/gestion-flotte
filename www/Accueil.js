@@ -51,13 +51,13 @@ fetch("/liste/vehicule")
       let insert = "";
       let val_etat = "";
 
-      //MEF de la colonne etat
+      //MEF de la colonne etat (icone selon l'etat)
       if(items.etat === "en_service"){
-        val_etat = `<td class="has-background-success has-text-white">${items.etat}</td>`}
+        val_etat = `<td><i class="fas fa-check-square"></i></td>`}
       if(items.etat === "endommagé"){
-        val_etat = `<td class="has-background-warning has-text-black">${items.etat}</td>`}
+        val_etat = `<td><i class="fas fa-exclamation-triangle"></i></td>`}
       if(items.etat === "non_roulant"){
-        val_etat = `<td class="has-background-danger has-text-white">${items.etat}</td>`}
+        val_etat = `<td><i class="fas fa-ban"></i></td>`}
 
       //MEF de la colonne CT (icone selon echeance)
       const dateCT = items.date_ct ? new Date(items.date_ct) : null;
