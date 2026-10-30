@@ -35,6 +35,62 @@ fetch('/liste/marque')
         console.error('Erreur lors du chargement de la liste des marques:', error);
     });
 
+fetch('/liste/modele')
+    .then(response => response.json())
+    .then(data => {
+        liste_model = data;
+        console.log("liste des modeles telechargee", liste_model);
+        MAJSelectionModel();
+    })
+    .catch(error => {
+        console.error('Erreur lors du chargement de la liste des modeles :', error);
+    });
+
+fetch('/liste/energie')
+    .then(response => response.json())
+    .then(data => {
+        console.log("liste des energies", data);
+        MAJSelectionNRJ(data);
+    })
+    .catch(error => {
+        console.error('Erreur lors du chargement de la liste des energies :', error);
+    });
+
+//MAJ du select modele selon la marque choisie
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('slt_marque').addEventListener('change', function() {
+        MAJSelectionModel(this.value);
+    });
+});
+
+function MAJSelectionModel(marqueSelectionnee){
+    const contenu = document.getElementById("slt_model");
+    const divSelect = document.getElementById("div_slt_model");
+    while (contenu.options.length > 1) {
+        contenu.remove(1);
+    }
+    if (!marqueSelectionnee || marqueSelectionnee === "--Sélectionner--") {
+        divSelect.setAttribute("disabled", "");
+        return;
+    }
+    divSelect.removeAttribute("disabled");
+    const liste = liste_model.filter(v => v.marque === marqueSelectionnee);
+    liste.forEach(items => {
+        const option = document.createElement("option");
+        option.textContent = items.modele;
+        contenu.appendChild(option);
+    });
+}
+
+function MAJSelectionNRJ(data){
+    const contenu = document.getElementById("slt_energie");
+    data.forEach(items => {
+        const option = document.createElement("option");
+        option.textContent = items.nom;
+        contenu.appendChild(option);
+    });
+}
+
 //mise en place de lecteurs d'evenements
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
