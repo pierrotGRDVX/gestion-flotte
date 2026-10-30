@@ -114,7 +114,7 @@ Save.addEventListener('click', async () => {
         modele_nom: val_model,
         modele_marque: val_marque,
         categorie: val_cat,
-        etat: "OK",
+        etat: "en_service",
         energie: val_energie,
         date_mec: val_date_mec
         };
