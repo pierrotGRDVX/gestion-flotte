@@ -20,8 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //lecture du bouton enregistrer
     btn_enregitrer.addEventListener('click',async function(){
         console.info("click");
-        const donnees = ControleRemplissage();
-        
+        const choix = document.getElementById('slt_depense')?.value || "";
+        if (choix === "Contrôle technique") {
+            enregistrerControleTechnique();
+        } else {
+            ControleRemplissage();
+        }
     });
     //Lecture de la selection de la depense
     const slt_depense = document.getElementById('slt_depense')
@@ -285,6 +289,12 @@ function ChoixCT(){
                             </label>
                         </div>
                     </div>
+                    <div class="field">
+                        <div class="label">Observation:</div>
+                        <div class="control">
+                            <input class="textarea has-fixed-size" id="txa_observation_ct" rows="1" placeholder="Observation"/>
+                        </div>
+                    </div>
     `;
     contenu.appendChild(conteneurHTML);
     initChampDate("ipt_date");
@@ -336,6 +346,59 @@ function champDateAffiche(){
     return document.getElementById("ipt_date") || document.getElementById("txa_date");
 }
 
+//enregistre un controle technique : immatriculation, date, resultat (radio) et observation
+function enregistrerControleTechnique(){
+    console.info("Fonction enregistrement controle technique")
+    const slt_immatriculation = document.getElementById("slt_immatriculation");
+    const champDate = document.getElementById("ipt_date") || document.getElementById("txa_date");
+    const val_immat = slt_immatriculation.value;
+    const val_date = champDate?.value || "";
+    const radioCoche = document.querySelector('input[name="rdl_resultat_ct"]:checked');
+    const champObs = document.getElementById("txa_observation_ct");
+    const val_observation = champObs?.value || "";
+
+    //validation : immatriculation, date et resultat obligatoires
+    coloreChamp(slt_immatriculation, val_immat === "" || val_immat === "--Sélectionner--");
+    coloreChamp(champDate, val_date.trim() === "");
+    if (val_immat === "" || val_immat === "--Sélectionner--" || val_date.trim() === "") {
+        alert("Remplir l'immatriculation et la date (champs en rouge)");
+        return false;
+    }
+    if (!radioCoche) {
+        alert("Choisir le résultat du contrôle (Accepté / Reporté / Refusé)");
+        return false;
+    }
+
+    //convertit la date JJ/MM/AAAA en AAAA-MM-JJ pour la base de donnees
+    const dateBDD = val_date.split("/").reverse().join("-");
+    const donneesCT = {
+        immat: val_immat,
+        date_ct: dateBDD,
+        resultat_ct: radioCoche.value,
+        observation_ct: val_observation !== "" ? val_observation : null
+    };
+    fetch("/nouvelle/controle-technique", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donneesCT),
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Erreur serveur: " + response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.info("contrôle technique enregistré", data);
+            alert("Contrôle technique enregistré");
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'enregistrement:", error);
+            alert("Erreur lors de l'enregistrement du contrôle technique");
+        });
+    return donneesCT;
+}
+
 //Controle si les cases affichees sont bien remplies, si le kilometrage saisi
 //est superieur au precedent kilometrage, puis envoie l'intervention au serveur
 function ControleRemplissage(){
@@ -367,9 +430,6 @@ function ControleRemplissage(){
     } else if (choix === "Réparation") {
         champsObligatoires = champsObligatoires.concat([champKm]);
         idTypeInter = 3;
-    } else if (choix === "Contrôle technique") {
-        champsObligatoires = champsObligatoires.concat([champKm]);
-        idTypeInter = null; // le CT part dans controle_technique/ct_effectue, pas dans intervention
     } else if (choix === "Parking/Gardienage") {
         idTypeInter = 4;
     } else {
@@ -404,41 +464,6 @@ function ControleRemplissage(){
 
     //convertit la date JJ/MM/AAAA en AAAA-MM-JJ pour la base de donnees
     const dateBDD = val_date.split("/").reverse().join("-");
-
-    //cas du controle technique : un resultat (radio) est obligatoire
-    if (choix === "Contrôle technique") {
-        const radioCoche = document.querySelector('input[name="rdl_resultat_ct"]:checked');
-        if (!radioCoche) {
-            alert("Choisir le résultat du contrôle (Accepté / Reporté / Refusé)");
-            return false;
-        }
-        const donneesCT = {
-            immat: val_immat,
-            date_ct: dateBDD,
-            resultat_ct: radioCoche.value,
-            observation_ct: null
-        };
-        fetch("/nouvelle/controle-technique", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(donneesCT),
-        })
-            .then(response => {
-                if (!response.ok) throw new Error("Erreur serveur: " + response.status);
-                return response.json();
-            })
-            .then(data => {
-                console.info("contrôle technique enregistré", data);
-                alert("Contrôle technique enregistré");
-            })
-            .catch(error => {
-                console.error("Erreur lors de l'enregistrement:", error);
-                alert("Erreur lors de l'enregistrement du contrôle technique");
-            });
-        return donneesCT;
-    }
 
     const donnees = {
         immat: val_immat,
