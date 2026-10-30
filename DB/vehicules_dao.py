@@ -232,8 +232,7 @@ class vehiculeDAO:
                     date_ct = row["date_ct"],
                     resultat_ct = row["resultat_ct"],
                     marque = row["marque"],
-                    modele = row["modele"],
-                    proprio = row["proprio"]
+                    modele = row["modele"]
                 )
             )
         return donnees

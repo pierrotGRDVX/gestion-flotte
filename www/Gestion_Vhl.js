@@ -101,7 +101,6 @@ fetch("/liste/vehicule")
         <td>${items.modele}</td>
         ${val_ct}
         ${val_etat}
-        <td>${items.proprio}</td>
         `;
       if(classe_ligne !== ""){
         conteneurHTML.setAttribute("class", classe_ligne)}
