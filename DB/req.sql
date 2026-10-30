@@ -34,6 +34,8 @@ liste_intervention = SELECT intervention.id_inter, intervention.immat, intervent
 
 nbr_etat_vehicule = SELECT etat, COUNT(*) AS nbr FROM vehicule GROUP BY etat;
 
+distance_parcourue = SELECT COALESCE((SELECT MAX(kilometrage) FROM intervention WHERE kilometrage IS NOT NULL), 0) - (SELECT COALESCE(MIN(kilometrage), 0) FROM intervention WHERE kilometrage IS NOT NULL) AS distance_totale, COALESCE((SELECT MAX(kilometrage) FROM intervention WHERE kilometrage IS NOT NULL AND strftime('%Y', date) = strftime('%Y', 'now')), 0) - (SELECT COALESCE(MIN(kilometrage), 0) FROM intervention WHERE kilometrage IS NOT NULL AND strftime('%Y', date) = strftime('%Y', 'now')) AS distance_annee, COALESCE((SELECT MAX(kilometrage) FROM intervention WHERE kilometrage IS NOT NULL AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')), 0) - (SELECT COALESCE(MIN(kilometrage), 0) FROM intervention WHERE kilometrage IS NOT NULL AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')) AS distance_mois;
+
 insert_energie = INSERT INTO energie(nom) VALUES (?);
 
 liste_energie = SELECT * FROM energie;

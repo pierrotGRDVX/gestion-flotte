@@ -213,6 +213,19 @@ class vehiculeDAO:
             )
         return donnees
 
+    def distanceParcourue(self):
+        cur = self.bdd.cursor()
+        requete = self.req['distance_parcourue']
+        cur.execute(requete)
+        row = cur.fetchone()
+        print("distance parcourue")
+
+        return vehiculesDTO(
+            distance_totale = row["distance_totale"],
+            distance_annee = row["distance_annee"],
+            distance_mois = row["distance_mois"]
+        )
+
     def listeVehicule(self):
         cur = self.bdd.cursor()
         requete = self.req['liste_vehicule']

@@ -1,6 +1,6 @@
 class vehiculesDTO:
 
-    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", nom_intervention = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0, energie = ""):
+    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", nom_intervention = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0, energie = "", distance_totale = 0, distance_annee = 0, distance_mois = 0):
         self.categorie = categorie
         self.immat = immat
         self.marque = marque
@@ -29,6 +29,9 @@ class vehiculesDTO:
         self.resultat_ct = resultat_ct
         self.nbr_etat = nbr_etat
         self.energie = energie
+        self.distance_totale = distance_totale
+        self.distance_annee = distance_annee
+        self.distance_mois = distance_mois
 
     def listeCategorie(self):
         return {
@@ -95,6 +98,12 @@ class vehiculesDTO:
         return {
             "etat": self.etat,
             "nbr_etat": self.nbr_etat}
+
+    def distanceParcourue(self):
+        return {
+            "distance_totale": self.distance_totale,
+            "distance_annee": self.distance_annee,
+            "distance_mois": self.distance_mois}
 
     def listeEnergie(self):
         return {

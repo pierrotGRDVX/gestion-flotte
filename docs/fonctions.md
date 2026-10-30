@@ -26,6 +26,7 @@
 | Ajouter une nouvelle intervention | nouvelleIntervention( immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) | POST | /nouvelle/intervention | .json | success | insertIntervention(immat, date,  cout\_inter, prix\_litre, volume, kilometrage, id\_type\_inter, observation) |
 | Obtenir la liste des interventions d'un véhicule | `listeIntervention(immat)` | GET | `/liste/intervention/<immat>` | — | .json (id_inter, immat, date, cout_inter, prix_litre, volume, kilometrage, id_type_inter, nom_intervention, observation), trié par date décroissante | `listeIntervention(immat)` → DTO |
 | Compter les véhicules par état (en_service / endommagé / non_roulant) | `listeEtatVehicule()` | GET | `/liste/etat/vehicule` | — | .json (etat, nbr\_etat) | `listeEtatVehicule()` → DTO |
+| Distance parcourue par l'ensemble des véhicules (total, année en cours, mois en cours), calculée depuis les kilométrages des interventions | `distanceParcourue()` | GET | `/distance/parcourue` | — | .json (distance_totale, distance_annee, distance_mois) = MAX(kilometrage) − MIN(kilometrage) des interventions, filtrées ou non sur l'année/mois en cours | `distanceParcourue()` → DTO distanceParcourue() (requête distance_parcourue de req.sql) |
 | Ajouter une nouvelle énergie | nouvelleEnergie(nom) | POST | /nouvelle/energie | .json | success | insertEnergie(nom) |
 | Obtenir la liste des énergies | `listeEnergie()` | GET | `/liste/energie` | — | .json (nom) | `listeEnergie()` → DTO listeEnergie() |
 |  |  |  |  |  |  |  |
