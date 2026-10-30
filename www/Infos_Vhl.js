@@ -85,6 +85,46 @@ function formatDate(iso){
       return parties[2] + "/" + parties[1] + "/" + parties[0];
     };
 
+//met a jour le tag CT selon la date et le resultat du dernier controle technique
+function MAJTagCT(dateCtIso, resultatCt){
+    const tag = document.getElementById('tag_ct');
+    if (!tag) return;
+    let classe = "is-success";
+    let texte = "";
+    let icone = '<i class="fas fa-check-square"></i>';
+
+    if (dateCtIso && resultatCt) {
+        const dateCt = new Date(dateCtIso + "T00:00:00");
+        const maintenant = new Date();
+        maintenant.setHours(0, 0, 0, 0);
+        const ilY2Ans = new Date(maintenant);
+        ilY2Ans.setFullYear(ilY2Ans.getFullYear() - 2);
+        const dans2Mois = new Date(maintenant);
+        dans2Mois.setMonth(dans2Mois.getMonth() + 2);
+
+        if (resultatCt === "refuse") {
+            classe = "is-danger";
+            texte = "CT refusé";
+            icone = '<i class="fas fa-ban"></i>';
+        } else if (resultatCt === "reporte") {
+            classe = "is-warning";
+            texte = "CT à repasser";
+            icone = '<i class="fas fa-exclamation-triangle"></i>';
+        } else if (dateCt < ilY2Ans) {
+            classe = "is-danger";
+            texte = "CT dépassé";
+            icone = '<i class="fas fa-ban"></i>';
+        } else if (dateCt < dans2Mois) {
+            classe = "is-warning";
+            texte = "CT bientôt expiré";
+            icone = '<i class="fas fa-exclamation-triangle"></i>';
+        }
+    }
+
+    tag.className = "tag " + classe;
+    tag.innerHTML = '<span class="icon">' + icone + '</span>' + texte;
+}
+
 function MAJInput(items){
       document.getElementById('ipt_immatriculation').value = items.immat;
       document.getElementById('ipt_marque').value = items.marque;
@@ -93,6 +133,7 @@ function MAJInput(items){
       document.getElementById('ipt_couleur').value = items.couleur;
       document.getElementById('ipt_kilometrage').value = items.kilometrage;
       document.getElementById('ipt_date_ct').value = formatDate(items.date_ct);
+      MAJTagCT(items.date_ct, items.resultat_ct);
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
       document.getElementById('ipt_categorie').value = items.categorie;
