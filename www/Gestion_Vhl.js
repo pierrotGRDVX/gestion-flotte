@@ -17,6 +17,18 @@ fetch("/liste/etat/vehicule")
   .catch(error => console.error("Erreur lors du chargement des etats :", error));
 
 
+//RECEPTION DE LA DISTANCE PARCOURUE PAR LA FLotte (onglet "Distance parcouru")
+fetch("/distance/parcourue")
+  .then(response => response.json())
+  .then(data => {
+    console.log("distance parcourue", data);
+    document.getElementById("ipt_distance_totale").value = data.distance_totale + " km";
+    document.getElementById("ipt_distance_annee").value = data.distance_annee + " km";
+    document.getElementById("ipt_distance_mois").value = data.distance_mois + " km";
+  })
+  .catch(error => console.error("Erreur lors du chargement de la distance parcourue :", error));
+
+
 //RECEPTION DES DONNEES
 fetch("/liste/vehicule")
   .then(response => response.json())

@@ -212,3 +212,11 @@ def listeEtatVehicule():
     donnees = dao.listeEtatVehicule()
     etatsDicts = [m.listeEtatVehicule() for m in donnees]
     return jsonify(etatsDicts)
+
+#retourne la distance parcourue par l'ensemble des vehicules (total, annee en cours, mois en cours)
+@vehicules_bp.route("/distance/parcourue")
+def distanceParcourue():
+    db = get_db()
+    dao = vehiculeDAO(db)
+    donnees = dao.distanceParcourue()
+    return jsonify(donnees.distanceParcourue())
