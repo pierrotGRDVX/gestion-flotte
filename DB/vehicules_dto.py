@@ -1,6 +1,6 @@
 class vehiculesDTO:
 
-    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", nom_intervention = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0, energie = "", distance_totale = 0, distance_annee = 0, distance_mois = 0):
+    def __init__(self,categorie = "", immat = "", date = "", cout_inter = "", prix_litre = "", volume = "", kilometrage = "", id_type_inter = "", nom_intervention = "", observation = "", id_inter = "", marque = "", date_mec = "", num_serie = "", ptac = "", ptra = "", kilometrage_achat = "", prix_achat = "", etat = "", modele = "", id_modele = "", cylindree = "", puissance = "", nbr_place = "", date_ct = "", resultat_ct = "", nbr_etat = 0, energie = "", distance_totale = 0, distance_annee = 0, distance_mois = 0, litres_total = 0, litres_annee = 0, litres_mois = 0, distance_moyenne_annee = 0, distance_moyenne_mois = 0):
         self.categorie = categorie
         self.immat = immat
         self.marque = marque
@@ -32,6 +32,11 @@ class vehiculesDTO:
         self.distance_totale = distance_totale
         self.distance_annee = distance_annee
         self.distance_mois = distance_mois
+        self.litres_total = litres_total
+        self.litres_annee = litres_annee
+        self.litres_mois = litres_mois
+        self.distance_moyenne_annee = distance_moyenne_annee
+        self.distance_moyenne_mois = distance_moyenne_mois
 
     def listeCategorie(self):
         return {
@@ -104,6 +109,18 @@ class vehiculesDTO:
             "distance_totale": self.distance_totale,
             "distance_annee": self.distance_annee,
             "distance_mois": self.distance_mois}
+
+    def distanceConsoVhl(self):
+        return {
+            "immat": self.immat,
+            "distance_totale": self.distance_totale,
+            "litres_total": self.litres_total,
+            "distance_annee": self.distance_annee,
+            "litres_annee": self.litres_annee,
+            "distance_mois": self.distance_mois,
+            "litres_mois": self.litres_mois,
+            "distance_moyenne_annee": self.distance_moyenne_annee,
+            "distance_moyenne_mois": self.distance_moyenne_mois}
 
     def listeEnergie(self):
         return {

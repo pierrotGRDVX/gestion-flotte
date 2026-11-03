@@ -27,6 +27,21 @@ fetch(`/info/vehicule/${encodeURIComponent(immat)}`)
       console.error("Erreur lors de la requête:", error);
   });
 
+fetch(`/distance/conso/${encodeURIComponent(immat)}`)
+  .then(response => {
+    if (!response.ok) {
+        throw new Error(`Erreur HTTP! statut: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+      console.log("Chargement distances/consommations lancé", data);
+      MAJDistanceConso(data);
+  })
+  .catch(error => {
+      console.error("Erreur lors de la requête:", error);
+  });
+
 fetch(`/liste/intervention/${encodeURIComponent(immat)}`)
   .then(response => response.json())
   .then(data => {
@@ -125,6 +140,17 @@ function MAJTagCT(dateCtIso, resultatCt){
     tag.className = "tag " + classe;
     tag.innerHTML = '<span class="icon">' + icone + '</span>' + texte;
 }
+
+function MAJDistanceConso(d){
+      document.getElementById('ipt_dist_totale').value = d.distance_totale;
+      document.getElementById('ipt_litres_total').value = d.litres_total;
+      document.getElementById('ipt_dist_annee').value = d.distance_annee;
+      document.getElementById('ipt_litres_annee').value = d.litres_annee;
+      document.getElementById('ipt_dist_mois').value = d.distance_mois;
+      document.getElementById('ipt_litres_mois').value = d.litres_mois;
+      document.getElementById('ipt_dist_moy_annee').value = d.distance_moyenne_annee === null ? "" : Math.round(d.distance_moyenne_annee);
+      document.getElementById('ipt_dist_moy_mois').value = d.distance_moyenne_mois === null ? "" : Math.round(d.distance_moyenne_mois);
+    };
 
 function MAJInput(items){
       document.getElementById('ipt_immatriculation').value = items.immat;
