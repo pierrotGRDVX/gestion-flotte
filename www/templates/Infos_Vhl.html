@@ -126,30 +126,51 @@
 
             </div>
 
-            <!onglet 2 : tableau des pleins>
+            <!onglet 2 : onglet pleins et distance parcourus>
             <div class="box">
                 <h1 id="titreCategorie">Distances parcourus:</h1>
-                <div class="fixed-grid has-1-cols">
+                <div class="fixed-grid has-4-cols">
                     <div class="grid">
+                        <div class="cell is-col-span-2">
+                            <span class="tag is-info">Actuellement</span>
+                        </div>
+                        <div class="cell is-col-span-2">
+                            <span class="tag is-info">En moyenne</span>
+                        </div>
                         <div class="cell">
-                            <div class="field is-horizontal">
-                                <div class="label">Distance parcouru total:</div>
-                                <div class="control">
-                                    <input class="input" id="ipt_Dist_total" type="text" readonly rows="1">
-                                </div>    
-                            </div>
-                            <div class="field is-horizontal">
-                                <div class="label">Distance parcouru cette année:</div>
-                                <div class="control">
-                                    <input class="input" id="ipt_Dist_annuel" type="text" readonly rows="1">
-                                </div>    
-                            </div>
-                            <div class="field is-horizontal">
-                                <div class="label">Distance parcouru ce mois-ci</div>
-                                <div class="control">
-                                    <input class="input" id="ipt_Dist_mensuel" type="text" readonly rows="1">
-                                </div>    
-                            </div>
+                            <span class="tag is-info">Cette année:</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info" id="tag_km_an">km</span>
+                            <span class="tag is-info" id="tag_L_an">L</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info">Par an:</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info" id="tag_km_moyenne_an">km</span>
+                            <span class="tag is-info" id="tag_L_moyenne_an">L</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info">Ce mois:</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info" id="tag_km_mois">km</span>
+                            <span class="tag is-info" id="tag_L_mois">L</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info">Par mois:</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info" id="tag_km_moyenne_mois">km</span>
+                            <span class="tag is-info" id="tag_L_moyenne_mois">L</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info">au total:</span>
+                        </div>
+                        <div class="cell">
+                            <span class="tag is-info" id="tag_km_mois">km</span>
+                            <span class="tag is-info" id="tag_L_mois">L</span>
                         </div>
                     </div>
                 </div>
