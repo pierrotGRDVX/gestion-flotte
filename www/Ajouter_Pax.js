@@ -288,37 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 4. CONTRÔLE DES DONNÉES UTILISATEUR
 
-// Fonction de contrôle de remplissage
-function ControleRemplissage() {
-    let resultat = true;
-
-    if (!document.getElementById("ipt_nom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_prenom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_naissance")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_email")?.value) {
-        resultat = false;
-    }
-    if (document.getElementById("slt_adresse")?.value === "--Selectionner--") {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_num_permis")?.value) {
-        resultat = false;
-    }
-
-    const radios = document.querySelectorAll('input[type="radio"][name="answer"]:checked');
-    if (radios.length === 0) {
-        resultat = false;
-    }
-
-    console.info("Résultat du contrôle :", resultat);
-    return resultat;
-}
 // 5. ENVOI DES DONNÉES UTILISATEUR
 
 // Fonctions d'enregistrement
@@ -471,9 +440,6 @@ function ControleRemplissage() {
             selectAdresse.classList.remove("is-danger", "champ-invalide");
         }
     }
-    const contenu = document.getElementById("slt_pup_ville");
-    if (!contenu) return;
-
     // Boutons radio (genre)
     const radios = document.querySelectorAll('input[type="radio"][name="answer"]:checked');
     const champGenre = document.querySelector('input[type="radio"][name="answer"]')?.closest(".field");
@@ -482,6 +448,56 @@ function ControleRemplissage() {
         resultat = false;
     } else if (champGenre) {
         champGenre.classList.remove("champ-invalide");
+    }
+
+    console.info("Résultat du contrôle :", resultat);
+    return resultat;
+}
+
+// Fonctions de mise à jour des sélections
+function MAJSelectionCategorie(data) {
+    if (!data || data.length === 0) {
+        console.error("Aucune catégorie à afficher");
+        return;
+    }
+    const conteneurHTML = document.getElementById("ckb_categorie");
+    if (!conteneurHTML) return;
+
+    conteneurHTML.innerHTML = '';
+    data.forEach(item => {
+        const label = document.createElement("label");
+        label.className = "checkbox";
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.name = item.categorie || item;
+        input.value = item.categorie || item;
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(item.categorie || item));
+        conteneurHTML.appendChild(label);
+    });
+}
+
+function MAJSelectionVille(data) {
+    if (!data || data.length === 0) {
+        console.error("Aucune ville à afficher");
+        return;
+    }
+    const contenu = document.getElementById("slt_pup_ville");
+    if (!contenu) return;
+
+    contenu.innerHTML = '<option value="--Selectionner--">--Sélectionner--</option>';
+    data.forEach(item => {
+        const option = document.createElement("option");
+        option.value = `${item.code_postal} - ${item.nom_ville}`;
+        option.textContent = `${item.code_postal} - ${item.nom_ville}`;
+        contenu.appendChild(option);
+    });
+}
+
+function MAJSelectionAdresse(liste_adresse) {
+    if (!liste_adresse || liste_adresse.length === 0) {
+        console.error("Aucune adresse à afficher");
+        return;
     }
     const contenu = document.getElementById("slt_adresse");
     if (!contenu) return;
