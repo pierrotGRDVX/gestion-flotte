@@ -6,7 +6,7 @@
 <div class="contenue-central">
     <!-- box gestion de la base de donnees -->
     <div class="box">
-        <h1 id="titreCategorie">Gestion de base de données</h1>
+        <h1 id="tag_titre_categorie">Gestion de base de données</h1>
         <div class="fixed-grid has-1-cols">
             <div class="grid">
                 <div class="cell">
@@ -28,7 +28,7 @@
                             <div class="field">
                                 <div class="control">
                                     <div class="select">
-                                        <select id="select_table_export"></select>
+                                        <select id="slt_table_export"></select>
                                     </div>
                                 </div>
                             </div>
@@ -47,13 +47,13 @@
                             <div class="field">
                                 <div class="control">
                                     <div class="select">
-                                        <select id="select_table_import"></select>
+                                        <select id="slt_table_import"></select>
                                     </div>
                                 </div>
                             </div>
                             <div class="field">
                                 <div class="control">
-                                    <input class="file-input" type="file" id="input_file_csv" accept=".csv">
+                                    <input class="file-input" type="file" id="ipt_file_csv" accept=".csv">
                                     <button class="button is-primary" id="btn_import_csv">Choisir un fichier CSV</button>
                                 </div>
                             </div>
@@ -66,13 +66,13 @@
 
     <!-- box personnalisation (a venir) -->
     <div class="box">
-        <h1 id="titreCategorie">Personnalisation</h1>
+        <h1 id="tag_titre_categorie">Personnalisation</h1>
         <p>La personnalisation graphique de la plateforme arrivera prochainement.</p>
     </div>
 
     <!-- box configuration : categories du code de la route -->
     <div class="box">
-        <h1 id="titreCategorie">Configuration : catégories du code de la route</h1>
+        <h1 id="tag_titre_categorie">Configuration : catégories du code de la route</h1>
         <div class="field">
             <div class="label">Choix du jeu de catégories (remplace la liste actuelle)</div>
             <div class="buttons">
@@ -84,5 +84,5 @@
     </div>
 </div>
 
-<p id="message_parametres"></p>
+<p id="tag_message_parametres"></p>
 {% endblock %}

@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnVille) {
         btnVille.addEventListener('click', () => {
             console.info("bouton ville cliqué");
-            const pupVille = document.getElementById('pup_ville');
+            const pupVille = document.getElementById('tag_pup_ville');
             if (pupVille) pupVille.classList.add('is-active');
         });
     }
@@ -60,15 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPupVilleClose = document.getElementById('btn_pup_ville_close');
     if (btnPupVilleClose) {
         btnPupVilleClose.addEventListener('click', () => {
-            const pupVille = document.getElementById('pup_ville');
+            const pupVille = document.getElementById('tag_pup_ville');
             if (pupVille) pupVille.classList.remove('is-active');
         });
     }
 
-    const pupVilleBackground = document.getElementById('pup_ville')?.querySelector('.modal-background');
+    const pupVilleBackground = document.getElementById('tag_pup_ville')?.querySelector('.modal-background');
     if (pupVilleBackground) {
         pupVilleBackground.addEventListener('click', () => {
-            const pupVille = document.getElementById('pup_ville');
+            const pupVille = document.getElementById('tag_pup_ville');
             if (pupVille) pupVille.classList.remove('is-active');
         });
     }
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnAdresse) {
         btnAdresse.addEventListener('click', () => {
             console.info("bouton Adresse cliqué");
-            const pupAdresse = document.getElementById('pup_adresse');
+            const pupAdresse = document.getElementById('tag_pup_adresse');
             if (pupAdresse) pupAdresse.classList.add('is-active');
         });
     }
@@ -105,15 +105,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPupAdresseClose = document.getElementById('btn_pup_adresse_close');
     if (btnPupAdresseClose) {
         btnPupAdresseClose.addEventListener('click', () => {
-            const pupAdresse = document.getElementById('pup_adresse');
+            const pupAdresse = document.getElementById('tag_pup_adresse');
             if (pupAdresse) pupAdresse.classList.remove('is-active');
         });
     }
 
-    const pupAdresseBackground = document.getElementById('pup_adresse')?.querySelector('.modal-background');
+    const pupAdresseBackground = document.getElementById('tag_pup_adresse')?.querySelector('.modal-background');
     if (pupAdresseBackground) {
         pupAdresseBackground.addEventListener('click', () => {
-            const pupAdresse = document.getElementById('pup_adresse');
+            const pupAdresse = document.getElementById('tag_pup_adresse');
             if (pupAdresse) pupAdresse.classList.remove('is-active');
         });
     }
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCategorie) {
         btnCategorie.addEventListener('click', () => {
             console.info("bouton Catégorie cliqué");
-            const pupCategorie = document.getElementById('pup_categorie');
+            const pupCategorie = document.getElementById('tag_pup_categorie');
             if (pupCategorie) pupCategorie.classList.add('is-active');
         });
     }
@@ -151,15 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPupCategorieClose = document.getElementById('btn_pup_categorie_close');
     if (btnPupCategorieClose) {
         btnPupCategorieClose.addEventListener('click', () => {
-            const pupCategorie = document.getElementById('pup_categorie');
+            const pupCategorie = document.getElementById('tag_pup_categorie');
             if (pupCategorie) pupCategorie.classList.remove('is-active');
         });
     }
 
-    const pupCategorieBackground = document.getElementById('pup_categorie')?.querySelector('.modal-background');
+    const pupCategorieBackground = document.getElementById('tag_pup_categorie')?.querySelector('.modal-background');
     if (pupCategorieBackground) {
         pupCategorieBackground.addEventListener('click', () => {
-            const pupCategorie = document.getElementById('pup_categorie');
+            const pupCategorie = document.getElementById('tag_pup_categorie');
             if (pupCategorie) pupCategorie.classList.remove('is-active');
         });
     }

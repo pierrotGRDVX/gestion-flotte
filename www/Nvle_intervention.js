@@ -107,13 +107,13 @@ function MAJSelectionImmat(){
 //affichage du choix plein
 function ChoixPlein(){
     console.info("MEF avec Plein")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
-    conteneurHTML.id = "box_plein";
+    conteneurHTML.id = "tag_box_plein";
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-5-cols">
                         <div class="grid">
                             <div class="cell">
@@ -179,13 +179,13 @@ function MAJinformationsVhl(valeur){
 //affichage du choix netoyage ou réparation
 function ChoixNettoyage(){
     console.info("MEF avec Nettoyage ou réparation")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
     
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-3-cols">
                         <div class="grid">
                             <div class="cell">
@@ -240,13 +240,13 @@ function ChoixNettoyage(){
 
 function ChoixCT(){
     console.info("MEF avec plein")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
-    conteneurHTML.id = "box_plein";
+    conteneurHTML.id = "tag_box_plein";
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-3-cols">
                         <div class="grid">
                             <div class="cell">
@@ -303,13 +303,13 @@ function ChoixCT(){
 //affichage du choix netoyage ou réparation
 function ChoixParking(){
     console.info("MEF avec Nettoyage ou réparation")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
     
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-2-cols">
                         <div class="grid">
                             <div class="cell">
