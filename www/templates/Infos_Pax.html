@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <!barre lateral>
+        <div class="sidebar">
+            <aside class="menu">
+                <div class="field">
+                    <div class="button"><a href="/pageGestionPax">Retour à la liste</a></div>
+                </div>
+            </aside>
+        </div>
+
+        <!contenu Principale>
+        <div class="contenue-central">
+
+            <!box contenant les informations d'identité du personnel>
+            <div class="box">
+                <h1 id="tag_titre_categorie">Carte d'identité:</h1>
+                <div class="fixed-grid has-2-cols">
+                    <div class="grid">
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">ID:</div>
+                                <input class="has-fixed-size input" id="ipt_id" type="text" readonly placeholder="0" rows="1"/>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Nom:</div>
+                                <input class="has-fixed-size input" id="ipt_nom" type="text" readonly placeholder="Nom" rows="1"/>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Prénom:</div>
+                                <input class="has-fixed-size input" id="ipt_prenom" type="text" readonly placeholder="Prénom" rows="1"/>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Date de naissance:</div>
+                                <input class="has-fixed-size input" id="ipt_naissance" type="text" readonly placeholder="00/00/0000" rows="1">
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Sexe:</div>
+                                <input class="has-fixed-size input" id="ipt_sexe" type="text" readonly placeholder="" rows="1">
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Email:</div>
+                                <input class="has-fixed-size input" id="ipt_email" type="text" readonly placeholder="" rows="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!box contenant l'adresse du personnel>
+            <div class="box">
+                <h1 id="tag_titre_categorie">Adresse:</h1>
+                <div class="fixed-grid has-2-cols">
+                    <div class="grid">
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Numéro et rue:</div>
+                                <input class="has-fixed-size input" id="ipt_rue" type="text" readonly placeholder="" rows="1">
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Complément:</div>
+                                <input class="has-fixed-size input" id="ipt_complement" type="text" readonly placeholder="" rows="1">
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Code postal:</div>
+                                <input class="has-fixed-size input" id="ipt_code_postal" type="text" readonly placeholder="00000" rows="1">
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Ville:</div>
+                                <input class="has-fixed-size input" id="ipt_ville" type="text" readonly placeholder="" rows="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!box contenant les informations sur le permis du personnel>
+            <div class="box">
+                <h1 id="tag_titre_categorie">Permis de conduire:</h1>
+                <div class="fixed-grid has-2-cols">
+                    <div class="grid">
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Numéro de permis:</div>
+                                <input class="has-fixed-size input" id="ipt_num_permis" type="text" readonly placeholder="" rows="1">
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="field">
+                                <div class="label">Catégories détenues:</div>
+                                <div class="field" id="tag_fld_categorie"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    <script src="Infos_Pax.js" defer></script>
+{% endblock %}

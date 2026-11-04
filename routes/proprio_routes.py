@@ -124,6 +124,16 @@ def listeProprio():
     proprioDicts = [m.listeProprio() for m in donnees]
     return jsonify(proprioDicts)
 
+#retourne les infos d'un personnel
+@proprio_bp.route("/info/proprio/<int:id_proprio>")
+def infoProprio(id_proprio):
+    db = get_db()
+    dao = proprioDAO(db)
+    donnee = dao.infoProprio(id_proprio)
+    if donnee is None:
+        return {"message": "personnel introuvable"}, 404
+    return jsonify(donnee.infoProprio())
+
 #insere un nouveau permis
 @proprio_bp.route("/nouveau/permis", methods=["POST"])
 def nouveauPermis():
