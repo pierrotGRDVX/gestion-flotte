@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    /* Mise en évidence des champs non remplis */
+    .champ-invalide {
+        outline: 2px solid #ff3860 !important;
+        border-radius: 4px;
+    }
+    input.champ-invalide, select.champ-invalide {
+        border-color: #ff3860 !important;
+    }
+</style>
             <!barre lateral>
             <div class="sidebar">
                 <aside class="menu">
@@ -221,5 +231,23 @@
                 </div>
             </div>
         </div>
+
+    <!popUp Ajouter une Énergie>
+    <div class="modal" id="pup_energie">
+        <div class="modal-background"></div>
+        <div class="modal-content" id="contenu_popup">
+            <div class="box">
+                <h2 class="title is-4">Ajouter un type d'énergie</h2>
+                <div class="field">
+                    <div class="label">Energie</div>
+                    <div class="control">
+                        <input class="input" id="ipt_pup_energie" type="text" placeholder="Energie">
+                    </div>
+                </div>
+                <button class="button is-primary" id="btn_save_energie">Enregistrer</button>
+                <button class="modal-close is-large" aria-label="close" id="btn_pup_energie_close"></button>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
