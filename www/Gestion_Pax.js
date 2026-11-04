@@ -41,12 +41,12 @@ fetch("/liste/proprietaire")
       // Récupère toutes les cellules (<td>) de la ligne
       const cells = row.querySelectorAll('td');
 
-      // Extrait les valeurs de chaque cellule
-      const rowData = {
-        id_proprio: cells[0].textContent,
-      
-  }
-      console.info(rowData)});
+      // première cellule = id du personnel
+      const id_proprio = cells[0].textContent;
+
+      // ouvre la page Infos_Pax du personnel sélectionné
+      window.location.href = `/pageInfoPax?valeur=${encodeURIComponent(id_proprio)}`;
+    });
 });
 
 // 3. GESTION DES INTERVENTIONS UTILISATEUR

@@ -71,3 +71,7 @@ supprimer_pax = DELETE FROM proprietaire WHERE id_proprio = ?;
 insert_permis = INSERT INTO permis(num_permis) VALUES (?);
 
 insert_categorie_permis = INSERT INTO categorie_detenues(num_permis, categorie) VALUES (?,?);
+
+info_pax = SELECT proprietaire.id_proprio, proprietaire.nom_proprio, proprietaire.prenom_proprio, proprietaire.date_naissance, proprietaire.sexe, proprietaire.email_proprio, proprietaire.num_permis, adresse.num_rue, adresse.rue, adresse.complement, ville.nom_ville, ville.code_postal FROM proprietaire LEFT JOIN adresse ON proprietaire.id_adresse_proprio = adresse.id_adresse LEFT JOIN ville ON adresse.id_ville = ville.id_ville WHERE proprietaire.id_proprio = ?;
+
+liste_categorie_pax = SELECT categorie FROM categorie_detenues WHERE num_permis = ?;
