@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function MAJSelectionModel(marqueSelectionnee){
     const contenu = document.getElementById("slt_model");
-    const divSelect = document.getElementById("div_slt_model");
+    const divSelect = document.getElementById("tag_div_slt_model");
     while (contenu.options.length > 1) {
         contenu.remove(1);
     }
@@ -119,65 +119,65 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ouvrir le pop up Marque
     document.getElementById('btn_marque').addEventListener('click', () => {
         console.info("bouton marque cliqué");
-        document.getElementById('pup_marque').classList.add('is-active');
+        document.getElementById('tag_pup_marque').classList.add('is-active');
     });
 
     // Fermer le pop up Marque
     document.getElementById('btn_pup_marque_close').addEventListener('click', () => {
-        document.getElementById('pup_marque').classList.remove('is-active');
+        document.getElementById('tag_pup_marque').classList.remove('is-active');
     });
 
     // Fermer la popup Marque en cliquant à l'extérieur
-    document.getElementById('pup_marque').querySelector('.modal-background').addEventListener('click', () => {
-        document.getElementById('pup_marque').classList.remove('is-active');
+    document.getElementById('tag_pup_marque').querySelector('.modal-background').addEventListener('click', () => {
+        document.getElementById('tag_pup_marque').classList.remove('is-active');
     });
 
     // Ouvrir le pop up Modèle
     document.getElementById('btn_model').addEventListener('click', () => {
         console.info("bouton modèle cliqué");
-        document.getElementById('pup_model').classList.add('is-active');
+        document.getElementById('tag_pup_model').classList.add('is-active');
     });
 
     // Fermer le pop up Modèle
     document.getElementById('btn_pup_model_close').addEventListener('click', () => {
-        document.getElementById('pup_model').classList.remove('is-active');
+        document.getElementById('tag_pup_model').classList.remove('is-active');
     });
 
     // Fermer la popup Modèle en cliquant à l'extérieur
-    document.getElementById('pup_model').querySelector('.modal-background').addEventListener('click', () => {
-        document.getElementById('pup_model').classList.remove('is-active');
+    document.getElementById('tag_pup_model').querySelector('.modal-background').addEventListener('click', () => {
+        document.getElementById('tag_pup_model').classList.remove('is-active');
     });
 
     // Ouvrir le pop up Energie
     document.getElementById('btn_energie').addEventListener('click', () => {
         console.info("bouton énergie cliqué");
-        document.getElementById('pup_energie').classList.add('is-active');
+        document.getElementById('tag_pup_energie').classList.add('is-active');
     });
 
     // Fermer le pop up Energie
     document.getElementById('btn_pup_energie_close').addEventListener('click', () => {
-        document.getElementById('pup_energie').classList.remove('is-active');
+        document.getElementById('tag_pup_energie').classList.remove('is-active');
     });
 
     // Fermer la popup Energie en cliquant à l'extérieur
-    document.getElementById('pup_energie').querySelector('.modal-background').addEventListener('click', () => {
-        document.getElementById('pup_energie').classList.remove('is-active');
+    document.getElementById('tag_pup_energie').querySelector('.modal-background').addEventListener('click', () => {
+        document.getElementById('tag_pup_energie').classList.remove('is-active');
     });
 
     // Ouvrir le pop up Categorie
     document.getElementById('btn_categorie').addEventListener('click', () => {
         console.info("bouton catégorie cliqué");
-        document.getElementById('pup_categorie').classList.add('is-active');
+        document.getElementById('tag_pup_categorie').classList.add('is-active');
     });
 
     // Fermer le pop up Categorie
     document.getElementById('btn_pup_categorie_close').addEventListener('click', () => {
-        document.getElementById('pup_categorie').classList.remove('is-active');
+        document.getElementById('tag_pup_categorie').classList.remove('is-active');
     });
 
     // Fermer la popup Categorie en cliquant à l'extérieur
-    document.getElementById('pup_categorie').querySelector('.modal-background').addEventListener('click', () => {
-        document.getElementById('pup_categorie').classList.remove('is-active');
+    document.getElementById('tag_pup_categorie').querySelector('.modal-background').addEventListener('click', () => {
+        document.getElementById('tag_pup_categorie').classList.remove('is-active');
     });
 
     //enregistrer la marque

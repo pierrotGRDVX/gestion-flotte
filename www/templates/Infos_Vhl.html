@@ -6,7 +6,7 @@
             <aside class="menu">
                 <div class="field">
                     <div class="label">changer Etat</div>
-                    <button class="button" id="Btn_sidebar btn_pup_etat">changer</button>
+                    <button class="button btn_sidebar" id="btn_pup_etat">changer</button>
                 </div>
             </aside>
         </div>
@@ -28,7 +28,7 @@
             <div id="tab_identite" class="tab-content">
                 <!box contenant les informations presentes sur le certificat d'Immatriculation>
                 <div class="box">
-                    <h1 id="titreCategorie">Caractérsitiques techniques:</h1>
+                    <h1 id="tag_titre_categorie">Caractérsitiques techniques:</h1>
                     <div class="fixed-grid has-2-cols">
                         <div class="grid">     
                             <div class="cell">
@@ -74,12 +74,12 @@
                 </div>
                 <! box contenant les informations sur l'état du véhicule à l'acquisition>
                 <div class="box">
-                    <h1 id="titreCategorie">Etat actuel:</h1>
+                    <h1 id="tag_titre_categorie">Etat actuel:</h1>
                     <div class="fixed-grid has-2-cols">
                         <div class="grid">
                             <div class="cell">
                                 <div class="label">Etat:</div>
-                                <div class="field" id="fld_etat"> 
+                                <div class="field" id="tag_fld_etat"> 
                                 </div>
                             </div>
                             <div class="cell">
@@ -120,7 +120,7 @@
 
                 <! box enregistrer>
                 <div class="box">
-                    <h1 id="titreCategorie">Enregistrer</h1>
+                    <h1 id="tag_titre_categorie">Enregistrer</h1>
                     <button id="btn_enregistrer" class="button is-primary">Envoyer</button>
                 </div>
 
@@ -128,7 +128,7 @@
 
             <!onglet 2 : onglet pleins et distance parcourus>
             <div class="box">
-                <h1 id="titreCategorie">Distances parcourus:</h1>
+                <h1 id="tag_titre_categorie">Distances parcourus:</h1>
                 <div class="fixed-grid has-4-cols">
                     <div class="grid">
                         <div class="cell is-col-span-2">
@@ -177,8 +177,8 @@
             </div>
             <div id="tab_pleins" class="tab-content" style="display:none">
                 <div class="box">
-                    <h1 id="titreCategorie">Pleins du véhicule:</h1>
-                    <table class="table is-striped is-fullwidth" id="tbl_pleins">
+                    <h1 id="tag_titre_categorie">Pleins du véhicule:</h1>
+                    <table class="table is-striped is-fullwidth" id="tab_pleins">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -188,12 +188,12 @@
                                 <th>Volume</th>
                             </tr>
                         </thead>
-                        <tbody id="body_pleins">
+                        <tbody id="tab_body_pleins">
                         </tbody>
                     </table>
                 </div>
                 <div class="box">
-                    <h1 id="titreCategorie">Distances et consommations:</h1>
+                    <h1 id="tag_titre_categorie">Distances et consommations:</h1>
                     <div class="fixed-grid has-2-cols">
                         <div class="grid">
                             <div class="cell">
@@ -248,16 +248,16 @@
                     </div>
                 </div>
                 <div class="box">
-                    <h1 id="titreCategorie">Consommation en fonction du kilométrage:</h1>
-                    <canvas id="graph_pleins"></canvas>
+                    <h1 id="tag_titre_categorie">Consommation en fonction du kilométrage:</h1>
+                    <canvas id="tag_graph_pleins"></canvas>
                 </div>
             </div>
 
             <!onglet 3 : tableau des autres interventions>
             <div id="tab_interventions" class="tab-content" style="display:none">
                 <div class="box">
-                    <h1 id="titreCategorie">Interventions du véhicule:</h1>
-                    <table class="table is-striped is-fullwidth" id="tbl_interventions">
+                    <h1 id="tag_titre_categorie">Interventions du véhicule:</h1>
+                    <table class="table is-striped is-fullwidth" id="tab_interventions">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -267,12 +267,12 @@
                                 <th>Observation</th>
                             </tr>
                         </thead>
-                        <tbody id="body_interventions">
+                        <tbody id="tab_body_interventions">
                         </tbody>
                     </table>
                 </div>
                 <div class="box">
-                    <h1 id="titreCategorie">Contrôle technique</h1>
+                    <h1 id="tag_titre_categorie">Contrôle technique</h1>
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
                             <div class="tags has-addons">
@@ -281,7 +281,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table is-striped is-fullwidth" id="tbl_CT">
+                    <table class="table is-striped is-fullwidth" id="tab_CT">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -291,12 +291,12 @@
                                 <th>Observation</th>
                             </tr>
                         </thead>
-                        <tbody id="body_CT"></tbody>
+                        <tbody id="tab_body_CT"></tbody>
                     </table>
                 </div>
                 <div class="box">
-                    <h1 id="titreCategorie">Intervention</h1>
-                    <table class="table is-striped is-fullwidth" id="tbl_CT">
+                    <h1 id="tag_titre_categorie">Intervention</h1>
+                    <table class="table is-striped is-fullwidth" id="tab_CT">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -305,7 +305,7 @@
                                 <th>Observation</th>
                             </tr>
                         </thead>
-                        <tbody id="body_intervention"></tbody>
+                        <tbody id="tab_body_intervention"></tbody>
                     </table>
                 </div>
             </div>
@@ -313,7 +313,7 @@
             <!onglet 4 : données calculées (à développer)>
             <div id="tab_calculs" class="tab-content" style="display:none">
                 <div class="box">
-                    <h1 id="titreCategorie">Données calculées</h1>
+                    <h1 id="tag_titre_categorie">Données calculées</h1>
                     
                 </div>
             </div>
@@ -321,7 +321,7 @@
             <!onglet 5 : graphiques (à développer)>
             <div id="tab_graphiques" class="tab-content" style="display:none">
                 <div class="box">
-                    <h1 id="titreCategorie">Graphiques</h1>
+                    <h1 id="tag_titre_categorie">Graphiques</h1>
                     <p>À développer.</p>
                 </div>
             </div>
@@ -338,9 +338,9 @@
 
 
     <!popUp Changer Etat>
-                <div class="modal" id="pup_etat">
+                <div class="modal" id="tag_pup_etat">
                     <div class="modal-background"></div>
-                    <div class="modal-content" id="contenu_popup">
+                    <div class="modal-content" id="tag_contenu_popup">
                         <div class="box">
                             <h2 class="title is-4">Changer état</h2>
                              <div class="grid has-3-cols is-column-gap-1 is-col-min-2">

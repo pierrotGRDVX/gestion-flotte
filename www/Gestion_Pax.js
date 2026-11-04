@@ -7,7 +7,7 @@ fetch("/liste/proprietaire")
     console.info(data);
 
     // selection du conteneur HTML
-    const contenu = document.getElementById("ListeVhl");
+    const contenu = document.getElementById("tab_liste_vhl");
 
     //parcours du taleau "entree"
     data.forEach(items => {
@@ -28,7 +28,7 @@ fetch("/liste/proprietaire")
 
 
   document.addEventListener('DOMContentLoaded', () => {
-    const tbody = document.getElementById('ListeVhl');
+    const tbody = document.getElementById('tab_liste_vhl');
 
     // Écouteur d'événement pour les clics sur les lignes du tableau
     tbody.addEventListener('click', (event) => {

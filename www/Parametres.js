@@ -5,8 +5,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     //titre et sous-titre de la page
-    document.getElementById("base_title").textContent = "Paramètres";
-    document.getElementById("base_subtitle").textContent = "Administration de la plateforme";
+    document.getElementById("tag_base_title").textContent = "Paramètres";
+    document.getElementById("tag_base_subtitle").textContent = "Administration de la plateforme";
 
     //lecture du bouton remise a zero de la base de donnees
     document.getElementById("btn_reset").addEventListener('click', async () => {
@@ -24,18 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //lecture du bouton export CSV
     document.getElementById("btn_export_csv").addEventListener('click', () => {
-        const table = document.getElementById("select_table_export").value;
+        const table = document.getElementById("slt_table_export").value;
         if (table) window.location = '/api/parametres/exportCSV/' + table;
     });
 
     //lecture du bouton import CSV (ouvre le selecteur de fichier)
     document.getElementById("btn_import_csv").addEventListener('click', () => {
-        document.getElementById("input_file_csv").click();
+        document.getElementById("ipt_file_csv").click();
     });
 
     //lecture du fichier CSV choisi puis envoi vers le serveur
-    document.getElementById("input_file_csv").addEventListener('change', async (event) => {
-        const table = document.getElementById("select_table_import").value;
+    document.getElementById("ipt_file_csv").addEventListener('change', async (event) => {
+        const table = document.getElementById("slt_table_import").value;
         const fichier = event.target.files[0];
         if (!table || !fichier) return;
         const formData = new FormData();
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //lecture du bouton ajout d'une categorie
     document.getElementById("btn_add_categorie").addEventListener('click', async () => {
-        const categorie = document.getElementById("input_new_categorie").value.trim();
+        const categorie = document.getElementById("ipt_new_categorie").value.trim();
         if (!categorie) return;
         const reponse = await fetch('/nouvelle/categorie', {
             method: 'POST',
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({ categorie: categorie })
         });
         afficherMessage(reponse);
-        document.getElementById("input_new_categorie").value = '';
+        document.getElementById("ipt_new_categorie").value = '';
     });
 
     //jeu de categories conforme au code de la route francais
@@ -102,7 +102,7 @@ async function chargerTables() {
     const reponse = await fetch('/api/parametres/listeTables');
     const donnees = await reponse.json();
     if (donnees.status !== 'success') return;
-    for (const selectId of ["select_table_export", "select_table_import"]) {
+    for (const selectId of ["slt_table_export", "slt_table_import"]) {
         const select = document.getElementById(selectId);
         select.innerHTML = '';
         for (const table of donnees.tables) {
@@ -117,7 +117,7 @@ async function chargerTables() {
 //affiche le message retourne par le serveur
 async function afficherMessage(reponse) {
     const donnees = await reponse.json();
-    const message = document.getElementById("message_parametres");
+    const message = document.getElementById("tag_message_parametres");
     message.textContent = donnees.status === 'success'
         ? '✔ ' + donnees.message
         : '✘ Erreur : ' + donnees.message;

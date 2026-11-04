@@ -69,15 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Ouvrir le pop up Energie
   document.getElementById('btn_pup_etat').addEventListener('click', async () => {
-      pup_etat.classList.add('is-active');
+      tag_pup_etat.classList.add('is-active');
       });
   // Fermer le pop up energie
   document.getElementById('btn_pup_etat_close').addEventListener('click', () => {
-      pup_etat.classList.remove('is-active');
+      tag_pup_etat.classList.remove('is-active');
       });
   // Fermer la popup Energie en cliquant à l'extérieur
-  document.getElementById('pup_etat').querySelector('.modal-background').addEventListener('click', () => {
-      pup_etat.classList.remove('is-active');
+  document.getElementById('tag_pup_etat').querySelector('.modal-background').addEventListener('click', () => {
+      tag_pup_etat.classList.remove('is-active');
       });
 
   document.getElementById('btn_ok').addEventListener('click', async () => {
@@ -164,21 +164,21 @@ function MAJInput(items){
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
       document.getElementById('ipt_categorie').value = items.categorie;
-      const fld_etat = document.getElementById('fld_etat')
-      fld_etat.innerHTML = "";
+      const tag_fld_etat = document.getElementById('tag_fld_etat')
+      tag_fld_etat.innerHTML = "";
       const conteneurHTML = document.createElement("button");
       if (items.etat === "en_service"){
         conteneurHTML.className = "button is-success"
         conteneurHTML.textContent = "en_service"
-        fld_etat.appendChild(conteneurHTML)};
+        tag_fld_etat.appendChild(conteneurHTML)};
       if (items.etat === "endommagé"){
         conteneurHTML.className = "button is-warning"
         conteneurHTML.textContent = "Endommagé"
-        fld_etat.appendChild(conteneurHTML)};
+        tag_fld_etat.appendChild(conteneurHTML)};
       if (items.etat === "non_roulant"){
         conteneurHTML.className = "button is-danger"
         conteneurHTML.textContent = "Non roulant"
-        fld_etat.appendChild(conteneurHTML)};
+        tag_fld_etat.appendChild(conteneurHTML)};
     };
 
 function ligneTableau(valeurs){
@@ -192,8 +192,8 @@ function ligneTableau(valeurs){
     };
 
 function MAJTableauInterventions(interventions){
-      const tbodyPleins = document.getElementById('body_pleins');
-      const tbodyInter = document.getElementById('body_interventions');
+      const tbodyPleins = document.getElementById('tab_body_pleins');
+      const tbodyInter = document.getElementById('tab_body_interventions');
       tbodyPleins.innerHTML = "";
       tbodyInter.innerHTML = "";
       interventions.forEach(function(inter){
@@ -206,7 +206,7 @@ function MAJTableauInterventions(interventions){
     };
 
 function MAJGraphiquePleins(interventions){
-      const canvas = document.getElementById('graph_pleins');
+      const canvas = document.getElementById('tag_graph_pleins');
       if (!canvas || typeof Chart === 'undefined') return;
       const pleins = interventions
         .filter(function(inter){ return inter.nom_intervention === "plein" && inter.kilometrage != null && inter.volume != null; })
