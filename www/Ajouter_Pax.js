@@ -81,13 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const ville = document.getElementById('ipt_pup_ville')?.value.trim();
             const CP = document.getElementById('ipt_pup_code_postal')?.value.trim();
 
-            if (!ville) {
-                alert('Veuillez entrer une ville');
-            } else if (!CP) {
-                alert('Veuillez entrer un code postal');
+            if (!ville || !CP) {
+                alert('Veuillez remplir tous les champs (ville et code postal)');
             } else {
-                EnregisterNvlleVille(ville, CP);
-                window.location.reload();
+                EnregisterNvlleVille(ville, CP).then(() => window.location.reload());
             }
         });
     }
@@ -129,11 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const rue = document.getElementById('ipt_pup_rue')?.value;
             const complement = document.getElementById('ipt_pup_complement')?.value;
 
-            if (ville === '--Selectionner--' || !rue) {
-                alert('Veuillez entrer toutes les données nécessaires');
+            if (ville === '--Selectionner--' || !num || !rue) {
+                alert('Veuillez remplir tous les champs (ville, numéro et rue)');
             } else {
-                EnregisterAdresse(ville, num, rue, complement);
-                window.location.reload();
+                EnregisterAdresse(ville, num, rue, complement).then(() => window.location.reload());
             }
         });
     }
@@ -164,6 +160,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Écouteurs pour l'énergie
+    const btnEnergie = document.getElementById('btn_energie');
+    if (btnEnergie) {
+        btnEnergie.addEventListener('click', () => {
+            console.info("bouton Energie cliqué");
+            const pupEnergie = document.getElementById('pup_energie');
+            if (pupEnergie) pupEnergie.classList.add('is-active');
+        });
+    }
+
+    const btnPupEnergieClose = document.getElementById('btn_pup_energie_close');
+    if (btnPupEnergieClose) {
+        btnPupEnergieClose.addEventListener('click', () => {
+            const pupEnergie = document.getElementById('pup_energie');
+            if (pupEnergie) pupEnergie.classList.remove('is-active');
+        });
+    }
+
+    const pupEnergieBackground = document.getElementById('pup_energie')?.querySelector('.modal-background');
+    if (pupEnergieBackground) {
+        pupEnergieBackground.addEventListener('click', () => {
+            const pupEnergie = document.getElementById('pup_energie');
+            if (pupEnergie) pupEnergie.classList.remove('is-active');
+        });
+    }
+
+    // Enregistrer une nouvelle énergie
+    const btnSaveEnergie = document.getElementById('btn_save_energie');
+    if (btnSaveEnergie) {
+        btnSaveEnergie.addEventListener('click', () => {
+            console.info("bouton enregistrer énergie appuyé");
+            const energie = document.getElementById('ipt_pup_energie')?.value.trim();
+
+            if (!energie) {
+                alert('Veuillez entrer un type d\'énergie');
+            } else {
+                EnregisterNvlleEnergie(energie).then(() => window.location.reload());
+            }
+        });
+    }
+
     // Enregistrer une nouvelle catégorie
     const btnPupSaveCategorie = document.getElementById('btn_pup_save_categorie');
     if (btnPupSaveCategorie) {
@@ -174,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!categorie) {
                 alert('Veuillez entrer une catégorie');
             } else {
-                EnregisterCategorie(categorie);
+                EnregisterCategorie(categorie).then(() => window.location.reload());
             }
         });
     }
@@ -222,8 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 ).map(checkbox => checkbox.value);
 
                 console.log("Liste des permis :", liste_permis);
-                EnregistrerPermis(num_permis, liste_permis);
-                EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis);
+                Promise.all([
+                    EnregistrerPermis(num_permis, liste_permis),
+                    EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis)
+                ]).then(() => window.location.reload());
             } else {
                 console.info("Veuillez renseigner toutes les informations");
             }
@@ -295,7 +334,7 @@ function EnregisterNvlleVille(ville, CP) {
         code_postal: CP
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouvelle/ville', {
+    return fetch('/nouvelle/ville', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -312,7 +351,7 @@ function EnregisterCategorie(categorie) {
         categorie: categorie
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouvelle/categorie', {
+    return fetch('/nouvelle/categorie', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -321,6 +360,23 @@ function EnregisterCategorie(categorie) {
     })
     .catch(error => {
         console.error('Erreur lors de l\'envoi des données de la catégorie :', error);
+    });
+}
+
+function EnregisterNvlleEnergie(energie) {
+    const data = {
+        nom: energie
+    };
+    console.log('Données à envoyer :', data);
+    return fetch('/nouvelle/energie', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données de l\'énergie :', error);
     });
 }
 
@@ -341,7 +397,7 @@ function EnregisterAdresse(ville, num, rue, complement) {
         complement: complement
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouvelle/adresse', {
+    return fetch('/nouvelle/adresse', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -364,7 +420,7 @@ function EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis)
         num_permis: num_permis
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouveau/proprio', {
+    return fetch('/nouveau/proprio', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -382,7 +438,7 @@ function EnregistrerPermis(numeros, liste_permis) {
         liste_categorie: liste_permis
     };
     console.log('Données à envoyer :', data);
-    fetch('/nouveau/permis', {
+    return fetch('/nouveau/permis', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
