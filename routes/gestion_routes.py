@@ -55,7 +55,7 @@ def pageInfoVhl():
 def pageInfoPax():
     valeur = request.args.get("valeur")
     if request.method == 'GET':
-        return render_template("Infos_Pax.html", title = "Infos personnel " + str(valeur), title_onglet= "Infos personnel",  valeur= valeur)
+        return render_template("Infos_Pax.html", title = "Infos personnel", title_onglet= "Infos personnel",  valeur= valeur)
 
 @gestion_bp.route("/pageParametres")
 def pageParametres():

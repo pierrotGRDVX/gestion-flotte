@@ -15,6 +15,7 @@ fetch(`/info/proprio/${encodeURIComponent(id_proprio)}`)
   })
   .then(data => {
       console.log("Chargement infos personnel lancé", data);
+      MAJTitre(data);
       MAJInput(data);
   })
   .catch(error => {
@@ -50,6 +51,14 @@ function formatDate(val){
         return jj + "/" + mm + "/" + d.getFullYear();
       }
       return val;
+    };
+
+function MAJTitre(items){
+      const nom = (items.nom_proprio || "").toUpperCase();
+      const prenom = items.prenom_proprio || "";
+      const titre = (nom + " " + (prenom.charAt(0).toUpperCase() + prenom.slice(1))).trim();
+      document.getElementById('tag_base_title').textContent = titre;
+      document.title = titre;
     };
 
 function MAJInput(items){
