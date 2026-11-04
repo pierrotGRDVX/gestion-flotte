@@ -91,6 +91,27 @@ function MAJSelectionNRJ(data){
     });
 }
 
+//Mise en forme automatique de l'immatriculation au format XX-NNN-XX
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('ipt_immatriculation').addEventListener('input', function(e) {
+        let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+        const lettres1 = value.slice(0, 2).replace(/[^A-Z]/g, '');
+        const chiffres = value.slice(2, 5).replace(/[^0-9]/g, '');
+        const lettres2 = value.slice(5, 7).replace(/[^A-Z]/g, '');
+
+        let formate = lettres1;
+        if (chiffres.length > 0) {
+            formate += '-' + chiffres;
+        }
+        if (lettres2.length > 0) {
+            formate += '-' + lettres2;
+        }
+
+        e.target.value = formate;
+    });
+});
+
 //mise en place de lecteurs d'evenements
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
