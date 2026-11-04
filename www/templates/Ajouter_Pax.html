@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    /* Mise en évidence des champs non remplis */
+    .champ-invalide {
+        outline: 2px solid #ff3860 !important;
+        border-radius: 4px;
+    }
+    input.champ-invalide, select.champ-invalide {
+        border-color: #ff3860 !important;
+    }
+</style>
             <!barre lateral>
             <div class="sidebar">
                 <aside class="menu">

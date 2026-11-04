@@ -264,10 +264,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis)
                 ]).then(() => window.location.reload());
             } else {
+                alert("Veuillez remplir tous les champs surlignés en rouge");
                 console.info("Veuillez renseigner toutes les informations");
             }
         });
     }
+
+    // Supprimer la mise en évidence dès que l'utilisateur remplit un champ
+    document.querySelectorAll(".contenue-central input, .contenue-central select").forEach(champ => {
+        champ.addEventListener("input", () => champ.classList.remove("is-danger", "champ-invalide"));
+        champ.addEventListener("change", () => champ.classList.remove("is-danger", "champ-invalide"));
+    });
+    document.querySelectorAll('input[type="radio"][name="answer"]').forEach(radio => {
+        radio.addEventListener("change", () => {
+            document.querySelector('input[type="radio"][name="answer"]')?.closest(".field")?.classList.remove("champ-invalide");
+        });
+    });
 });
 
 // Fonctions de mise à jour des sélections
@@ -450,32 +462,42 @@ function EnregistrerPermis(numeros, liste_permis) {
     });
 }
 
-// Fonction de contrôle de remplissage
+// Fonction de contrôle de remplissage : met en évidence chaque champ vide
 function ControleRemplissage() {
     let resultat = true;
 
-    if (!document.getElementById("ipt_nom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_prenom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_naissance")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_email")?.value) {
-        resultat = false;
-    }
-    if (document.getElementById("slt_adresse")?.value === "--Selectionner--") {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_num_permis")?.value) {
-        resultat = false;
+    // Champs texte obligatoires
+    const champsTexte = ["ipt_nom", "ipt_prenom", "ipt_naissance", "ipt_email", "ipt_telephone", "ipt_num_permis"];
+    champsTexte.forEach(id => {
+        const champ = document.getElementById(id);
+        if (!champ) return;
+        if (!champ.value.trim()) {
+            champ.classList.add("is-danger", "champ-invalide");
+            resultat = false;
+        } else {
+            champ.classList.remove("is-danger", "champ-invalide");
+        }
+    });
+
+    // Liste déroulante adresse
+    const selectAdresse = document.getElementById("slt_adresse");
+    if (selectAdresse) {
+        if (!selectAdresse.value || selectAdresse.value === "--Selectionner--") {
+            selectAdresse.classList.add("is-danger", "champ-invalide");
+            resultat = false;
+        } else {
+            selectAdresse.classList.remove("is-danger", "champ-invalide");
+        }
     }
 
+    // Boutons radio (genre)
     const radios = document.querySelectorAll('input[type="radio"][name="answer"]:checked');
+    const champGenre = document.querySelector('input[type="radio"][name="answer"]')?.closest(".field");
     if (radios.length === 0) {
+        if (champGenre) champGenre.classList.add("champ-invalide");
         resultat = false;
+    } else if (champGenre) {
+        champGenre.classList.remove("champ-invalide");
     }
 
     console.info("Résultat du contrôle :", resultat);
