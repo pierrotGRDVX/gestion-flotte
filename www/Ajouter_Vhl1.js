@@ -14,6 +14,9 @@ let nbrInter = [];
 
 //telecharge le nombre d'intervention déjà effectué
 //déclenchement dès le chargement de la page
+
+// 1. FETCH
+
 fetch('/nbrInter')
     .then(response => response.json())
     .then(data => {
@@ -76,6 +79,9 @@ fetch('/ListCat')
     .catch(error => {
         console.error('Erreur lors du chargement du JSON:', error);
     });
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
+
 const Save = document.getElementById('btn_enregistrer');
 //Lecture du bouton enregistré
 Save.addEventListener('click', async () => {
@@ -321,6 +327,70 @@ document.getElementById("ipt_date_ct").addEventListener("input", function(e) {
     e.target.value = value;
     });
 
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+//fonction enregistrer nouvelle marque
+function EnregisterNvlleMarque(valeur){
+    const data = {
+        nom: valeur
+        };
+    console.log('donnée a envoyer',data)
+
+    fetch('/cars/newmark', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    };
+
+//fonction enregistrer nouvelle Categorie
+function EnregisterNvlleCategorie(valeur){
+    const data = {
+        libelle: valeur
+        };
+    console.log('donnée a envoyer',data)
+
+    fetch('/cars/newcat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    };
+
+//envoie les donnees a enregistrer dans la BDD
+function EnregisterNvxModele(val_marque, val_model, val_categorie){
+    const data = {
+        nom: val_model,
+        marque: val_marque,
+        categorie: val_categorie
+    };
+    console.log('donnée a envoyer',data)
+    fetch('/cars/newmodel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    };
+
+
+
+                    
+
+                    
+
+// 6. FONCTIONS
+
 //fonction ajoutant les marques dans le menu deroulant du contenue principale
 //plus du popup modele
 function MAJSelectionMarque(data){
@@ -409,57 +479,3 @@ function MAJSelectionCategorie(data){
     });
     };
 
-//fonction enregistrer nouvelle marque
-function EnregisterNvlleMarque(valeur){
-    const data = {
-        nom: valeur
-        };
-    console.log('donnée a envoyer',data)
-
-    fetch('/cars/newmark', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    };
-
-//fonction enregistrer nouvelle Categorie
-function EnregisterNvlleCategorie(valeur){
-    const data = {
-        libelle: valeur
-        };
-    console.log('donnée a envoyer',data)
-
-    fetch('/cars/newcat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    };
-
-//envoie les donnees a enregistrer dans la BDD
-function EnregisterNvxModele(val_marque, val_model, val_categorie){
-    const data = {
-        nom: val_model,
-        marque: val_marque,
-        categorie: val_categorie
-    };
-    console.log('donnée a envoyer',data)
-    fetch('/cars/newmodel', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    };
-
-
-
-                    
-
-                    

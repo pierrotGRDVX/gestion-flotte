@@ -1,5 +1,7 @@
 
 
+// 1. FETCH
+
 //Telecharge la liste des utilisateurs
 fetch("/liste/proprietaire")
   .then(response => response.json())
@@ -27,6 +29,7 @@ fetch("/liste/proprietaire")
   .catch(error => console.error("Erreur lors du chargement du JSON :", error));
 
 
+// 2. LECTEURS D'ÉVÈNEMENT HTML
   document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById('tab_liste_vhl');
 
@@ -45,3 +48,11 @@ fetch("/liste/proprietaire")
   }
       console.info(rowData)});
 });
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+// 6. FONCTIONS

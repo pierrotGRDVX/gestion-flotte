@@ -12,6 +12,9 @@ const data = {
     };
 console.log('données a envoyer',data)
 
+
+// 1. FETCH
+
 fetch(`/info/vehicule/${encodeURIComponent(immat)}`)
   .then(response => {
     if (!response.ok) {
@@ -55,6 +58,9 @@ fetch(`/liste/intervention/${encodeURIComponent(immat)}`)
 
 
 
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // Gestion des onglets
@@ -93,6 +99,32 @@ document.addEventListener('DOMContentLoaded', () => {
     SaveChangementEtat();
   });
   });
+
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+function SaveChangementEtat(){
+      const data = {
+        etat: change_etat,
+        immat: immat
+        };
+    console.log('changement d etat', data)
+
+    fetch('/cars/state', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    window.location.reload();
+}
+
+// 6. FONCTIONS
 
 function formatDate(iso){
       if (!iso) return "";
@@ -231,19 +263,3 @@ function MAJGraphiquePleins(interventions){
       });
     };
 
-function SaveChangementEtat(){
-      const data = {
-        etat: change_etat,
-        immat: immat
-        };
-    console.log('changement d etat', data)
-
-    fetch('/cars/state', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    window.location.reload();
-}

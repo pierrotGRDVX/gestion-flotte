@@ -1,5 +1,8 @@
-//reception des donnees
 
+// 1. FETCH
+
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
 
 //lecteurs devenements
 
@@ -83,6 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
     chargerTables();
 });
 
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
 //envoie la nouvelle liste de categories au serveur
 async function appliquerJeuCategories(liste, confirmation) {
     if (confirmation && !confirm(confirmation)) return;
@@ -94,6 +104,9 @@ async function appliquerJeuCategories(liste, confirmation) {
     afficherMessage(reponse);
 }
 
+
+
+// 6. FONCTIONS
 
 //maj des elements HTML
 
@@ -125,9 +138,3 @@ async function afficherMessage(reponse) {
 }
 
 
-//intervention utilisateur
-
-
-//controle des donnees utilisateur
-
-//envoie des donnees

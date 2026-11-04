@@ -30,6 +30,26 @@ Dans chaque page HTML (`www/templates/`) et chaque script JavaScript (`www/`), *
 
 ---
 
+## 2. Ordre des parties dans chaque fichier JavaScript
+
+Chaque script JavaScript du dossier `www/` doit être organisé en **6 parties, toujours dans cet ordre précis**, repérées par un bandeau commentaire :
+
+| Ordre | Bandeau | Contenu |
+| :---- | :---- | :---- |
+| 1 | `// 1. FETCH` | tous les appels `fetch` (réception des données au chargement de la page) |
+| 2 | `// 2. LECTEURS D'ÉVÈNEMENT HTML` | mise en place des lecteurs d'évènement HTML (`DOMContentLoaded`, `addEventListener`) |
+| 3 | `// 3. GESTION DES INTERVENTIONS UTILISATEUR` | gestion des interventions de l'utilisateur (fonctions appelées lors d'une action : ouvrir/fermer une popup, changer d'onglet, afficher le formulaire correspondant au choix…) |
+| 4 | `// 4. CONTRÔLE DES DONNÉES UTILISATEUR` | contrôle des données saisies par l'utilisateur (champs obligatoires, formats, cohérence) |
+| 5 | `// 5. ENVOI DES DONNÉES UTILISATEUR` | envoi des données utilisateur au serveur (fonctions contenant les `fetch` en POST) |
+| 6 | `// 6. FONCTIONS` | toutes les autres fonctions (mise à jour de l'affichage, helpers…) |
+
+- Une partie peut être vide, mais le bandeau doit être présent pour garder l'ordre visible.
+- Ne pas modifier la logique du code lors du réordonnancement : on déplace les blocs tels quels.
+
+&nbsp;
+
+---
+
 ## Règles suivantes
 
 *(à compléter au fur et à mesure)*

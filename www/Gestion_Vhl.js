@@ -1,5 +1,7 @@
 Listes =[];
 
+// 1. FETCH
+
 //RECEPTION DU NOMBRE DE VEHICULES PAR ETAT (box "Etat des vehicules")
 fetch("/liste/etat/vehicule")
   .then(response => response.json())
@@ -121,7 +123,7 @@ fetch("/liste/vehicule")
   })
   .catch(error => console.error("Erreur lors du chargement du JSON :", error));
 
-//MISE EN PLACE LECTEUR 
+// 2. LECTEURS D'ÉVÈNEMENT HTML
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -153,3 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+// 6. FONCTIONS
