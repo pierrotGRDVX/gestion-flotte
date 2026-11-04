@@ -11,6 +11,9 @@ let liste_adresse = [];
 let liste_categorie = [];
 let liste_permis = [];
 
+
+// 1. FETCH
+
 // Charger les données initiales
 fetch('/liste/ville')
     .then(response => response.json())
@@ -44,6 +47,9 @@ fetch('/liste/adresse')
     .catch(error => {
         console.error('Erreur lors du chargement des adresses :', error);
     });
+
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
 
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
@@ -231,62 +237,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Fonctions de mise à jour des sélections
-function MAJSelectionCategorie(data) {
-    if (!data || data.length === 0) {
-        console.error("Aucune catégorie à afficher");
-        return;
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// Fonction de contrôle de remplissage
+function ControleRemplissage() {
+    let resultat = true;
+
+    if (!document.getElementById("ipt_nom")?.value) {
+        resultat = false;
     }
-    const conteneurHTML = document.getElementById("ckb_categorie");
-    if (!conteneurHTML) return;
-
-    conteneurHTML.innerHTML = '';
-    data.forEach(item => {
-        const label = document.createElement("label");
-        label.className = "checkbox";
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.name = item.categorie || item;
-        input.value = item.categorie || item;
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(item.categorie || item));
-        conteneurHTML.appendChild(label);
-    });
-}
-
-function MAJSelectionVille(data) {
-    if (!data || data.length === 0) {
-        console.error("Aucune ville à afficher");
-        return;
+    if (!document.getElementById("ipt_prenom")?.value) {
+        resultat = false;
     }
-    const contenu = document.getElementById("slt_pup_ville");
-    if (!contenu) return;
-
-    contenu.innerHTML = '<option value="--Selectionner--">--Sélectionner--</option>';
-    data.forEach(item => {
-        const option = document.createElement("option");
-        option.value = `${item.code_postal} - ${item.nom_ville}`;
-        option.textContent = `${item.code_postal} - ${item.nom_ville}`;
-        contenu.appendChild(option);
-    });
-}
-
-function MAJSelectionAdresse(liste_adresse) {
-    if (!liste_adresse || liste_adresse.length === 0) {
-        console.error("Aucune adresse à afficher");
-        return;
+    if (!document.getElementById("ipt_naissance")?.value) {
+        resultat = false;
     }
-    const contenu = document.getElementById("slt_adresse");
-    if (!contenu) return;
+    if (!document.getElementById("ipt_email")?.value) {
+        resultat = false;
+    }
+    if (document.getElementById("slt_adresse")?.value === "--Selectionner--") {
+        resultat = false;
+    }
+    if (!document.getElementById("ipt_num_permis")?.value) {
+        resultat = false;
+    }
 
-    contenu.innerHTML = '<option value="--Selectionner--">--Sélectionner--</option>';
-    liste_adresse.forEach(item => {
-        const option = document.createElement("option");
-        option.value = `${item.id_adresse}# ${item.code_postal} - ${item.nom_ville} | ${item.complement || ''} | ${item.num_rue} ${item.rue}`;
-        option.textContent = `${item.id_adresse}# ${item.code_postal} - ${item.nom_ville} | ${item.complement || ''} | ${item.num_rue} ${item.rue}`;
-        contenu.appendChild(option);
-    });
+    const radios = document.querySelectorAll('input[type="radio"][name="answer"]:checked');
+    if (radios.length === 0) {
+        resultat = false;
+    }
+
+    console.info("Résultat du contrôle :", resultat);
+    return resultat;
 }
+// 5. ENVOI DES DONNÉES UTILISATEUR
 
 // Fonctions d'enregistrement
 function EnregisterNvlleVille(ville, CP) {
@@ -394,34 +381,63 @@ function EnregistrerPermis(numeros, liste_permis) {
     });
 }
 
-// Fonction de contrôle de remplissage
-function ControleRemplissage() {
-    let resultat = true;
 
-    if (!document.getElementById("ipt_nom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_prenom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_naissance")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_email")?.value) {
-        resultat = false;
-    }
-    if (document.getElementById("slt_adresse")?.value === "--Selectionner--") {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_num_permis")?.value) {
-        resultat = false;
-    }
+// 6. FONCTIONS
 
-    const radios = document.querySelectorAll('input[type="radio"][name="answer"]:checked');
-    if (radios.length === 0) {
-        resultat = false;
+// Fonctions de mise à jour des sélections
+function MAJSelectionCategorie(data) {
+    if (!data || data.length === 0) {
+        console.error("Aucune catégorie à afficher");
+        return;
     }
+    const conteneurHTML = document.getElementById("ckb_categorie");
+    if (!conteneurHTML) return;
 
-    console.info("Résultat du contrôle :", resultat);
-    return resultat;
+    conteneurHTML.innerHTML = '';
+    data.forEach(item => {
+        const label = document.createElement("label");
+        label.className = "checkbox";
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.name = item.categorie || item;
+        input.value = item.categorie || item;
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(item.categorie || item));
+        conteneurHTML.appendChild(label);
+    });
 }
+
+function MAJSelectionVille(data) {
+    if (!data || data.length === 0) {
+        console.error("Aucune ville à afficher");
+        return;
+    }
+    const contenu = document.getElementById("slt_pup_ville");
+    if (!contenu) return;
+
+    contenu.innerHTML = '<option value="--Selectionner--">--Sélectionner--</option>';
+    data.forEach(item => {
+        const option = document.createElement("option");
+        option.value = `${item.code_postal} - ${item.nom_ville}`;
+        option.textContent = `${item.code_postal} - ${item.nom_ville}`;
+        contenu.appendChild(option);
+    });
+}
+
+function MAJSelectionAdresse(liste_adresse) {
+    if (!liste_adresse || liste_adresse.length === 0) {
+        console.error("Aucune adresse à afficher");
+        return;
+    }
+    const contenu = document.getElementById("slt_adresse");
+    if (!contenu) return;
+
+    contenu.innerHTML = '<option value="--Selectionner--">--Sélectionner--</option>';
+    liste_adresse.forEach(item => {
+        const option = document.createElement("option");
+        option.value = `${item.id_adresse}# ${item.code_postal} - ${item.nom_ville} | ${item.complement || ''} | ${item.num_rue} ${item.rue}`;
+        option.textContent = `${item.id_adresse}# ${item.code_postal} - ${item.nom_ville} | ${item.complement || ''} | ${item.num_rue} ${item.rue}`;
+        contenu.appendChild(option);
+    });
+}
+

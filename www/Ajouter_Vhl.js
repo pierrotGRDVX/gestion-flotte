@@ -12,6 +12,9 @@ let liste_model = [];
 
 
 
+
+// 1. FETCH
+
 // Charger les données initiales
 fetch('/liste/categorie')
     .then(response => response.json())
@@ -56,40 +59,15 @@ fetch('/liste/energie')
         console.error('Erreur lors du chargement de la liste des energies :', error);
     });
 
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
+
 //MAJ du select modele selon la marque choisie
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('slt_marque').addEventListener('change', function() {
         MAJSelectionModel(this.value);
     });
 });
-
-function MAJSelectionModel(marqueSelectionnee){
-    const contenu = document.getElementById("slt_model");
-    const divSelect = document.getElementById("tag_div_slt_model");
-    while (contenu.options.length > 1) {
-        contenu.remove(1);
-    }
-    if (!marqueSelectionnee || marqueSelectionnee === "--Sélectionner--") {
-        divSelect.setAttribute("disabled", "");
-        return;
-    }
-    divSelect.removeAttribute("disabled");
-    const liste = liste_model.filter(v => v.marque === marqueSelectionnee);
-    liste.forEach(items => {
-        const option = document.createElement("option");
-        option.textContent = items.modele;
-        contenu.appendChild(option);
-    });
-}
-
-function MAJSelectionNRJ(data){
-    const contenu = document.getElementById("slt_energie");
-    data.forEach(items => {
-        const option = document.createElement("option");
-        option.textContent = items.nom;
-        contenu.appendChild(option);
-    });
-}
 
 //Mise en forme automatique de l'immatriculation au format XX-NNN-XX
 document.addEventListener('DOMContentLoaded', () => {
@@ -235,50 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-//      FONCTIONS 
-// Fonctions de mise à jour des sélections
-function MAJSelectionCategorie(data) {
-    if (!data || data.length === 0) {
-        console.error("Aucune catégorie à afficher");
-        return;
-    }
 
-    const conteneurHTML = document.getElementById("rdo_categorie");
-    const conteneurPup = document.getElementById("rdo_pup_categorie");
-    if (!conteneurHTML) {
-        console.error("Conteneur introuvable : rdo_categorie");
-        return;
-    }
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
 
-    conteneurHTML.innerHTML = '';
-    if (conteneurPup) conteneurPup.innerHTML = '';
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
 
-    data.forEach(item => {
-        const categoryValue = item.categorie || item;
-
-        const label = document.createElement("label");
-        label.className = "checkbox";
-        const input = document.createElement("input");
-        input.type = "radio";
-        input.name = "categorie"; // Même nom pour regrouper les boutons radio
-        input.value = categoryValue;
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(categoryValue));
-        conteneurHTML.appendChild(label);
-
-        if (conteneurPup) {
-            const labelPup = document.createElement("label");
-            labelPup.className = "radio";
-            const inputPup = document.createElement("input");
-            inputPup.type = "radio";
-            inputPup.name = "categorie_pup";
-            inputPup.value = categoryValue;
-            labelPup.appendChild(inputPup);
-            labelPup.appendChild(document.createTextNode(categoryValue));
-            conteneurPup.appendChild(labelPup);
-        }
-    });
-}
+// 5. ENVOI DES DONNÉES UTILISATEUR
 
 async function EnregisterNvlleMarque(marque) {
     const data = {
@@ -336,21 +276,6 @@ async function EnregisterNvlleEnergie(nom) {
     });
 }
 
-function MAJSelectionMarque(data){
-    const slt_marque = document.getElementById("slt_marque");
-    const slt_pup_marque = document.getElementById("slt_pup_marque");
-    data.forEach(items => {
-        const optA = document.createElement("option");
-        optA.textContent = items.marque;
-        slt_marque.appendChild(optA);
-        if (slt_pup_marque) {
-            const optB = document.createElement("option");
-            optB.textContent = items.marque;
-            slt_pup_marque.appendChild(optB);
-        }
-    });
-}
-
 async function EnregisterNvlleCategorie(categorie) {
     const data = {
         categorie: categorie
@@ -367,3 +292,91 @@ async function EnregisterNvlleCategorie(categorie) {
         console.error('Erreur lors de l\'envoi des données de la catégorie :', error);
     });
 }
+// 6. FONCTIONS
+
+function MAJSelectionModel(marqueSelectionnee){
+    const contenu = document.getElementById("slt_model");
+    const divSelect = document.getElementById("tag_div_slt_model");
+    while (contenu.options.length > 1) {
+        contenu.remove(1);
+    }
+    if (!marqueSelectionnee || marqueSelectionnee === "--Sélectionner--") {
+        divSelect.setAttribute("disabled", "");
+        return;
+    }
+    divSelect.removeAttribute("disabled");
+    const liste = liste_model.filter(v => v.marque === marqueSelectionnee);
+    liste.forEach(items => {
+        const option = document.createElement("option");
+        option.textContent = items.modele;
+        contenu.appendChild(option);
+    });
+}
+
+function MAJSelectionNRJ(data){
+    const contenu = document.getElementById("slt_energie");
+    data.forEach(items => {
+        const option = document.createElement("option");
+        option.textContent = items.nom;
+        contenu.appendChild(option);
+    });
+}
+
+function MAJSelectionCategorie(data) {
+    if (!data || data.length === 0) {
+        console.error("Aucune catégorie à afficher");
+        return;
+    }
+
+    const conteneurHTML = document.getElementById("rdo_categorie");
+    const conteneurPup = document.getElementById("rdo_pup_categorie");
+    if (!conteneurHTML) {
+        console.error("Conteneur introuvable : rdo_categorie");
+        return;
+    }
+
+    conteneurHTML.innerHTML = '';
+    if (conteneurPup) conteneurPup.innerHTML = '';
+
+    data.forEach(item => {
+        const categoryValue = item.categorie || item;
+
+        const label = document.createElement("label");
+        label.className = "checkbox";
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "categorie"; // Même nom pour regrouper les boutons radio
+        input.value = categoryValue;
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(categoryValue));
+        conteneurHTML.appendChild(label);
+
+        if (conteneurPup) {
+            const labelPup = document.createElement("label");
+            labelPup.className = "radio";
+            const inputPup = document.createElement("input");
+            inputPup.type = "radio";
+            inputPup.name = "categorie_pup";
+            inputPup.value = categoryValue;
+            labelPup.appendChild(inputPup);
+            labelPup.appendChild(document.createTextNode(categoryValue));
+            conteneurPup.appendChild(labelPup);
+        }
+    });
+}
+
+function MAJSelectionMarque(data){
+    const slt_marque = document.getElementById("slt_marque");
+    const slt_pup_marque = document.getElementById("slt_pup_marque");
+    data.forEach(items => {
+        const optA = document.createElement("option");
+        optA.textContent = items.marque;
+        slt_marque.appendChild(optA);
+        if (slt_pup_marque) {
+            const optB = document.createElement("option");
+            optB.textContent = items.marque;
+            slt_pup_marque.appendChild(optB);
+        }
+    });
+}
+
