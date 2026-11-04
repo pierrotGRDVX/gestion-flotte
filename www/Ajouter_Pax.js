@@ -11,42 +11,43 @@ let liste_adresse = [];
 let liste_categorie = [];
 let liste_permis = [];
 
-// Charger les données initiales
-fetch('/liste/ville')
-    .then(response => response.json())
-    .then(data => {
-        liste_ville = data;
-        MAJSelectionVille(liste_ville);
-        console.log("Listes des villes téléchargées", liste_ville);
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement des villes :', error);
-    });
-
-fetch('/liste/categorie')
-    .then(response => response.json())
-    .then(data => {
-        liste_categorie = data;
-        MAJSelectionCategorie(liste_categorie);
-        console.log("Listes des catégories téléchargées", liste_categorie);
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement des catégories :', error);
-    });
-
-fetch('/liste/adresse')
-    .then(response => response.json())
-    .then(data => {
-        liste_adresse = data;
-        MAJSelectionAdresse(liste_adresse);
-        console.log("Listes des adresses téléchargées", liste_adresse);
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement des adresses :', error);
-    });
-
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
+    // Charger les données initiales au chargement de la page
+    fetch('/liste/ville')
+        .then(response => response.json())
+        .then(data => {
+            liste_ville = data;
+            MAJSelectionVille(liste_ville);
+            console.log("Listes des villes téléchargées", liste_ville);
+        })
+        .catch(error => {
+            console.error('Erreur lors du chargement des villes :', error);
+        });
+
+    // Télécharger la liste des catégories et remplir les cases à cocher
+    fetch('/liste/categorie')
+        .then(response => response.json())
+        .then(data => {
+            liste_categorie = data;
+            MAJSelectionCategorie(liste_categorie);
+            console.log("Listes des catégories téléchargées", liste_categorie);
+        })
+        .catch(error => {
+            console.error('Erreur lors du chargement des catégories :', error);
+        });
+
+    fetch('/liste/adresse')
+        .then(response => response.json())
+        .then(data => {
+            liste_adresse = data;
+            MAJSelectionAdresse(liste_adresse);
+            console.log("Listes des adresses téléchargées", liste_adresse);
+        })
+        .catch(error => {
+            console.error('Erreur lors du chargement des adresses :', error);
+        });
+
     // Écouteurs d'événements pour les boutons des popups
     const btnVille = document.getElementById('btn_ville');
     if (btnVille) {
