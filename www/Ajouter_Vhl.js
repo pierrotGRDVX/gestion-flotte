@@ -126,6 +126,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+//Mise en forme automatique des dates au format JJ/MM/AAAA
+document.addEventListener('DOMContentLoaded', () => {
+    ['ipt_mise_en_circulation', 'ipt_date_ct'].forEach(id => {
+        document.getElementById(id).addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Supprime tout sauf les chiffres
+            if (value.length > 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            if (value.length > 5) {
+                value = value.slice(0, 5) + '/' + value.slice(5, 9);
+            }
+            e.target.value = value;
+        });
+    });
+});
+
+//Mise en forme automatique du kilometrage : suffixe " km"
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('ipt_kilometrage').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/[^0-9]/g, ''); // chiffres uniquement
+        e.target.value = value === '' ? '' : value + ' km';
+    });
+});
+
+//Mise en forme automatique du prix d'achat : suffixe " €"
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('ipt_prix').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/[^0-9]/g, ''); // chiffres uniquement
+        e.target.value = value === '' ? '' : value + ' \u20ac';
+    });
+});
+
 //mise en place de lecteurs d'evenements
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
