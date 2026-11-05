@@ -61,6 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('slt_marque').addEventListener('change', function() {
         MAJSelectionModel(this.value);
     });
+
+    //Quand un modele est choisi, coche automatiquement sa categorie
+    document.getElementById('slt_model').addEventListener('change', function() {
+        const modeleChoisi = this.value;
+        document.querySelectorAll('input[name="categorie"]').forEach(radio => {
+            radio.checked = false;
+        });
+        if (!modeleChoisi || modeleChoisi === '--Sélectionner--') return;
+        const trouve = liste_model.find(v => v.modele === modeleChoisi);
+        if (trouve) {
+            const radio = document.querySelector('input[name="categorie"][value="' + trouve.categorie + '"]');
+            if (radio) radio.checked = true;
+        }
+    });
 });
 
 function MAJSelectionModel(marqueSelectionnee){
