@@ -276,6 +276,7 @@ function MAJSelectionCategorie(data) {
         input.type = "radio";
         input.name = "categorie"; // Même nom pour regrouper les boutons radio
         input.value = categoryValue;
+        input.disabled = true; // non modifiable : remplie automatiquement via le modele choisi
         label.appendChild(input);
         label.appendChild(document.createTextNode(categoryValue));
         conteneurHTML.appendChild(label);
