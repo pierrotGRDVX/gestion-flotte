@@ -67,6 +67,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('slt_marque').addEventListener('change', function() {
         MAJSelectionModel(this.value);
     });
+
+    //Quand un modele est choisi, coche automatiquement sa categorie
+    document.getElementById('slt_model').addEventListener('change', function() {
+        const modeleChoisi = this.value;
+        document.querySelectorAll('input[name="categorie"]').forEach(radio => {
+            radio.checked = false;
+        });
+        if (!modeleChoisi || modeleChoisi === '--Sélectionner--') return;
+        const trouve = liste_model.find(v => v.modele === modeleChoisi);
+        if (trouve) {
+            const radio = document.querySelector('input[name="categorie"][value="' + trouve.categorie + '"]');
+            if (radio) radio.checked = true;
+        }
+    });
 });
 
 //Mise en forme automatique de l'immatriculation au format XX-NNN-XX
@@ -87,6 +101,90 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         e.target.value = formate;
+    });
+});
+
+//Mise en forme automatique des dates au format JJ/MM/AAAA
+document.addEventListener('DOMContentLoaded', () => {
+    ['ipt_mise_en_circulation', 'ipt_date_ct'].forEach(id => {
+        document.getElementById(id).addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Supprime tout sauf les chiffres
+            if (value.length > 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            if (value.length > 5) {
+                value = value.slice(0, 5) + '/' + value.slice(5, 9);
+            }
+            e.target.value = value;
+        });
+    });
+});
+
+//Mise en forme automatique du kilometrage : suffixe " km"
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('ipt_kilometrage').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/[^0-9]/g, ''); // chiffres uniquement
+        e.target.value = value === '' ? '' : value + ' km';
+    });
+});
+
+//Mise en forme automatique du prix d'achat : suffixe " €"
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('ipt_prix').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/[^0-9]/g, ''); // chiffres uniquement
+        e.target.value = value === '' ? '' : value + ' \u20ac';
+    });
+});
+
+//Envoi du formulaire : on nettoie les suffixes (" km", " €") et on reformate la date avant envoi
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn_enregistrer').addEventListener('click', () => {
+        console.info("bouton enregistrer vehicule clique");
+
+        // valeurs brutes sans suffixe
+        const kilometrage = document.getElementById('ipt_kilometrage').value.replace(/[^0-9]/g, '');
+        const prix = document.getElementById('ipt_prix').value.replace(/[^0-9]/g, '');
+        // date JJ/MM/AAAA -> AAAA-MM-JJ
+        const dateMecBrute = document.getElementById('ipt_mise_en_circulation').value.replace(/\D/g, '');
+        const dateMec = dateMecBrute.length === 8
+            ? dateMecBrute.slice(4, 8) + '-' + dateMecBrute.slice(2, 4) + '-' + dateMecBrute.slice(0, 2)
+            : null;
+
+        const radioCat = document.querySelector('input[name="categorie"]:checked');
+
+        const data = {
+            immat: document.getElementById('ipt_immatriculation').value,
+            date_mec: dateMec,
+            id_proprio: null,
+            id_modele: null,
+            num_serie: null,
+            ptac: null,
+            ptra: null,
+            kilometrage_achat: kilometrage === '' ? null : parseFloat(kilometrage),
+            prix_achat: prix === '' ? null : parseFloat(prix),
+            etat: "en_service",
+            energie: document.getElementById('slt_energie').value,
+            couleur: document.getElementById('ipt_couleur').value,
+            categorie: radioCat ? radioCat.value : null,
+            marque: document.getElementById('slt_marque').value,
+            modele: document.getElementById('slt_model').value,
+            date_ct: document.getElementById('ipt_date_ct').value
+        };
+        console.log('donnees a envoyer', data);
+
+        fetch('/cars', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(rep => {
+            console.log('reponse serveur', rep);
+            window.location.reload();
+        })
+        .catch(error => console.error('Erreur lors de l\'envoi du vehicule :', error));
     });
 });
 
@@ -216,6 +314,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 3. GESTION DES INTERVENTIONS UTILISATEUR
 
+        const label = document.createElement("label");
+        label.className = "checkbox";
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "categorie"; // Même nom pour regrouper les boutons radio
+        input.value = categoryValue;
+        input.disabled = true; // non modifiable : remplie automatiquement via le modele choisi
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(categoryValue));
+        conteneurHTML.appendChild(label);
 // 4. CONTRÔLE DES DONNÉES UTILISATEUR
 
 // 5. ENVOI DES DONNÉES UTILISATEUR
