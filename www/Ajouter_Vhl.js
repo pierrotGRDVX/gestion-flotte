@@ -158,6 +158,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+//Envoi du formulaire : on nettoie les suffixes (" km", " €") et on reformate la date avant envoi
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn_enregistrer').addEventListener('click', () => {
+        console.info("bouton enregistrer vehicule clique");
+
+        // valeurs brutes sans suffixe
+        const kilometrage = document.getElementById('ipt_kilometrage').value.replace(/[^0-9]/g, '');
+        const prix = document.getElementById('ipt_prix').value.replace(/[^0-9]/g, '');
+        // date JJ/MM/AAAA -> AAAA-MM-JJ
+        const dateMecBrute = document.getElementById('ipt_mise_en_circulation').value.replace(/\D/g, '');
+        const dateMec = dateMecBrute.length === 8
+            ? dateMecBrute.slice(4, 8) + '-' + dateMecBrute.slice(2, 4) + '-' + dateMecBrute.slice(0, 2)
+            : null;
+
+        const radioCat = document.querySelector('input[name="categorie"]:checked');
+
+        const data = {
+            immat: document.getElementById('ipt_immatriculation').value,
+            date_mec: dateMec,
+            id_proprio: null,
+            id_modele: null,
+            num_serie: null,
+            ptac: null,
+            ptra: null,
+            kilometrage_achat: kilometrage === '' ? null : parseFloat(kilometrage),
+            prix_achat: prix === '' ? null : parseFloat(prix),
+            etat: "en_service",
+            energie: document.getElementById('slt_energie').value,
+            couleur: document.getElementById('ipt_couleur').value,
+            categorie: radioCat ? radioCat.value : null,
+            marque: document.getElementById('slt_marque').value,
+            modele: document.getElementById('slt_model').value,
+            date_ct: document.getElementById('ipt_date_ct').value
+        };
+        console.log('donnees a envoyer', data);
+
+        fetch('/cars', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(rep => {
+            console.log('reponse serveur', rep);
+            window.location.reload();
+        })
+        .catch(error => console.error('Erreur lors de l\'envoi du vehicule :', error));
+    });
+});
+
 //mise en place de lecteurs d'evenements
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
