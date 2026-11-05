@@ -25,7 +25,7 @@ body {
             padding-left: 0%;
 }
 
-#titreCategorie{
+#tag_titre_categorie{
             color: rgb(88, 61, 169);
             text-decoration: underline;
             text-transform: uppercase;
@@ -62,27 +62,30 @@ body {
 
 }
 
-#contenu_popup {
+#tag_contenu_popup {
     height: 230px;
 }
 
-#contenu_pup_model {
+#tag_contenu_pup_model {
     height: 370px;
 
 }
 
-#en_tete {
+#tag_en_tete {
+       position: sticky;
+       top: 0;
+       z-index: 30;
        background-color:  rgb(153, 178, 197);
 }
 
  /* Style pour placer l'image sur le côté */
-    #logo-container {
+    #tag_logo_container {
         position: absolute;
         left: 20px;
         top: 20px;
         z-index: 10;
     }
-    #logo-container img {
+    #tag_logo_container img {
         max-width: 200px;
         height: auto;
     }

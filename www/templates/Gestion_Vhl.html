@@ -6,7 +6,7 @@
                 <aside class="menu">
                     <div class="field">
                         <div class="label">Ajouter un véhicule</div>
-                        <a class="button is-success" href="pageAjoutVhl">Ajouter</a>
+                        <a class="button btn_sidebar" id="btn_sidebar" href="pageAjoutVhl">Ajouter</a>
                     </div>
                 </aside>
             </div>
@@ -14,7 +14,7 @@
             <div class="contenue-central">
 
                 <!onglets>
-                <div class="tabs is-boxed">
+                <div class="tabs is-boxed is-centered">
                     <ul>
                         <li class="is-active" data-tab="tab_liste_vehicules"><a><span class="icon"><i class="fa-solid fa-car"></i></span><span>Liste des véhicules</span></a></li>
                         <li data-tab="tab_distance"><a><span class="icon"><i class="fa-solid fa-arrows-turn-to-dots"></i></span><span>Distance parcouru</span></a></li>
@@ -26,13 +26,13 @@
                 <div id="tab_liste_vehicules" class="tab-content">
                     <!cartouche rassemblant differentes alerte>
                     <div class="box">
-                        <h1 id="titreCategorie">Etat des véhicules</h1>
+                        <h1 id="tag_titre_categorie">Etat des véhicules</h1>
                         <div class="grid has-3-cols is-column-gap-1 is-col-min-2">
                             <div class="cell"><span class="tag" id="tag_info_ok"></span><span class="tag is-success"> En Etat </span></div>
                             <div class="cell"><span class="tag" id="tag_info_ed"></span><span class="tag is-warning">Endommagé</span></div>
                             <div class="cell"><span class="tag" id="tag_info_nr"></span><span class="tag is-danger">En Panne</span></div>
                         </div>
-                    </div>  
+                    </div>
 
                     <!Table des differentes véhicules enregistrées dans la base de données> 
                     <div class="box">
@@ -54,18 +54,40 @@
                     </div>
                 </div>
 
-                <!onglet 2 : distance parcouru (a developper)>
+                <!onglet 2 : distance parcouru>
                 <div id="tab_distance" class="tab-content" style="display:none">
+                    <!box distance parcourue par l'ensemble de la flotte>
                     <div class="box">
-                        <h1 id="titreCategorie">Distance parcouru</h1>
-                        <p>À développer.</p>
+                        <h1 id="tag_titre_categorie">Distance parcourue</h1>
+                        <div class="fixed-grid has-3-cols">
+                            <div class="grid">
+                                <div class="cell">
+                                    <div class="field">
+                                        <div class="label">Distance parcourue au total:</div>
+                                        <input class="input" id="ipt_distance_totale" type="text" readonly placeholder="km">
+                                    </div>
+                                </div>
+                                <div class="cell">
+                                    <div class="field">
+                                        <div class="label">Distance parcourue cette année:</div>
+                                        <input class="input" id="ipt_distance_annee" type="text" readonly placeholder="km">
+                                    </div>
+                                </div>
+                                <div class="cell">
+                                    <div class="field">
+                                        <div class="label">Distance parcourue ce mois:</div>
+                                        <input class="input" id="ipt_distance_mois" type="text" readonly placeholder="km">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!onglet 3 : frais (a developper)>
                 <div id="tab_frais" class="tab-content" style="display:none">
                     <div class="box">
-                        <h1 id="titreCategorie">Frais</h1>
+                        <h1 id="tag_titre_categorie">Frais</h1>
                         <p>À développer.</p>
                     </div>
                 </div>

@@ -14,6 +14,9 @@ let nbrInter = [];
 
 //telecharge le nombre d'intervention déjà effectué
 //déclenchement dès le chargement de la page
+
+// 1. FETCH
+
 fetch('/nbrInter')
     .then(response => response.json())
     .then(data => {
@@ -76,6 +79,9 @@ fetch('/ListCat')
     .catch(error => {
         console.error('Erreur lors du chargement du JSON:', error);
     });
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
+
 const Save = document.getElementById('btn_enregistrer');
 //Lecture du bouton enregistré
 Save.addEventListener('click', async () => {
@@ -148,15 +154,15 @@ document.getElementById('slt_marque').addEventListener('change', function() {
 
 // Ouvrir le pop up marque
 document.getElementById('btn_marque').addEventListener('click', () => {
-    pup_marque.classList.add('is-active');
+    tag_pup_marque.classList.add('is-active');
     });
 // Fermer le pop up marque
 document.getElementById('btn_pup_marque_close').addEventListener('click', () => {
-    pup_marque.classList.remove('is-active');
+    tag_pup_marque.classList.remove('is-active');
     });
 // Fermer la popup marque en cliquant à l'extérieur
-document.getElementById('pup_marque').querySelector('.modal-background').addEventListener('click', () => {
-    pup_marque.classList.remove('is-active');
+document.getElementById('tag_pup_marque').querySelector('.modal-background').addEventListener('click', () => {
+    tag_pup_marque.classList.remove('is-active');
     });
 //enregister la marque
 document.getElementById('btn_save_marque').addEventListener('click', () => {
@@ -173,15 +179,15 @@ document.getElementById('btn_save_marque').addEventListener('click', () => {
 
 // Ouvrir le pop up modele
 document.getElementById('btn_model').addEventListener('click', () => {
-    pup_model.classList.add('is-active');
+    tag_pup_model.classList.add('is-active');
     });
 // Fermer le pop up modele
 document.getElementById('btn_pup_model_close').addEventListener('click', () => {
-    pup_model.classList.remove('is-active');
+    tag_pup_model.classList.remove('is-active');
     });
 // Fermer la popup modele en cliquant à l'extérieur
-document.getElementById('pup_model').querySelector('.modal-background').addEventListener('click', () => {
-    pup_model.classList.remove('is-active');
+document.getElementById('tag_pup_model').querySelector('.modal-background').addEventListener('click', () => {
+    tag_pup_model.classList.remove('is-active');
     });
 //lecture du bouton enregistrer nouveau model
 document.getElementById('btn_save_model').addEventListener('click', () => {
@@ -212,15 +218,15 @@ document.getElementById('btn_save_model').addEventListener('click', () => {
 // Ouvrir le pop up Categorie
 document.getElementById('btn_categorie').addEventListener('click', () => {
     console.info("appuyé");
-    pup_categorie.classList.add('is-active');
+    tag_pup_categorie.classList.add('is-active');
     });
 // Fermer le pop up Categorie
 document.getElementById('btn_pup_categorie_close').addEventListener('click', () => {
-    pup_categorie.classList.remove('is-active');
+    tag_pup_categorie.classList.remove('is-active');
     });
 // Fermer la popup Categorie en cliquant à l'extérieur
-document.getElementById('pup_categorie').querySelector('.modal-background').addEventListener('click', () => {
-    pup_categorie.classList.remove('is-active');
+document.getElementById('tag_pup_categorie').querySelector('.modal-background').addEventListener('click', () => {
+    tag_pup_categorie.classList.remove('is-active');
     });
 //enregister la categorie
 document.getElementById('btn_save_categorie').addEventListener('click', () => {
@@ -237,15 +243,15 @@ document.getElementById('btn_save_categorie').addEventListener('click', () => {
 
 // Ouvrir le pop up Energie
 document.getElementById('btn_energie').addEventListener('click', () => {
-    pup_energie.classList.add('is-active');
+    tag_pup_energie.classList.add('is-active');
     });
 // Fermer le pop up energie
 document.getElementById('btn_pup_energie_close').addEventListener('click', () => {
-    pup_energie.classList.remove('is-active');
+    tag_pup_energie.classList.remove('is-active');
     });
 // Fermer la popup Energie en cliquant à l'extérieur
-document.getElementById('pup_energie').querySelector('.modal-background').addEventListener('click', () => {
-    pup_energie.classList.remove('is-active');
+document.getElementById('tag_pup_energie').querySelector('.modal-background').addEventListener('click', () => {
+    tag_pup_energie.classList.remove('is-active');
     });
 
 //Lecture de la selection de la valeur modele
@@ -321,6 +327,70 @@ document.getElementById("ipt_date_ct").addEventListener("input", function(e) {
     e.target.value = value;
     });
 
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+//fonction enregistrer nouvelle marque
+function EnregisterNvlleMarque(valeur){
+    const data = {
+        nom: valeur
+        };
+    console.log('donnée a envoyer',data)
+
+    fetch('/cars/newmark', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    };
+
+//fonction enregistrer nouvelle Categorie
+function EnregisterNvlleCategorie(valeur){
+    const data = {
+        libelle: valeur
+        };
+    console.log('donnée a envoyer',data)
+
+    fetch('/cars/newcat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    };
+
+//envoie les donnees a enregistrer dans la BDD
+function EnregisterNvxModele(val_marque, val_model, val_categorie){
+    const data = {
+        nom: val_model,
+        marque: val_marque,
+        categorie: val_categorie
+    };
+    console.log('donnée a envoyer',data)
+    fetch('/cars/newmodel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    };
+
+
+
+                    
+
+                    
+
+// 6. FONCTIONS
+
 //fonction ajoutant les marques dans le menu deroulant du contenue principale
 //plus du popup modele
 function MAJSelectionMarque(data){
@@ -389,10 +459,10 @@ function MAJSelectionCategorie(data){
         const radioInput_B = document.createElement("input");
         radioInput_A.type = "radio";
         radioInput_A.name = "answer";
-        radioInput_A.id = (items.categorie);
+        radioInput_A.id = ("rdo_" + items.categorie);
         radioInput_B.type = "radio";
         radioInput_B.name = "answer";
-        radioInput_B.id = (items.categorie);
+        radioInput_B.id = ("rdo_" + items.categorie);
 
         const radioText_A = document.createElement("span")
         const radioText_B = document.createElement("span")
@@ -409,57 +479,3 @@ function MAJSelectionCategorie(data){
     });
     };
 
-//fonction enregistrer nouvelle marque
-function EnregisterNvlleMarque(valeur){
-    const data = {
-        nom: valeur
-        };
-    console.log('donnée a envoyer',data)
-
-    fetch('/cars/newmark', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    };
-
-//fonction enregistrer nouvelle Categorie
-function EnregisterNvlleCategorie(valeur){
-    const data = {
-        libelle: valeur
-        };
-    console.log('donnée a envoyer',data)
-
-    fetch('/cars/newcat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    };
-
-//envoie les donnees a enregistrer dans la BDD
-function EnregisterNvxModele(val_marque, val_model, val_categorie){
-    const data = {
-        nom: val_model,
-        marque: val_marque,
-        categorie: val_categorie
-    };
-    console.log('donnée a envoyer',data)
-    fetch('/cars/newmodel', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    };
-
-
-
-                    
-
-                    

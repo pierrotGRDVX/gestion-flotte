@@ -1,5 +1,7 @@
 
 
+// 1. FETCH
+
 //Telecharge la liste des utilisateurs
 fetch("/liste/proprietaire")
   .then(response => response.json())
@@ -7,7 +9,7 @@ fetch("/liste/proprietaire")
     console.info(data);
 
     // selection du conteneur HTML
-    const contenu = document.getElementById("ListeVhl");
+    const contenu = document.getElementById("tab_liste_vhl");
 
     //parcours du taleau "entree"
     data.forEach(items => {
@@ -27,8 +29,9 @@ fetch("/liste/proprietaire")
   .catch(error => console.error("Erreur lors du chargement du JSON :", error));
 
 
+// 2. LECTEURS D'ÉVÈNEMENT HTML
   document.addEventListener('DOMContentLoaded', () => {
-    const tbody = document.getElementById('ListeVhl');
+    const tbody = document.getElementById('tab_liste_vhl');
 
     // Écouteur d'événement pour les clics sur les lignes du tableau
     tbody.addEventListener('click', (event) => {
@@ -38,10 +41,18 @@ fetch("/liste/proprietaire")
       // Récupère toutes les cellules (<td>) de la ligne
       const cells = row.querySelectorAll('td');
 
-      // Extrait les valeurs de chaque cellule
-      const rowData = {
-        id_proprio: cells[0].textContent,
-      
-  }
-      console.info(rowData)});
+      // première cellule = id du personnel
+      const id_proprio = cells[0].textContent;
+
+      // ouvre la page Infos_Pax du personnel sélectionné
+      window.location.href = `/pageInfoPax?valeur=${encodeURIComponent(id_proprio)}`;
+    });
 });
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+// 6. FONCTIONS

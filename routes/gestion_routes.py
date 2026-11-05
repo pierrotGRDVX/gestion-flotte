@@ -50,6 +50,13 @@ def pageInfoVhl():
 
         return render_template("Infos_Vhl.html", title = valeur, title_onglet=valeur,  valeur= valeur)
 
+#Page d'affichage des infos d'un personnel
+@gestion_bp.route("/pageInfoPax")
+def pageInfoPax():
+    valeur = request.args.get("valeur")
+    if request.method == 'GET':
+        return render_template("Infos_Pax.html", title = "Infos personnel", title_onglet= "Infos personnel",  valeur= valeur)
+
 @gestion_bp.route("/pageParametres")
 def pageParametres():
     if request.method == 'GET':

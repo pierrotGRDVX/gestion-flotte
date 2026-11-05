@@ -1,6 +1,6 @@
 class proprioDTO:
 
-    def __init__(self,id_ville = None,nom_ville = None, code_postal = None, id_adresse = None,  num_rue = None,rue = None, complement = None,id_proprio = None, nom_proprio=None, prenom_proprio = None, date_naissance = None, sexe = None, email_proprio = None, id_adresse_proprio = None, num_permis = None):
+    def __init__(self,id_ville = None,nom_ville = None, code_postal = None, id_adresse = None,  num_rue = None,rue = None, complement = None,id_proprio = None, nom_proprio=None, prenom_proprio = None, date_naissance = None, sexe = None, email_proprio = None, id_adresse_proprio = None, num_permis = None, liste_categorie = None):
         self.id_ville = id_ville
         self.nom_ville = nom_ville
         self.code_postal = code_postal
@@ -11,6 +11,12 @@ class proprioDTO:
         self.id_proprio = id_proprio
         self.nom_proprio = nom_proprio
         self.prenom_proprio = prenom_proprio
+        self.date_naissance = date_naissance
+        self.sexe = sexe
+        self.email_proprio = email_proprio
+        self.id_adresse_proprio = id_adresse_proprio
+        self.num_permis = num_permis
+        self.liste_categorie = liste_categorie
 
     def listeVille(self):
         return {
@@ -32,4 +38,21 @@ class proprioDTO:
             "id_proprio": self.id_proprio,
             "nom_proprio": self.nom_proprio,
             "prenom_proprio": self.prenom_proprio
+        }
+
+    def infoProprio(self):
+        return {
+            "id_proprio": self.id_proprio,
+            "nom_proprio": self.nom_proprio,
+            "prenom_proprio": self.prenom_proprio,
+            "date_naissance": self.date_naissance,
+            "sexe": self.sexe,
+            "email_proprio": self.email_proprio,
+            "num_rue": self.num_rue,
+            "rue": self.rue,
+            "complement": self.complement,
+            "nom_ville": self.nom_ville,
+            "code_postal": self.code_postal,
+            "num_permis": self.num_permis,
+            "liste_categorie": self.liste_categorie
         }

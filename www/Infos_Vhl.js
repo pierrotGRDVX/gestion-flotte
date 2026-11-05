@@ -12,6 +12,9 @@ const data = {
     };
 console.log('données a envoyer',data)
 
+
+// 1. FETCH
+
 fetch(`/info/vehicule/${encodeURIComponent(immat)}`)
   .then(response => {
     if (!response.ok) {
@@ -22,6 +25,21 @@ fetch(`/info/vehicule/${encodeURIComponent(immat)}`)
   .then(data => {
       console.log("Chargement infos véhicule lancé", data);
       MAJInput(data);
+  })
+  .catch(error => {
+      console.error("Erreur lors de la requête:", error);
+  });
+
+fetch(`/distance/conso/${encodeURIComponent(immat)}`)
+  .then(response => {
+    if (!response.ok) {
+        throw new Error(`Erreur HTTP! statut: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+      console.log("Chargement distances/consommations lancé", data);
+      MAJDistanceConso(data);
   })
   .catch(error => {
       console.error("Erreur lors de la requête:", error);
@@ -40,6 +58,9 @@ fetch(`/liste/intervention/${encodeURIComponent(immat)}`)
 
 
 
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // Gestion des onglets
@@ -54,15 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Ouvrir le pop up Energie
   document.getElementById('btn_pup_etat').addEventListener('click', async () => {
-      pup_etat.classList.add('is-active');
+      tag_pup_etat.classList.add('is-active');
       });
   // Fermer le pop up energie
   document.getElementById('btn_pup_etat_close').addEventListener('click', () => {
-      pup_etat.classList.remove('is-active');
+      tag_pup_etat.classList.remove('is-active');
       });
   // Fermer la popup Energie en cliquant à l'extérieur
-  document.getElementById('pup_etat').querySelector('.modal-background').addEventListener('click', () => {
-      pup_etat.classList.remove('is-active');
+  document.getElementById('tag_pup_etat').querySelector('.modal-background').addEventListener('click', () => {
+      tag_pup_etat.classList.remove('is-active');
       });
 
   document.getElementById('btn_ok').addEventListener('click', async () => {
@@ -78,6 +99,32 @@ document.addEventListener('DOMContentLoaded', () => {
     SaveChangementEtat();
   });
   });
+
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+function SaveChangementEtat(){
+      const data = {
+        etat: change_etat,
+        immat: immat
+        };
+    console.log('changement d etat', data)
+
+    fetch('/cars/state', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        });
+    window.location.reload();
+}
+
+// 6. FONCTIONS
 
 function formatDate(iso){
       if (!iso) return "";
@@ -126,6 +173,17 @@ function MAJTagCT(dateCtIso, resultatCt){
     tag.innerHTML = '<span class="icon">' + icone + '</span>' + texte;
 }
 
+function MAJDistanceConso(d){
+      document.getElementById('ipt_dist_totale').value = d.distance_totale;
+      document.getElementById('ipt_litres_total').value = d.litres_total;
+      document.getElementById('ipt_dist_annee').value = d.distance_annee;
+      document.getElementById('ipt_litres_annee').value = d.litres_annee;
+      document.getElementById('ipt_dist_mois').value = d.distance_mois;
+      document.getElementById('ipt_litres_mois').value = d.litres_mois;
+      document.getElementById('ipt_dist_moy_annee').value = d.distance_moyenne_annee === null ? "" : Math.round(d.distance_moyenne_annee);
+      document.getElementById('ipt_dist_moy_mois').value = d.distance_moyenne_mois === null ? "" : Math.round(d.distance_moyenne_mois);
+    };
+
 function MAJInput(items){
       document.getElementById('ipt_immatriculation').value = items.immat;
       document.getElementById('ipt_marque').value = items.marque;
@@ -138,21 +196,21 @@ function MAJInput(items){
       document.getElementById('ipt_energie').value = items.energie;
       document.getElementById('ipt_prix').value = items.prix_achat;
       document.getElementById('ipt_categorie').value = items.categorie;
-      const fld_etat = document.getElementById('fld_etat')
-      fld_etat.innerHTML = "";
+      const tag_fld_etat = document.getElementById('tag_fld_etat')
+      tag_fld_etat.innerHTML = "";
       const conteneurHTML = document.createElement("button");
       if (items.etat === "en_service"){
         conteneurHTML.className = "button is-success"
         conteneurHTML.textContent = "en_service"
-        fld_etat.appendChild(conteneurHTML)};
+        tag_fld_etat.appendChild(conteneurHTML)};
       if (items.etat === "endommagé"){
         conteneurHTML.className = "button is-warning"
         conteneurHTML.textContent = "Endommagé"
-        fld_etat.appendChild(conteneurHTML)};
+        tag_fld_etat.appendChild(conteneurHTML)};
       if (items.etat === "non_roulant"){
         conteneurHTML.className = "button is-danger"
         conteneurHTML.textContent = "Non roulant"
-        fld_etat.appendChild(conteneurHTML)};
+        tag_fld_etat.appendChild(conteneurHTML)};
     };
 
 function ligneTableau(valeurs){
@@ -166,8 +224,8 @@ function ligneTableau(valeurs){
     };
 
 function MAJTableauInterventions(interventions){
-      const tbodyPleins = document.getElementById('body_pleins');
-      const tbodyInter = document.getElementById('body_interventions');
+      const tbodyPleins = document.getElementById('tab_body_pleins');
+      const tbodyInter = document.getElementById('tab_body_interventions');
       tbodyPleins.innerHTML = "";
       tbodyInter.innerHTML = "";
       interventions.forEach(function(inter){
@@ -180,7 +238,7 @@ function MAJTableauInterventions(interventions){
     };
 
 function MAJGraphiquePleins(interventions){
-      const canvas = document.getElementById('graph_pleins');
+      const canvas = document.getElementById('tag_graph_pleins');
       if (!canvas || typeof Chart === 'undefined') return;
       const pleins = interventions
         .filter(function(inter){ return inter.nom_intervention === "plein" && inter.kilometrage != null && inter.volume != null; })
@@ -205,19 +263,3 @@ function MAJGraphiquePleins(interventions){
       });
     };
 
-function SaveChangementEtat(){
-      const data = {
-        etat: change_etat,
-        immat: immat
-        };
-    console.log('changement d etat', data)
-
-    fetch('/cars/state', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        });
-    window.location.reload();
-}

@@ -220,6 +220,39 @@ class vehiculeDAO:
             )
         return donnees
 
+    def distanceParcourue(self):
+        cur = self.bdd.cursor()
+        requete = self.req['distance_parcourue']
+        cur.execute(requete)
+        row = cur.fetchone()
+        print("distance parcourue")
+
+        return vehiculesDTO(
+            distance_totale = row["distance_totale"],
+            distance_annee = row["distance_annee"],
+            distance_mois = row["distance_mois"]
+        )
+
+    def distanceConsoVhl(self, immat):
+        cur = self.bdd.cursor()
+        requete = self.req['distance_conso_vhl']
+        cur.execute(requete, (immat,))
+        row = cur.fetchone()
+        if row is None:
+            return None
+        print("distance et conso du vehicule")
+        return vehiculesDTO(
+            immat = row["immat"],
+            distance_totale = row["distance_totale"],
+            litres_total = row["litres_total"],
+            distance_annee = row["distance_annee"],
+            litres_annee = row["litres_annee"],
+            distance_mois = row["distance_mois"],
+            litres_mois = row["litres_mois"],
+            distance_moyenne_annee = row["distance_moyenne_annee"],
+            distance_moyenne_mois = row["distance_moyenne_mois"]
+        )
+
     def listeVehicule(self):
         cur = self.bdd.cursor()
         requete = self.req['liste_vehicule']

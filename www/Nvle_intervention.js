@@ -1,6 +1,9 @@
 let vehicules = [];
 let immatriculation = [];
 
+
+// 1. FETCH
+
 //fonction chargeant la liste des vehicules en .json
 //déclenchement dès le chargement de la page
 fetch('/liste/vehicule')
@@ -13,6 +16,9 @@ fetch('/liste/vehicule')
     .catch(error => {
         console.error('Erreur lors du chargement du JSON:', error);
 });
+
+
+// 2. LECTEURS D'ÉVÈNEMENT HTML
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -62,58 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
     initChampDate("ipt_date");
 });
 
-//retourne la date du jour au format JJ/MM/AAAA
-function dateDuJourJJMMAAAA(){
-    const d = new Date();
-    const jj = String(d.getDate()).padStart(2, "0");
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const aaaa = d.getFullYear();
-    return jj + "/" + mm + "/" + aaaa;
-}
-
-//remplit le champ avec la date du jour et formate la saisie en JJ/MM/AAAA
-function initChampDate(idChamp){
-    const champ = document.getElementById(idChamp);
-    if (!champ) return;
-    champ.value = dateDuJourJJMMAAAA();
-    champ.addEventListener("input", function(e) {
-        let value = e.target.value.replace(/\D/g, "").slice(0, 8); // Supprime tout sauf chiffres
-        if (value.length > 2) {
-            value = value.slice(0,2) + "/" + value.slice(2);
-        }
-        if (value.length > 5) {
-            value = value.slice(0,5) + "/" + value.slice(5,9);
-        }
-        e.target.value = value;
-    });
-}
-
-
-
-
-//fonction ajoutant les immatriculations dans la liste déroulante
-function MAJSelectionImmat(){
-    console.info("fonction integration des immatriculation lancé");
-    const contenu =document.getElementById("slt_immatriculation");
-    vehicules.forEach(items => {
-         const conteneurHTML = document.createElement("option");
-
-         conteneurHTML.value = `${items.immat}`;
-         conteneurHTML.textContent = `${items.immat}`;
-         contenu.appendChild(conteneurHTML);
-    });
-    };
-
 //affichage du choix plein
 function ChoixPlein(){
     console.info("MEF avec Plein")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
-    conteneurHTML.id = "box_plein";
+    conteneurHTML.id = "tag_box_plein";
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-5-cols">
                         <div class="grid">
                             <div class="cell">
@@ -179,13 +143,13 @@ function MAJinformationsVhl(valeur){
 //affichage du choix netoyage ou réparation
 function ChoixNettoyage(){
     console.info("MEF avec Nettoyage ou réparation")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
     
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-3-cols">
                         <div class="grid">
                             <div class="cell">
@@ -240,13 +204,13 @@ function ChoixNettoyage(){
 
 function ChoixCT(){
     console.info("MEF avec plein")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
-    conteneurHTML.id = "box_plein";
+    conteneurHTML.id = "tag_box_plein";
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-3-cols">
                         <div class="grid">
                             <div class="cell">
@@ -303,13 +267,13 @@ function ChoixCT(){
 //affichage du choix netoyage ou réparation
 function ChoixParking(){
     console.info("MEF avec Nettoyage ou réparation")
-    const contenu = document.getElementById("box_depense");
+    const contenu = document.getElementById("tag_box_depense");
     contenu.innerHTML = "";
     const conteneurHTML = document.createElement("div");
     
     //creation du conteneur choix du plein
     conteneurHTML.innerHTML = `
-                    <h1 id="titreCategorie">Détail des dépenses</h1>
+                    <h1 id="tag_titre_categorie">Détail des dépenses</h1>
                     <div class="fixed-grid has-2-cols">
                         <div class="grid">
                             <div class="cell">
@@ -335,6 +299,11 @@ function ChoixParking(){
     initChampDate("ipt_date");
     };
 
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
 //colorie un champ en rouge (invalide) ou le remet normal (valide)
 function coloreChamp(champ, invalide){
     if (!champ) return;
@@ -344,59 +313,6 @@ function coloreChamp(champ, invalide){
 //recupere le champ date affiche (statique ou dynamique selon le choix de depense)
 function champDateAffiche(){
     return document.getElementById("ipt_date") || document.getElementById("txa_date");
-}
-
-//enregistre un controle technique : immatriculation, date, resultat (radio) et observation
-function enregistrerControleTechnique(){
-    console.info("Fonction enregistrement controle technique")
-    const slt_immatriculation = document.getElementById("slt_immatriculation");
-    const champDate = document.getElementById("ipt_date") || document.getElementById("txa_date");
-    const val_immat = slt_immatriculation.value;
-    const val_date = champDate?.value || "";
-    const radioCoche = document.querySelector('input[name="rdl_resultat_ct"]:checked');
-    const champObs = document.getElementById("txa_observation_ct");
-    const val_observation = champObs?.value || "";
-
-    //validation : immatriculation, date et resultat obligatoires
-    coloreChamp(slt_immatriculation, val_immat === "" || val_immat === "--Sélectionner--");
-    coloreChamp(champDate, val_date.trim() === "");
-    if (val_immat === "" || val_immat === "--Sélectionner--" || val_date.trim() === "") {
-        alert("Remplir l'immatriculation et la date (champs en rouge)");
-        return false;
-    }
-    if (!radioCoche) {
-        alert("Choisir le résultat du contrôle (Accepté / Reporté / Refusé)");
-        return false;
-    }
-
-    //convertit la date JJ/MM/AAAA en AAAA-MM-JJ pour la base de donnees
-    const dateBDD = val_date.split("/").reverse().join("-");
-    const donneesCT = {
-        immat: val_immat,
-        date_ct: dateBDD,
-        resultat_ct: radioCoche.value,
-        observation_ct: val_observation !== "" ? val_observation : null
-    };
-    fetch("/nouvelle/controle-technique", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(donneesCT),
-    })
-        .then(response => {
-            if (!response.ok) throw new Error("Erreur serveur: " + response.status);
-            return response.json();
-        })
-        .then(data => {
-            console.info("contrôle technique enregistré", data);
-            alert("Contrôle technique enregistré");
-        })
-        .catch(error => {
-            console.error("Erreur lors de l'enregistrement:", error);
-            alert("Erreur lors de l'enregistrement du contrôle technique");
-        });
-    return donneesCT;
 }
 
 //Controle si les cases affichees sont bien remplies, si le kilometrage saisi
@@ -497,3 +413,104 @@ function ControleRemplissage(){
         });
     return donnees;
 };
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+//enregistre un controle technique : immatriculation, date, resultat (radio) et observation
+function enregistrerControleTechnique(){
+    console.info("Fonction enregistrement controle technique")
+    const slt_immatriculation = document.getElementById("slt_immatriculation");
+    const champDate = document.getElementById("ipt_date") || document.getElementById("txa_date");
+    const val_immat = slt_immatriculation.value;
+    const val_date = champDate?.value || "";
+    const radioCoche = document.querySelector('input[name="rdl_resultat_ct"]:checked');
+    const champObs = document.getElementById("txa_observation_ct");
+    const val_observation = champObs?.value || "";
+
+    //validation : immatriculation, date et resultat obligatoires
+    coloreChamp(slt_immatriculation, val_immat === "" || val_immat === "--Sélectionner--");
+    coloreChamp(champDate, val_date.trim() === "");
+    if (val_immat === "" || val_immat === "--Sélectionner--" || val_date.trim() === "") {
+        alert("Remplir l'immatriculation et la date (champs en rouge)");
+        return false;
+    }
+    if (!radioCoche) {
+        alert("Choisir le résultat du contrôle (Accepté / Reporté / Refusé)");
+        return false;
+    }
+
+    //convertit la date JJ/MM/AAAA en AAAA-MM-JJ pour la base de donnees
+    const dateBDD = val_date.split("/").reverse().join("-");
+    const donneesCT = {
+        immat: val_immat,
+        date_ct: dateBDD,
+        resultat_ct: radioCoche.value,
+        observation_ct: val_observation !== "" ? val_observation : null
+    };
+    fetch("/nouvelle/controle-technique", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donneesCT),
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Erreur serveur: " + response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.info("contrôle technique enregistré", data);
+            alert("Contrôle technique enregistré");
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'enregistrement:", error);
+            alert("Erreur lors de l'enregistrement du contrôle technique");
+        });
+    return donneesCT;
+}
+
+
+// 6. FONCTIONS
+
+//retourne la date du jour au format JJ/MM/AAAA
+function dateDuJourJJMMAAAA(){
+    const d = new Date();
+    const jj = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const aaaa = d.getFullYear();
+    return jj + "/" + mm + "/" + aaaa;
+}
+
+//remplit le champ avec la date du jour et formate la saisie en JJ/MM/AAAA
+function initChampDate(idChamp){
+    const champ = document.getElementById(idChamp);
+    if (!champ) return;
+    champ.value = dateDuJourJJMMAAAA();
+    champ.addEventListener("input", function(e) {
+        let value = e.target.value.replace(/\D/g, "").slice(0, 8); // Supprime tout sauf chiffres
+        if (value.length > 2) {
+            value = value.slice(0,2) + "/" + value.slice(2);
+        }
+        if (value.length > 5) {
+            value = value.slice(0,5) + "/" + value.slice(5,9);
+        }
+        e.target.value = value;
+    });
+}
+
+
+
+
+//fonction ajoutant les immatriculations dans la liste déroulante
+function MAJSelectionImmat(){
+    console.info("fonction integration des immatriculation lancé");
+    const contenu =document.getElementById("slt_immatriculation");
+    vehicules.forEach(items => {
+         const conteneurHTML = document.createElement("option");
+
+         conteneurHTML.value = `${items.immat}`;
+         conteneurHTML.textContent = `${items.immat}`;
+         contenu.appendChild(conteneurHTML);
+    });
+    };
+

@@ -11,48 +11,49 @@ let liste_adresse = [];
 let liste_categorie = [];
 let liste_permis = [];
 
-// Charger les données initiales
-fetch('/liste/ville')
-    .then(response => response.json())
-    .then(data => {
-        liste_ville = data;
-        MAJSelectionVille(liste_ville);
-        console.log("Listes des villes téléchargées", liste_ville);
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement des villes :', error);
-    });
-
-fetch('/liste/categorie')
-    .then(response => response.json())
-    .then(data => {
-        liste_categorie = data;
-        MAJSelectionCategorie(liste_categorie);
-        console.log("Listes des catégories téléchargées", liste_categorie);
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement des catégories :', error);
-    });
-
-fetch('/liste/adresse')
-    .then(response => response.json())
-    .then(data => {
-        liste_adresse = data;
-        MAJSelectionAdresse(liste_adresse);
-        console.log("Listes des adresses téléchargées", liste_adresse);
-    })
-    .catch(error => {
-        console.error('Erreur lors du chargement des adresses :', error);
-    });
-
 // Attendre que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', () => {
+    // Charger les données initiales au chargement de la page
+    fetch('/liste/ville')
+        .then(response => response.json())
+        .then(data => {
+            liste_ville = data;
+            MAJSelectionVille(liste_ville);
+            console.log("Listes des villes téléchargées", liste_ville);
+        })
+        .catch(error => {
+            console.error('Erreur lors du chargement des villes :', error);
+        });
+
+    // Télécharger la liste des catégories et remplir les cases à cocher
+    fetch('/liste/categorie')
+        .then(response => response.json())
+        .then(data => {
+            liste_categorie = data;
+            MAJSelectionCategorie(liste_categorie);
+            console.log("Listes des catégories téléchargées", liste_categorie);
+        })
+        .catch(error => {
+            console.error('Erreur lors du chargement des catégories :', error);
+        });
+
+    fetch('/liste/adresse')
+        .then(response => response.json())
+        .then(data => {
+            liste_adresse = data;
+            MAJSelectionAdresse(liste_adresse);
+            console.log("Listes des adresses téléchargées", liste_adresse);
+        })
+        .catch(error => {
+            console.error('Erreur lors du chargement des adresses :', error);
+        });
+
     // Écouteurs d'événements pour les boutons des popups
     const btnVille = document.getElementById('btn_ville');
     if (btnVille) {
         btnVille.addEventListener('click', () => {
             console.info("bouton ville cliqué");
-            const pupVille = document.getElementById('pup_ville');
+            const pupVille = document.getElementById('tag_pup_ville');
             if (pupVille) pupVille.classList.add('is-active');
         });
     }
@@ -60,15 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPupVilleClose = document.getElementById('btn_pup_ville_close');
     if (btnPupVilleClose) {
         btnPupVilleClose.addEventListener('click', () => {
-            const pupVille = document.getElementById('pup_ville');
+            const pupVille = document.getElementById('tag_pup_ville');
             if (pupVille) pupVille.classList.remove('is-active');
         });
     }
 
-    const pupVilleBackground = document.getElementById('pup_ville')?.querySelector('.modal-background');
+    const pupVilleBackground = document.getElementById('tag_pup_ville')?.querySelector('.modal-background');
     if (pupVilleBackground) {
         pupVilleBackground.addEventListener('click', () => {
-            const pupVille = document.getElementById('pup_ville');
+            const pupVille = document.getElementById('tag_pup_ville');
             if (pupVille) pupVille.classList.remove('is-active');
         });
     }
@@ -81,13 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const ville = document.getElementById('ipt_pup_ville')?.value.trim();
             const CP = document.getElementById('ipt_pup_code_postal')?.value.trim();
 
-            if (!ville) {
-                alert('Veuillez entrer une ville');
-            } else if (!CP) {
-                alert('Veuillez entrer un code postal');
+            if (!ville || !CP) {
+                alert('Veuillez remplir tous les champs (ville et code postal)');
             } else {
-                EnregisterNvlleVille(ville, CP);
-                window.location.reload();
+                EnregisterNvlleVille(ville, CP).then(() => window.location.reload());
             }
         });
     }
@@ -97,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnAdresse) {
         btnAdresse.addEventListener('click', () => {
             console.info("bouton Adresse cliqué");
-            const pupAdresse = document.getElementById('pup_adresse');
+            const pupAdresse = document.getElementById('tag_pup_adresse');
             if (pupAdresse) pupAdresse.classList.add('is-active');
         });
     }
@@ -105,15 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPupAdresseClose = document.getElementById('btn_pup_adresse_close');
     if (btnPupAdresseClose) {
         btnPupAdresseClose.addEventListener('click', () => {
-            const pupAdresse = document.getElementById('pup_adresse');
+            const pupAdresse = document.getElementById('tag_pup_adresse');
             if (pupAdresse) pupAdresse.classList.remove('is-active');
         });
     }
 
-    const pupAdresseBackground = document.getElementById('pup_adresse')?.querySelector('.modal-background');
+    const pupAdresseBackground = document.getElementById('tag_pup_adresse')?.querySelector('.modal-background');
     if (pupAdresseBackground) {
         pupAdresseBackground.addEventListener('click', () => {
-            const pupAdresse = document.getElementById('pup_adresse');
+            const pupAdresse = document.getElementById('tag_pup_adresse');
             if (pupAdresse) pupAdresse.classList.remove('is-active');
         });
     }
@@ -129,11 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const rue = document.getElementById('ipt_pup_rue')?.value;
             const complement = document.getElementById('ipt_pup_complement')?.value;
 
-            if (ville === '--Selectionner--' || !rue) {
-                alert('Veuillez entrer toutes les données nécessaires');
+            if (ville === '--Selectionner--' || !num || !rue) {
+                alert('Veuillez remplir tous les champs (ville, numéro et rue)');
             } else {
-                EnregisterAdresse(ville, num, rue, complement);
-                window.location.reload();
+                EnregisterAdresse(ville, num, rue, complement).then(() => window.location.reload());
             }
         });
     }
@@ -143,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCategorie) {
         btnCategorie.addEventListener('click', () => {
             console.info("bouton Catégorie cliqué");
-            const pupCategorie = document.getElementById('pup_categorie');
+            const pupCategorie = document.getElementById('tag_pup_categorie');
             if (pupCategorie) pupCategorie.classList.add('is-active');
         });
     }
@@ -151,16 +148,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPupCategorieClose = document.getElementById('btn_pup_categorie_close');
     if (btnPupCategorieClose) {
         btnPupCategorieClose.addEventListener('click', () => {
-            const pupCategorie = document.getElementById('pup_categorie');
+            const pupCategorie = document.getElementById('tag_pup_categorie');
             if (pupCategorie) pupCategorie.classList.remove('is-active');
         });
     }
 
-    const pupCategorieBackground = document.getElementById('pup_categorie')?.querySelector('.modal-background');
+    const pupCategorieBackground = document.getElementById('tag_pup_categorie')?.querySelector('.modal-background');
     if (pupCategorieBackground) {
         pupCategorieBackground.addEventListener('click', () => {
-            const pupCategorie = document.getElementById('pup_categorie');
+            const pupCategorie = document.getElementById('tag_pup_categorie');
             if (pupCategorie) pupCategorie.classList.remove('is-active');
+        });
+    }
+
+    // Écouteurs pour l'énergie
+    const btnEnergie = document.getElementById('btn_energie');
+    if (btnEnergie) {
+        btnEnergie.addEventListener('click', () => {
+            console.info("bouton Energie cliqué");
+            const pupEnergie = document.getElementById('pup_energie');
+            if (pupEnergie) pupEnergie.classList.add('is-active');
+        });
+    }
+
+    const btnPupEnergieClose = document.getElementById('btn_pup_energie_close');
+    if (btnPupEnergieClose) {
+        btnPupEnergieClose.addEventListener('click', () => {
+            const pupEnergie = document.getElementById('pup_energie');
+            if (pupEnergie) pupEnergie.classList.remove('is-active');
+        });
+    }
+
+    const pupEnergieBackground = document.getElementById('pup_energie')?.querySelector('.modal-background');
+    if (pupEnergieBackground) {
+        pupEnergieBackground.addEventListener('click', () => {
+            const pupEnergie = document.getElementById('pup_energie');
+            if (pupEnergie) pupEnergie.classList.remove('is-active');
+        });
+    }
+
+    // Enregistrer une nouvelle énergie
+    const btnSaveEnergie = document.getElementById('btn_save_energie');
+    if (btnSaveEnergie) {
+        btnSaveEnergie.addEventListener('click', () => {
+            console.info("bouton enregistrer énergie appuyé");
+            const energie = document.getElementById('ipt_pup_energie')?.value.trim();
+
+            if (!energie) {
+                alert('Veuillez entrer un type d\'énergie');
+            } else {
+                EnregisterNvlleEnergie(energie).then(() => window.location.reload());
+            }
         });
     }
 
@@ -174,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!categorie) {
                 alert('Veuillez entrer une catégorie');
             } else {
-                EnregisterCategorie(categorie);
+                EnregisterCategorie(categorie).then(() => window.location.reload());
             }
         });
     }
@@ -222,14 +260,199 @@ document.addEventListener('DOMContentLoaded', () => {
                 ).map(checkbox => checkbox.value);
 
                 console.log("Liste des permis :", liste_permis);
-                EnregistrerPermis(num_permis, liste_permis);
-                EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis);
+                Promise.all([
+                    EnregistrerPermis(num_permis, liste_permis),
+                    EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis)
+                ]).then(() => window.location.reload());
             } else {
+                alert("Veuillez remplir tous les champs surlignés en rouge");
                 console.info("Veuillez renseigner toutes les informations");
             }
         });
     }
+
+    // Supprimer la mise en évidence dès que l'utilisateur remplit un champ
+    document.querySelectorAll(".contenue-central input, .contenue-central select").forEach(champ => {
+        champ.addEventListener("input", () => champ.classList.remove("is-danger", "champ-invalide"));
+        champ.addEventListener("change", () => champ.classList.remove("is-danger", "champ-invalide"));
+    });
+    document.querySelectorAll('input[type="radio"][name="answer"]').forEach(radio => {
+        radio.addEventListener("change", () => {
+            document.querySelector('input[type="radio"][name="answer"]')?.closest(".field")?.classList.remove("champ-invalide");
+        });
+    });
 });
+
+
+// 3. GESTION DES INTERVENTIONS UTILISATEUR
+
+// 4. CONTRÔLE DES DONNÉES UTILISATEUR
+
+// 5. ENVOI DES DONNÉES UTILISATEUR
+
+// Fonctions d'enregistrement
+function EnregisterNvlleVille(ville, CP) {
+    const data = {
+        nom_ville: ville,
+        code_postal: CP
+    };
+    console.log('Données à envoyer :', data);
+    return fetch('/nouvelle/ville', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données de la ville :', error);
+    });
+}
+
+function EnregisterCategorie(categorie) {
+    const data = {
+        categorie: categorie
+    };
+    console.log('Données à envoyer :', data);
+    return fetch('/nouvelle/categorie', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données de la catégorie :', error);
+    });
+}
+
+function EnregisterNvlleEnergie(energie) {
+    const data = {
+        nom: energie
+    };
+    console.log('Données à envoyer :', data);
+    return fetch('/nouvelle/energie', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données de l\'énergie :', error);
+    });
+}
+
+function EnregisterAdresse(ville, num, rue, complement) {
+    console.info(ville);
+    console.info(liste_ville);
+    const ville_choisie = liste_ville.find(v =>
+        v.nom_ville == ville.split(" - ")[1] && v.code_postal == ville.split(" - ")[0])
+
+    if (!ville_choisie) {
+        console.error("Ville non trouvée");
+        return;
+    }
+    const data = {
+        id_ville: ville_choisie.id_ville,
+        num_rue: num,
+        rue: rue,
+        complement: complement
+    };
+    console.log('Données à envoyer :', data);
+    return fetch('/nouvelle/adresse', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données de l\'adresse :', error);
+    });
+}
+
+function EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis) {
+    const data = {
+        nom_proprio: Nom,
+        prenom_proprio: prenom,
+        sexe: sexe,
+        date_naissance: date,
+        email_proprio: e_mail,
+        id_adresse_proprio: id_adresse,
+        num_permis: num_permis
+    };
+    console.log('Données à envoyer :', data);
+    return fetch('/nouveau/proprio', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données du propriétaire :', error);
+    });
+}
+
+function EnregistrerPermis(numeros, liste_permis) {
+    const data = {
+        num_permis: numeros,
+        liste_categorie: liste_permis
+    };
+    console.log('Données à envoyer :', data);
+    return fetch('/nouveau/permis', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'envoi des données du permis :', error);
+    });
+}
+
+// Fonction de contrôle de remplissage : met en évidence chaque champ vide
+function ControleRemplissage() {
+    let resultat = true;
+
+    // Champs texte obligatoires
+    const champsTexte = ["ipt_nom", "ipt_prenom", "ipt_naissance", "ipt_email", "ipt_telephone", "ipt_num_permis"];
+    champsTexte.forEach(id => {
+        const champ = document.getElementById(id);
+        if (!champ) return;
+        if (!champ.value.trim()) {
+            champ.classList.add("is-danger", "champ-invalide");
+            resultat = false;
+        } else {
+            champ.classList.remove("is-danger", "champ-invalide");
+        }
+    });
+
+    // Liste déroulante adresse
+    const selectAdresse = document.getElementById("slt_adresse");
+    if (selectAdresse) {
+        if (!selectAdresse.value || selectAdresse.value === "--Selectionner--") {
+            selectAdresse.classList.add("is-danger", "champ-invalide");
+            resultat = false;
+        } else {
+            selectAdresse.classList.remove("is-danger", "champ-invalide");
+        }
+    }
+    // Boutons radio (genre)
+    const radios = document.querySelectorAll('input[type="radio"][name="answer"]:checked');
+    const champGenre = document.querySelector('input[type="radio"][name="answer"]')?.closest(".field");
+    if (radios.length === 0) {
+        if (champGenre) champGenre.classList.add("champ-invalide");
+        resultat = false;
+    } else if (champGenre) {
+        champGenre.classList.remove("champ-invalide");
+    }
+
+    console.info("Résultat du contrôle :", resultat);
+    return resultat;
+}
 
 // Fonctions de mise à jour des sélections
 function MAJSelectionCategorie(data) {
@@ -288,140 +511,3 @@ function MAJSelectionAdresse(liste_adresse) {
     });
 }
 
-// Fonctions d'enregistrement
-function EnregisterNvlleVille(ville, CP) {
-    const data = {
-        nom_ville: ville,
-        code_postal: CP
-    };
-    console.log('Données à envoyer :', data);
-    fetch('/nouvelle/ville', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .catch(error => {
-        console.error('Erreur lors de l\'envoi des données de la ville :', error);
-    });
-}
-
-function EnregisterCategorie(categorie) {
-    const data = {
-        categorie: categorie
-    };
-    console.log('Données à envoyer :', data);
-    fetch('/nouvelle/categorie', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .catch(error => {
-        console.error('Erreur lors de l\'envoi des données de la catégorie :', error);
-    });
-}
-
-function EnregisterAdresse(ville, num, rue, complement) {
-    console.info(ville);
-    console.info(liste_ville);
-    const ville_choisie = liste_ville.find(v =>
-        v.nom_ville == ville.split(" - ")[1] && v.code_postal == ville.split(" - ")[0])
-
-    if (!ville_choisie) {
-        console.error("Ville non trouvée");
-        return;
-    }
-    const data = {
-        id_ville: ville_choisie.id_ville,
-        num_rue: num,
-        rue: rue,
-        complement: complement
-    };
-    console.log('Données à envoyer :', data);
-    fetch('/nouvelle/adresse', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .catch(error => {
-        console.error('Erreur lors de l\'envoi des données de l\'adresse :', error);
-    });
-}
-
-function EnregistrerPax(Nom, prenom, sexe, date, e_mail, id_adresse, num_permis) {
-    const data = {
-        nom_proprio: Nom,
-        prenom_proprio: prenom,
-        sexe: sexe,
-        date_naissance: date,
-        email_proprio: e_mail,
-        id_adresse_proprio: id_adresse,
-        num_permis: num_permis
-    };
-    console.log('Données à envoyer :', data);
-    fetch('/nouveau/proprio', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .catch(error => {
-        console.error('Erreur lors de l\'envoi des données du propriétaire :', error);
-    });
-}
-
-function EnregistrerPermis(numeros, liste_permis) {
-    const data = {
-        num_permis: numeros,
-        liste_categorie: liste_permis
-    };
-    console.log('Données à envoyer :', data);
-    fetch('/nouveau/permis', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .catch(error => {
-        console.error('Erreur lors de l\'envoi des données du permis :', error);
-    });
-}
-
-// Fonction de contrôle de remplissage
-function ControleRemplissage() {
-    let resultat = true;
-
-    if (!document.getElementById("ipt_nom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_prenom")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_naissance")?.value) {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_email")?.value) {
-        resultat = false;
-    }
-    if (document.getElementById("slt_adresse")?.value === "--Selectionner--") {
-        resultat = false;
-    }
-    if (!document.getElementById("ipt_num_permis")?.value) {
-        resultat = false;
-    }
-
-    const radios = document.querySelectorAll('input[type="radio"][name="answer"]:checked');
-    if (radios.length === 0) {
-        resultat = false;
-    }
-
-    console.info("Résultat du contrôle :", resultat);
-    return resultat;
-}

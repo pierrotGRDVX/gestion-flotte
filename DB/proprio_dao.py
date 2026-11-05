@@ -108,6 +108,31 @@ class proprioDAO:
             )
         return donnees
 
+    #fonction retournant les infos d'un personnel
+    def infoProprio(self, id_proprio):
+        cur = self.bdd.cursor()
+        cur.execute(self.req["info_pax"], (id_proprio,))
+        row = cur.fetchone()
+        if row is None:
+            return None
+        cur.execute(self.req["liste_categorie_pax"], (row["num_permis"],))
+        liste_categorie = [r["categorie"] for r in cur.fetchall()]
+        return proprioDTO(
+            id_proprio = row["id_proprio"],
+            nom_proprio = row["nom_proprio"],
+            prenom_proprio = row["prenom_proprio"],
+            date_naissance = row["date_naissance"],
+            sexe = row["sexe"],
+            email_proprio = row["email_proprio"],
+            num_rue = row["num_rue"],
+            rue = row["rue"],
+            complement = row["complement"],
+            nom_ville = row["nom_ville"],
+            code_postal = row["code_postal"],
+            num_permis = row["num_permis"],
+            liste_categorie = liste_categorie
+        )
+
     #fonction de création d'une nouvelle ville
     def insert_permis(self, num_permis, liste_categorie):
         cur = self.bdd.cursor()

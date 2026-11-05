@@ -1,18 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    /* Mise en évidence des champs non remplis */
+    .champ-invalide {
+        outline: 2px solid #ff3860 !important;
+        border-radius: 4px;
+    }
+    input.champ-invalide, select.champ-invalide {
+        border-color: #ff3860 !important;
+    }
+</style>
             <!barre lateral>
             <div class="sidebar">
                 <aside class="menu">
                     <div class="field">
                         <div class="label">Ajouter Ville</div>
-                        <button class="button is-success" id="btn_ville">Ajouter</button>    
+                        <button class="button btn_sidebar" id="btn_ville">Ajouter</button>    
                         <div class="label">Ajouter Adresse</div>
-                        <button class="button is-success" id="btn_adresse">Ajouter</button>
+                        <button class="button btn_sidebar" id="btn_adresse">Ajouter</button>
                         <div class="label">Ajouter Catégorie</div>
-                        <button class="button is-success" id="btn_categorie">Ajouter</button>    
+                        <button class="button btn_sidebar" id="btn_categorie">Ajouter</button>    
                         <div class="label">Ajouter Energie</div>
-                        <button class="button is-success" id="btn_energie">Ajouter</button>
+                        <button class="button btn_sidebar" id="btn_energie">Ajouter</button>
                     </div>
                 </aside>
             </div>
@@ -21,7 +31,7 @@
 <div class="contenue-central">
     <! box contenant les donnnées de la personne>
     <div class="box">
-        <h1 id="titreCategorie">Données personnelles:</h1>
+        <h1 id="tag_titre_categorie">Données personnelles:</h1>
         <div class="fixed-grid has-2-cols">
             <div class="grid">
                 <div class="cell">
@@ -69,6 +79,14 @@
                         </div>    
                     </div>
                 </div>
+                <div class="cell">
+                    <div class="field">
+                        <div class="label">Téléphone</div>
+                        <div class="control">
+                            <input class="input" id="ipt_telephone" type="tel" placeholder="06 00 00 00 00">
+                        </div>    
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -76,7 +94,7 @@
 
     <!box contenant l'adresse de la personne>
     <div class="box">
-        <h1 id="titreCategorie">Adresse</h1>        
+        <h1 id="tag_titre_categorie">Adresse</h1>        
         <div class="field">
             <div class="select">
                 <select id="slt_adresse">
@@ -88,7 +106,7 @@
 
     <! box contenant les permis détenue>
     <div class="box">
-        <h1 id="titreCategorie">Permis détenue:</h1>
+        <h1 id="tag_titre_categorie">Permis détenue:</h1>
         <div class="fixed-grid has-2-cols">
             <div class="grid">
                 <div class="cell">
@@ -111,7 +129,7 @@
 
     <! --box enregistrer -->
             <div class="box">
-                <h1 id="titreCategorie">Enregistrer</h1>
+                <h1 id="tag_titre_categorie">Enregistrer</h1>
                 <button id="btn_enregistrer" class="button is-primary">Envoyer</button>
             </div>
 
@@ -122,9 +140,9 @@
 
 
     <!popUp Ajouter une Ville>
-    <div class="modal" id="pup_ville">
+    <div class="modal" id="tag_pup_ville">
         <div class="modal-background"></div>
-        <div class="modal-content" id="contenu_popup">
+        <div class="modal-content" id="tag_contenu_popup">
             <div class="box">
                 <h2 class="title is-4">Ajouter une ville</h2>
                 <div class="field">
@@ -145,9 +163,9 @@
         </div>
 
     <!popUp Ajouter une Adresse>
-    <div class="modal" id="pup_adresse">
+    <div class="modal" id="tag_pup_adresse">
         <div class="modal-background"></div>
-        <div class="modal-content" id="contenu_popup">
+        <div class="modal-content" id="tag_contenu_popup">
             <div class="box">
                 <h2 class="title is-4">Ajouter une adresse</h2>
                 <div class="fixed-grid has-4-cols">
@@ -197,9 +215,9 @@
         </div>
 
         <!popUp Ajouter une Catégorie>
-        <div class="modal" id="pup_categorie">
+        <div class="modal" id="tag_pup_categorie">
             <div class="modal-background"></div>
-            <div class="modal-content" id="contenu_popup">
+            <div class="modal-content" id="tag_contenu_popup">
                 <div class="box">
                     <h2 class="title is-4">Ajouter une Catégorie</h2>
                     <div class="field">
@@ -213,5 +231,23 @@
                 </div>
             </div>
         </div>
+
+    <!popUp Ajouter une Énergie>
+    <div class="modal" id="pup_energie">
+        <div class="modal-background"></div>
+        <div class="modal-content" id="contenu_popup">
+            <div class="box">
+                <h2 class="title is-4">Ajouter un type d'énergie</h2>
+                <div class="field">
+                    <div class="label">Energie</div>
+                    <div class="control">
+                        <input class="input" id="ipt_pup_energie" type="text" placeholder="Energie">
+                    </div>
+                </div>
+                <button class="button is-primary" id="btn_save_energie">Enregistrer</button>
+                <button class="modal-close is-large" aria-label="close" id="btn_pup_energie_close"></button>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
