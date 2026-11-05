@@ -31,12 +31,14 @@ def nouveauVehicule():
 #ajoute une nouvelle marque
 @vehicules_bp.route("/nouvelle/marque", methods= ["POST"])
 def nouvelleMarque():
+    print("route marque lancé")
     data = request.json
     db = get_db()
     dao = vehiculeDAO(db)
     dao.insertMarque(
         data["marque"]
     )
+    print("marque enregistré" + data["marque"])
     db.commit()
     return {"message": "nouvelle marque enregistrée"}, 201
 

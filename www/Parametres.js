@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     //lecture du bouton ajout d'une categorie
-    document.getElementById("btn_add_categorie").addEventListener('click', async () => {
+    document.getElementById("btn_cat_autre").addEventListener('click', async () => {
         const categorie = document.getElementById("ipt_new_categorie").value.trim();
         if (!categorie) return;
         const reponse = await fetch('/nouvelle/categorie', {
